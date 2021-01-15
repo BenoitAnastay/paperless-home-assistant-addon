@@ -9,7 +9,7 @@ PASSWORD = os.getenv("DEFAULT_PASSWORD")
 
 try:
     User = get_user_model()
-    User.objects.create_superuser('admin', 'admin@myproject.com', 'changeme')
-    print('Default admin user created')
+    User.objects.create_superuser(USERNAME, EMAIL, PASSWORD)
+    print("Default admin user created")
 except IntegrityError as error:
-    print('User already created. Skiping...')
+    print("User already created. Skiping...")

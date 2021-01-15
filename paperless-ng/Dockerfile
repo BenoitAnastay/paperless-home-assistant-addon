@@ -1,5 +1,5 @@
-FROM python:3.7-slim
-
+ARG BUILD_FROM
+FROM $BUILD_FROM
 
 #Dependencies
 RUN apt-get update \
@@ -25,6 +25,8 @@ RUN apt-get update \
     optipng \
     p7zip-full \
     pngquant \
+    python3-pip \
+    python3-dev \
     qpdf \
     sudo \
     tesseract-ocr \
@@ -58,7 +60,7 @@ RUN cp -R ./src /usr/src/paperless/
 
 # Install requirements
 RUN pip3 install --upgrade supervisor setuptools \
-    && pip install --no-cache-dir -r requirements.txt
+    && pip3 install --no-cache-dir -r requirements.txt
 
 #### Redis Setup
 RUN apt-get install redis-server redis-tools -y

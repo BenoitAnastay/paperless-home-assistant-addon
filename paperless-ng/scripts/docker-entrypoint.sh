@@ -29,7 +29,6 @@ mkdir -p $PAPERLESS_DATA_DIR
 mkdir -p $PAPERLESS_MEDIA_ROOT
 
 sudo chmod -R 777 /share/paperless
-sudo chmod -R 777 /data/paperless
 
 # cat "Hello World!!" > /share/hello-world.txt
 ls /share/

@@ -12,7 +12,6 @@ echo "Entry script"
 # Load config
 export PAPERLESS_FILENAME_FORMAT=$(jq --raw-output ".filename.format" $CONFIG_PATH)
 export PAPERLESS_OCR_LANGUAGE=$(jq --raw-output ".ocr.language" $CONFIG_PATH)
-export PAPERLESS_OCR_IMAGE_DPI=$(jq --raw-output ".ocr.image_dpi" $CONFIG_PATH)
 
 export DEFAULT_USERNAME=$(jq --raw-output ".default_superuser.username" $CONFIG_PATH)
 export DEFAULT_EMAIL=$(jq --raw-output ".default_superuser.email" $CONFIG_PATH)

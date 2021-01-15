@@ -21,8 +21,7 @@
       "format": "{created_year}/{correspondent}/{title}"
     },
     "ocr": {
-      "language": "eng",
-      "image_dpi": 300
+      "language": "eng"
     },
     "default_superuser": {
       "username": null,
@@ -35,8 +34,7 @@
       "format": "str"
     },
     "ocr": {
-      "language": "str",
-      "image_dpi": "int"
+      "language": "str"
     },
     "default_superuser": {
       "username": "str",

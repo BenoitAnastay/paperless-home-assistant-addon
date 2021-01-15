@@ -7,7 +7,7 @@ Paperless is an application that manages your personal documents. With the help 
 The installation of this add-on is pretty straightforward and not different in
 comparison to installing any other Home Assistant add-on.
 
-1. Add Add this url to your hass.io addons repos (Supervisor -> Add-on store -> three dots upper right): `https://github.com/TheBestMoshe/ha-addons`
+1. Add Add this url to your hass.io addons repos (Supervisor -> Add-on store -> three dots upper right): `https://github.com/TheBestMoshe/home-assistant-addons`
 1. Update the addons list
 1. Install
 

@@ -4,4 +4,4 @@ Paperless is an application that manages your personal documents. With the help 
 
 ![Dashboard screenshot](https://github.com/jonaswinkler/paperless-ng/raw/master/docs/_static/screenshots/dashboard.png)
 
-Read more in the projects [Readme](https://github.com/jonaswinkler/paperless-ng)
+Read more in the project's [Readme](https://github.com/jonaswinkler/paperless-ng)

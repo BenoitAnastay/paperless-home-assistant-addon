@@ -1,0 +1,49 @@
+{
+  "name": "Paperless-ng",
+  "version": "0.1.2",
+  "slug": "paperless",
+  "url": "https://github.com/jonaswinkler/paperless-ng",
+  "description": "Paperless is an application that manages your personal documents. With the help of a document scanner, paperless transforms your wieldy physical document binders into a searchable archive and provides many utilities for finding and managing your documents.",
+  "webui": "http://[HOST]:[PORT:8000]",
+  "stage": "experimental",
+  "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
+  "startup": "system",
+  "boot": "auto",
+  "ports": {
+    "8000/tcp": 8000
+  },
+  "ports_description": {
+    "8000/tcp": "Web interface"
+  },
+  "map": ["share:rw"],
+  "options": {
+    "filename": {
+      "format": "{created_year}/{correspondent}/{title}",
+      "date_order": "YMD"
+    },
+    "ocr": {
+      "language": "eng",
+      "image_dpi": 300
+    },
+    "default_superuser": {
+      "username": null,
+      "email": null,
+      "password": null
+    }
+  },
+  "schema": {
+    "filename": {
+      "format": "str",
+      "date_order": "str"
+    },
+    "ocr": {
+      "language": "str",
+      "image_dpi": "int"
+    },
+    "default_superuser": {
+      "username": "str",
+      "email": "email",
+      "password": "password"
+    }
+  }
+}

@@ -7,7 +7,7 @@ CONFIG_PATH=/data/options.json
 
 echo "Entry script"
 
-sudo ./scripts/wait-for-redis.sh
+./scripts/wait-for-redis.sh
 
 # Load config
 export PAPERLESS_FILENAME_FORMAT=$(jq --raw-output ".filename.format" $CONFIG_PATH)

@@ -30,12 +30,6 @@ mkdir -p $PAPERLESS_MEDIA_ROOT
 
 sudo chmod -R 777 /share/paperless
 
-# cat "Hello World!!" > /share/hello-world.txt
-ls /share/
-
-echo "**************"
-echo "Filename fomat :: $PAPERLESS_FILENAME_FORMAT"
-
 
 # Source: https://github.com/sameersbn/docker-gitlab/
 map_uidgid() {

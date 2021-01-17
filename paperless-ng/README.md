@@ -19,3 +19,7 @@ comparison to installing any other Home Assistant add-on.
 1. Click the `Save` button to store your configuration.
 1. Start the add-on.
 1. Check the logs of the add-on to see if everything went well.
+
+## Documentation
+
+The documentation for this addon can be found [here](DOCS.md)

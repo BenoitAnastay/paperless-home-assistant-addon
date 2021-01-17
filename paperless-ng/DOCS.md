@@ -1,15 +1,30 @@
 # Paperless-ng
 
-Paperless is an application that manages your personal documents. With the help of a document scanner (see [Scanner recommendations](https://paperless-ng.readthedocs.io/en/latest/scanners.html#scanners)), paperless transforms your wieldy physical document binders into a searchable archive and provides many utilities for finding and managing your documents.
+_Paperless is an application that manages your personal documents. With the help of a document scanner (see [Scanner recommendations](https://paperless-ng.readthedocs.io/en/latest/scanners.html#scanners)), paperless transforms your wieldy physical document binders into a searchable archive and provides many utilities for finding and managing your documents._
 
 ## Installation
 
 The installation of this add-on is pretty straightforward and not different in
 comparison to installing any other Home Assistant add-on.
 
-1. Add Add this url to your hass.io addons repos (Supervisor -> Add-on store -> three dots upper right): `https://github.com/TheBestMoshe/home-assistant-addons`
-1. Update the addons list
-1. Install
+1. Add Add this URL to your Home Assistant addons repos (Supervisor -> Add-on store -> three dots upper right): `https://github.com/TheBestMoshe/home-assistant-addons`
+1. Install this add-on.
+1. Set the configuration.
+1. Click the `Save` button to store your configuration.
+1. Start the add-on.
+1. Check the logs of the add-on to see if everything went well.
+
+## File Storage
+
+All the files are stored in the `share/paperless` directory. This includes the `consume` directory as well as the `data` and `media` directories. Files added into `consume` will be ingested by Paperless.
+
+## Backing up
+
+The simplest way is to make a backup is to make a Home Assistant snapshot and include `share`.
+
+Another way is to make a copy of the `data` and `media` directories.
+
+**NOTE: Making a snapshot that includes this addon but does not include the `share` directory will not back up your data!!**
 
 ## Configuration
 

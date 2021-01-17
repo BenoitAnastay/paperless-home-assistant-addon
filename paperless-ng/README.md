@@ -2,7 +2,7 @@
 
 ## About
 
-Paperless is an application that manages your personal documents. With the help of a document scanner (see [Scanner recommendations](https://paperless-ng.readthedocs.io/en/latest/scanners.html#scanners)), paperless transforms your wieldy physical document binders into a searchable archive and provides many utilities for finding and managing your documents.
+_Paperless is an application that manages your personal documents. With the help of a document scanner (see [Scanner recommendations](https://paperless-ng.readthedocs.io/en/latest/scanners.html#scanners)), paperless transforms your wieldy physical document binders into a searchable archive and provides many utilities for finding and managing your documents._
 
 ![Dashboard screenshot](https://github.com/jonaswinkler/paperless-ng/raw/master/docs/_static/screenshots/dashboard.png)
 
@@ -13,7 +13,7 @@ Read more in the project's [Readme](https://github.com/jonaswinkler/paperless-ng
 The installation of this add-on is pretty straightforward and not different in
 comparison to installing any other Home Assistant add-on.
 
-1. [Add my Home Assistant add-ons repository](https://github.com/TheBestMoshe/home-assistant-addons) to your Home Assistant instance.
+1. Add Add this URL to your Home Assistant addons repos (Supervisor -> Add-on store -> three dots upper right): `https://github.com/TheBestMoshe/home-assistant-addons`
 1. Install this add-on.
 1. Set the configuration.
 1. Click the `Save` button to store your configuration.

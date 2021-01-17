@@ -15,6 +15,7 @@ comparison to installing any other Home Assistant add-on.
 
 1. [Add my Home Assistant add-ons repository](https://github.com/TheBestMoshe/home-assistant-addons) to your Home Assistant instance.
 1. Install this add-on.
+1. Set the configuration.
 1. Click the `Save` button to store your configuration.
 1. Start the add-on.
 1. Check the logs of the add-on to see if everything went well.

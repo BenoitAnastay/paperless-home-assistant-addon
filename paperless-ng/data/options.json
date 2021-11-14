@@ -1,0 +1,13 @@
+{
+    "default_superuser": {
+        "username": "admin",
+        "email": "admin@example.com",
+        "password": "password123"
+    },
+    "ocr": {
+        "language": "eng"
+    },
+    "filename": {
+        "format": "{created_year}/{correspondent}/{title}"
+    }
+}

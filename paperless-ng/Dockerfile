@@ -19,7 +19,6 @@ RUN apt-get update \
     libssl-dev \
     liblept5 \
     libmagic-dev \
-    libpoppler-cpp-dev \
     libpq-dev \
     libqpdf-dev \
     libxml2 \
@@ -46,8 +45,7 @@ RUN apt-get update \
     zlib1g \
     && mkdir /var/log/supervisord /var/run/supervisord
 
-# Download release of Paperless-ng
-RUN wget -O paperless.tar.xz https://github.com/jonaswinkler/paperless-ng/releases/download/ng-1.1.4/paperless-ng-1.1.4.tar.xz \
+RUN wget -O paperless.tar.xz https://github.com/jonaswinkler/paperless-ng/releases/download/ng-1.5.0/paperless-ng-1.5.0.tar.xz \
     && 7z x paperless.tar.xz \
     && 7z x paperless.tar -o/usr/src/ \
     && cd /usr/src 
@@ -86,11 +84,6 @@ COPY scripts/docker-entrypoint.sh /sbin/docker-entrypoint.sh
 
 WORKDIR /usr/src/paperless
 
-
-
-
-
-WORKDIR /usr/src/paperless
 # add users, setup scripts
 RUN addgroup --gid 1000 paperless \
     && useradd --uid 1000 --gid paperless --home-dir /usr/src/paperless paperless \

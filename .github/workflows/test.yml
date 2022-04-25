@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   build:
-    name: Test build of paperless-ng
+    name: Test build of paperless-ngx
     runs-on: ubuntu-latest
     steps:
     - name: Checkout the repository
@@ -15,5 +15,5 @@ jobs:
         args: |
           --test \
           --all \
-          --target paperless-ng \
+          --target paperless-ngx \
           --docker-hub cyclickdevelopment

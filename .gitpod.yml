@@ -1,10 +1,10 @@
 tasks:
-  - name: Paperless-ng
-    init: docker build --build-arg BUILD_FROM="homeassistant/amd64-base-debian:latest" -t local/paperless-ng ./paperless-ng/
-    command: docker run -p 8000:8000 -v $PWD/paperless-ng/data:/data local/paperless-ng
+  - name: Paperless-ngx
+    init: docker build --build-arg BUILD_FROM="homeassistant/amd64-base-debian:latest" -t local/paperless-ngx ./paperless-ngx/
+    command: docker run -p 8000:8000 -v $PWD/paperless-ngx/data:/data local/paperless-ngx
 
 ports:
-  - port: 8000 # Paperless-ng
+  - port: 8000 # Paperless-ngx
     onOpen: ignore
 
 vscode:

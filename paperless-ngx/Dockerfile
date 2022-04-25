@@ -9,6 +9,7 @@ RUN apt-get update \
     file \
     fonts-liberation \
     gettext \
+    gosu \
     ghostscript \
     gnupg \
     icc-profiles-free \
@@ -45,12 +46,22 @@ RUN apt-get update \
     zlib1g \
     && mkdir /var/log/supervisord /var/run/supervisord
 
-RUN wget -O paperless.tar.xz https://github.com/jonaswinkler/paperless-ng/releases/download/ng-1.5.0/paperless-ng-1.5.0.tar.xz \
+RUN wget -O paperless.tar.xz https://github.com/paperless-ngx/paperless-ngx/releases/download/ngx-1.6.0/paperless-ngx-1.6.0.tar.xz \
     && 7z x paperless.tar.xz \
     && 7z x paperless.tar -o/usr/src/ \
     && cd /usr/src 
 
-WORKDIR /usr/src/paperless-ng/
+# Fix aarch64 builds
+# see: https://github.com/pikepdf/pikepdf/issues/194#issuecomment-1020419586
+RUN wget -O qpdf.tar.gz https://github.com/qpdf/qpdf/releases/download/release-qpdf-10.6.3/qpdf-10.6.3.tar.gz \
+    && tar zxf qpdf.tar.gz \
+    && mv qpdf-10.6.3 qpdf \
+    && ls -lah \
+    && cd /qpdf \
+    && ./configure \
+    && make
+
+WORKDIR /usr/src/paperless-ngx/
 
 # We need to make the directory before coping to it
 RUN mkdir -p /usr/src/paperless/src
@@ -62,7 +73,7 @@ RUN cp -R ./src /usr/src/paperless/
 
 # Install requirements
 RUN python3 -m pip install --upgrade pip supervisor setuptools \
-    && python3 -m pip install --no-cache-dir -r requirements.txt
+    && env QPDF_SOURCE_TREE=/qpdf python3 -m pip install --no-cache-dir -r requirements.txt
 
 #### Redis Setup
 RUN apt-get install redis-server redis-tools -y
@@ -80,6 +91,7 @@ RUN cp gunicorn.conf.py /usr/src/paperless
 RUN cp docker/supervisord.conf /etc/supervisord.conf
 # RUN cp docker/docker-entrypoint.sh /sbin/docker-entrypoint.sh
 COPY scripts/docker-entrypoint.sh /sbin/docker-entrypoint.sh
+COPY scripts/docker-prepare.sh /sbin/docker-prepare.sh
 
 
 WORKDIR /usr/src/paperless

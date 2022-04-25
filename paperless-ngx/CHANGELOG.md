@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.6.0-0
+- Swap to, and upgrade to paperless-ngx v1.6.0
+
 ## 1.5.0-0
 - Update paperless-ng to 1.5.0
 - Remove devcontainer setup as gitpod is the preferred environment

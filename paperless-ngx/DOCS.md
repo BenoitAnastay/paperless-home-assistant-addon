@@ -1,6 +1,6 @@
 # Paperless-ng
 
-_Paperless is an application that manages your personal documents. With the help of a document scanner (see [Scanner recommendations](https://paperless-ng.readthedocs.io/en/latest/scanners.html#scanners)), paperless transforms your wieldy physical document binders into a searchable archive and provides many utilities for finding and managing your documents._
+_Paperless is an application that manages your personal documents. With the help of a document scanner (see [Scanner recommendations](https://paperless-ngx.readthedocs.io/en/latest/scanners.html#scanners)), paperless transforms your wieldy physical document binders into a searchable archive and provides many utilities for finding and managing your documents._
 
 ## Installation
 
@@ -43,13 +43,13 @@ default_superuser:
 
 ### Option: `filename.format`
 
-https://paperless-ng.readthedocs.io/en/latest/advanced_usage.html#advanced-file-name-handling
+https://paperless-ngx.readthedocs.io/en/latest/advanced_usage.html#advanced-file-name-handling
 
 ### Option: `ocr.language`
 
 Can be `eng`, `deu`, `fra`, `ita`, `spa`.
 This can be a combination of multiple languages such as deu+eng, in which case tesseract will use whatever language matches best.
-[Docs](https://paperless-ng.readthedocs.io/en/latest/configuration.html#:~:text=PAPERLESS_OCR_LANGUAGE)
+[Docs](https://paperless-ngx.readthedocs.io/en/latest/configuration.html#ocr-settings)
 
 ### Option: `default_superuser`
 

@@ -14,17 +14,17 @@ https://github.com/TheBestMoshe/home-assistant-addons
 
 ## Add-ons provided by this repository
 
-### [Paperless-ng](paperless-ng)
+### [Paperless-ngx](paperless-ngx)
 
-[Docs](paperless-ng/DOCS.md)
+[Docs](paperless-ngx/DOCS.md)
 
 
 ## Develop on Gitpod
 I use [Gitpod](https://gitpod.io/) to develop my Home Assistant addons. Use the commands listed below to build and run the addons.
 
-### Paperless-ng
+### Paperless-ngx
 
 ```
-docker build --build-arg BUILD_FROM="homeassistant/amd64-base-debian:latest" -t local/paperless-ng ./paperless-ng/
-docker run -p 8000:8000 -v $PWD/paperless-ng/data:/data local/paperless-ng
+docker build --build-arg BUILD_FROM="homeassistant/amd64-base-debian:latest" -t local/paperless-ngx ./paperless-ngx/
+docker run -p 8000:8000 -v $PWD/paperless-ngx/data:/data local/paperless-ngx
 ```

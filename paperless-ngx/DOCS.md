@@ -31,6 +31,7 @@ Another way is to make a copy of the `data` and `media` directories.
 **Note**: _Remember to restart the add-on when the configuration is changed._
 
 ```yaml
+url: http://example.com
 filename:
   format: "{created_year}/{correspondent}/{title}"
 ocr:
@@ -40,6 +41,11 @@ default_superuser:
   email: admin@example.com
   password: changeme
 ```
+
+### Option: `url`
+
+https://paperless-ngx.readthedocs.io/en/latest/configuration.html?highlight=paperless_url#hosting-security
+
 
 ### Option: `filename.format`
 

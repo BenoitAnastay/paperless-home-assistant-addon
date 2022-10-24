@@ -10,7 +10,7 @@ echo "Entry script"
 ./scripts/wait-for-redis.sh
 
 # Load config
-export PAPERLESS_URL=$(jq --raw-output ".url // ''" $CONFIG_PATH)
+export PAPERLESS_URL=$(jq --raw-output ".url // empty" $CONFIG_PATH)
 export PAPERLESS_FILENAME_FORMAT=$(jq --raw-output ".filename.format" $CONFIG_PATH)
 export PAPERLESS_OCR_LANGUAGE=$(jq --raw-output ".ocr.language" $CONFIG_PATH)
 

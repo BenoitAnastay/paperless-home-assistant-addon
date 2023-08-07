@@ -46,9 +46,12 @@ RUN apt-get update \
     wget \
     zlib1g \
     default-libmysqlclient-dev \
+    pkg-config \
+    mime-support\
+    poppler-utils \
     && mkdir /var/log/supervisord /var/run/supervisord
 
-RUN wget -O paperless.tar.xz https://github.com/paperless-ngx/paperless-ngx/releases/download/v1.16.5/paperless-ngx-v1.16.5.tar.xz \
+RUN wget -O paperless.tar.xz https://github.com/paperless-ngx/paperless-ngx/releases/download/v1.17.0/paperless-ngx-v1.17.0.tar.xz \
     && 7z x paperless.tar.xz \
     && 7z x paperless.tar -o/usr/src/ \
     && cd /usr/src 
@@ -77,6 +80,8 @@ RUN cp -R ./src /usr/src/paperless/
 RUN python3 -m pip install --upgrade pip supervisor setuptools 
 RUN env QPDF_SOURCE_TREE=/qpdf 
 RUN python3 -m pip install --no-cache-dir -r requirements.txt
+
+RUN python3 -m nltk.downloader stopwords
 
 #### Redis Setup
 RUN apt-get install redis-server redis-tools -y

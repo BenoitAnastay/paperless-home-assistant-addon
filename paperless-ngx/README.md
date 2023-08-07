@@ -1,4 +1,5 @@
 # Paperless-ng Home Assistant Addon
+# Paperless Version 1.17.0
 
 ## About
 
@@ -13,7 +14,7 @@ Read more in the project's [Readme](https://github.com/paperless-ngx/paperless-n
 The installation of this add-on is pretty straightforward and not different in
 comparison to installing any other Home Assistant add-on.
 
-1. Add Add this URL to your Home Assistant addons repos (Supervisor -> Add-on store -> three dots upper right): `https://github.com/TheBestMoshe/home-assistant-addons`
+1. Add Add this URL to your Home Assistant addons repos (Supervisor -> Add-on store -> three dots upper right): `https://github.com/Rudertier/paperless-home-assistant-addon`
 1. Install this add-on.
 1. Set the configuration.
 1. Click the `Save` button to store your configuration.

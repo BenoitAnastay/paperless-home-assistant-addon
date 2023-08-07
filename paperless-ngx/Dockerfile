@@ -45,6 +45,7 @@ RUN apt-get update \
     unzip \
     wget \
     zlib1g \
+    default-libmysqlclient-dev \
     && mkdir /var/log/supervisord /var/run/supervisord
 
 RUN wget -O paperless.tar.xz https://github.com/paperless-ngx/paperless-ngx/releases/download/v1.16.5/paperless-ngx-v1.16.5.tar.xz \

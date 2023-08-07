@@ -124,4 +124,4 @@ EXPOSE 8000
 
 CMD ["/usr/local/bin/supervisord", "-c", "/etc/supervisord.conf"]
 
-LABEL maintainer="Moshe <34072688+TheBestMoshe@users.noreply.github.com>"
+LABEL maintainer="Rudertier <Rudertiers@users.noreply.github.com>"

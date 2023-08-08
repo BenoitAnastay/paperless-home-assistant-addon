@@ -81,8 +81,11 @@ RUN python3 -m pip install --upgrade pip supervisor setuptools
 RUN env QPDF_SOURCE_TREE=/qpdf 
 RUN python3 -m pip install --no-cache-dir -r requirements.txt
 
+
 # Download NLTK Stopwords
-RUN [ "python3", "-c", "import nltk; nltk.download('all', download_dir='/usr/local/share/nltk_data')" ]
+RUN mkdir -p /usr/src/paperless/nltk
+ENV PAPERLESS_NLTK_DIR="/usr/src/paperless/nltk"
+RUN [ "python3", "-c", "import nltk; nltk.download('all', download_dir='/usr/src/paperless/nltk')" ]
 
 #### Redis Setup
 RUN apt-get install redis-server redis-tools -y

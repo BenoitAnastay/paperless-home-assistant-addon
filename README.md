@@ -17,11 +17,3 @@ https://github.com/Rudertier/paperless-home-assistant-addon
 ### [Paperless-ngx](paperless-ngx)
 
 [Docs](paperless-ngx/DOCS.md)
-
-
-### Paperless-ngx
-
-```
-docker build --build-arg BUILD_FROM="homeassistant/amd64-base-debian:latest" -t local/paperless-ngx ./paperless-ngx/
-docker run -p 8000:8000 -v $PWD/paperless-ngx/data:/data local/paperless-ngx
-```

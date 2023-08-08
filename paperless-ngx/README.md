@@ -24,3 +24,26 @@ comparison to installing any other Home Assistant add-on.
 ## Documentation
 
 The documentation for this addon can be found [here](DOCS.md)
+
+## Integrate into Home Assistant
+
+In Home Assistant Information from paperless can be accessed trought a REST-Sensor:
+```
+- platform: rest
+  unique_id: 5dade7bc-ddb7-442e-bb17-0d379dbf01fb
+  resource: paperless.server:port/api/documents/
+  headers:
+    Authorization: !secret paperless_auth_header
+  params:
+    query: "tag:inbox"
+  value_template: "{{ value_json.count | int }}"
+  name: "Paperless Inbox"
+  icon: mdi:inbox
+```
+
+In your secrets file you'll have to specify:
+```
+paperless_auth_header: Token <django-token>
+```
+
+You can generate a token by clicking on `Settings -> Django Adminpanel -> Token` in your paperless instance.

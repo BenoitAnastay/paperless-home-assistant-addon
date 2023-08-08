@@ -60,3 +60,7 @@ This can be a combination of multiple languages such as deu+eng, in which case t
 ### Option: `default_superuser`
 
 When the addon starts up, if this user is not created, it will create it.
+
+### Option: `timezone`
+
+Set the timezone of Paperless defaults to UTC. (Options are: Europe/Berlin, Asia/Bishkek and [many more](https://docs.djangoproject.com/en/4.1/ref/settings/#std:setting-TIME_ZONE))

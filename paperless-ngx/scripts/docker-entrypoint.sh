@@ -18,6 +18,9 @@ export DEFAULT_USERNAME=$(jq --raw-output ".default_superuser.username" $CONFIG_
 export DEFAULT_EMAIL=$(jq --raw-output ".default_superuser.email" $CONFIG_PATH)
 export DEFAULT_PASSWORD=$(jq --raw-output ".default_superuser.password" $CONFIG_PATH)
 
+
+export PAPERLESS_TIME_ZONE=$(jq --raw-output ".timezone.timezone" $CONFIG_PATH)
+
 # Change Paperless directories so that we can access the files
 export PAPERLESS_CONSUMPTION_DIR=/share/paperless/consume
 export PAPERLESS_DATA_DIR=/share/paperless/data

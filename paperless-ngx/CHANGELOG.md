@@ -1,5 +1,11 @@
 # Changelog
 
+
+## 1.17.10
+- Upgrade to paperless-ngx v1.17.0
+- Add NLTK-stopword in Dockerfile
+- Add Option to set paperless timezone
+
 ## 1.16.5-0
 - Upgrade to paperless-ngx v1.16.5
 

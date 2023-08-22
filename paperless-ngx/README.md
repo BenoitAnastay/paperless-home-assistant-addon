@@ -1,5 +1,5 @@
 # Paperless-ng Home Assistant Addon
-# Paperless Version 1.17.0
+### Paperless Version 1.17.1
 
 ## About
 

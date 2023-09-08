@@ -121,11 +121,11 @@ WORKDIR /usr/src/paperless/src/
 ENV PAPERLESS_REDIS="redis://localhost:6379"
 
 COPY scripts/wait-for-redis.sh scripts/wait-for-redis.sh
-RUN sudo chmod +x scripts/wait-for-redis.sh
+RUN chmod +x scripts/wait-for-redis.sh
 
-RUN sudo -HEu paperless python3 manage.py collectstatic --clear --no-input
+RUN paperless python3 manage.py collectstatic --clear --no-input
 
-RUN sudo -HEu paperless python3 manage.py compilemessages
+RUN paperless python3 manage.py compilemessages
 
 
 VOLUME ["/usr/src/paperless/data", "/usr/src/paperless/media", "/usr/src/paperless/consume", "/usr/src/paperless/export"]

@@ -1,11 +1,13 @@
-ARG BUILD_FROM
+ARG BUILD_FROM=ghcr.io/hassio-addons/base:14.1.0
+# hadolint ignore=DL3006
 FROM $BUILD_FROM
 
 ARG version=v1.17.4
 
 #Dependencies
+# hadolint ignore=DL3008
 RUN apt-get update \
-    && apt-get -y install \
+    && apt-get -y install --no-install-recommends \
     build-essential \
     curl \
     file \
@@ -51,47 +53,49 @@ RUN apt-get update \
     pkg-config \
     mime-support\
     poppler-utils \
-    && mkdir /var/log/supervisord /var/run/supervisord
+    && mkdir /var/log/supervisord /var/run/supervisord \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN wget -O paperless.tar.xz https://github.com/paperless-ngx/paperless-ngx/releases/download/$version/paperless-ngx-$version.tar.xz \
+RUN wget --progress=dot:giga -O paperless.tar.xz https://github.com/paperless-ngx/paperless-ngx/releases/download/$version/paperless-ngx-$version.tar.xz \
     && 7z x paperless.tar.xz \
-    && 7z x paperless.tar -o/usr/src/ \
-    && cd /usr/src 
+    && 7z x paperless.tar -o/usr/src/ 
+
+WORKDIR /usr/src 
 
 # Fix aarch64 builds
 # see: https://github.com/pikepdf/pikepdf/issues/194#issuecomment-1020419586
-RUN wget -O qpdf.tar.gz https://github.com/qpdf/qpdf/releases/download/release-qpdf-10.6.3/qpdf-10.6.3.tar.gz \
+RUN wget --progress=dot:giga -O qpdf.tar.gz https://github.com/qpdf/qpdf/releases/download/release-qpdf-10.6.3/qpdf-10.6.3.tar.gz \
     && tar zxf qpdf.tar.gz \
     && mv qpdf-10.6.3 qpdf \
-    && ls -lah \
-    && cd /qpdf \
-    && ./configure \
+    && ls -lah 
+WORKDIR /qpdf
+RUN ./configure \
     && make
 
 WORKDIR /usr/src/paperless-ngx/
 
 # We need to make the directory before coping to it
-RUN mkdir -p /usr/src/paperless/src
-RUN cp requirements.txt /usr/src/paperless/requirements.txt
+RUN mkdir -p /usr/src/paperless/src && cp requirements.txt /usr/src/paperless/requirements.txt
 
 # copy app
 RUN cp -R ./src /usr/src/paperless/
 
 
 # Install requirements
-RUN python3 -m pip install --upgrade pip supervisor setuptools 
-RUN env QPDF_SOURCE_TREE=/qpdf 
-RUN python3 -m pip install --no-cache-dir -r requirements.txt
+# hadolint ignore=DL3013
+RUN python3 -m pip install --no-cache-dir --upgrade pip supervisor setuptools && env QPDF_SOURCE_TREE=/qpdf && python3 -m pip install --no-cache-dir -r requirements.txt
 
 
 # Download NLTK Stopwords
 RUN mkdir -p /usr/src/paperless/nltk
 ENV PAPERLESS_NLTK_DIR="/usr/src/paperless/nltk"
+# hadolint ignore=SC1072
 RUN [ "python3", "-c", "import nltk; nltk.download('all', download_dir='/usr/src/paperless/nltk')" ]
 
 #### Redis Setup
-RUN apt-get install redis-server redis-tools -y
-RUN sed -i "s/bind .*/bind 127.0.0.1/g" /etc/redis/redis.conf
+# hadolint ignore=DL3008
+RUN apt-get install --no-install-recommends redis-server redis-tools -y && sed -i "s/bind .*/bind 127.0.0.1/g" /etc/redis/redis.conf
 
 # Clean Up
 RUN apt-get -y purge build-essential libqpdf-dev \
@@ -100,9 +104,10 @@ RUN apt-get -y purge build-essential libqpdf-dev \
 
 # copy scripts
 # FROM ORIGINAL DOCKER FILE: this fixes issues with imagemagick and PDF
-RUN cp docker/imagemagick-policy.xml /etc/ImageMagick-6/policy.xml
-RUN cp gunicorn.conf.py /usr/src/paperless
-RUN cp docker/supervisord.conf /etc/supervisord.conf
+RUN cp docker/imagemagick-policy.xml /etc/ImageMagick-6/policy.xml \
+    && cp gunicorn.conf.py /usr/src/paperless \
+    && cp docker/supervisord.conf /etc/supervisord.conf
+
 # RUN cp docker/docker-entrypoint.sh /sbin/docker-entrypoint.sh
 COPY scripts/docker-entrypoint.sh /sbin/docker-entrypoint.sh
 COPY scripts/docker-prepare.sh /sbin/docker-prepare.sh
@@ -123,9 +128,8 @@ ENV PAPERLESS_REDIS="redis://localhost:6379"
 COPY scripts/wait-for-redis.sh scripts/wait-for-redis.sh
 RUN chmod +x scripts/wait-for-redis.sh
 
-RUN paperless python3 manage.py collectstatic --clear --no-input
-
-RUN paperless python3 manage.py compilemessages
+RUN paperless python3 manage.py collectstatic --clear --no-input \
+    && paperless python3 manage.py compilemessages
 
 
 VOLUME ["/usr/src/paperless/data", "/usr/src/paperless/media", "/usr/src/paperless/consume", "/usr/src/paperless/export"]

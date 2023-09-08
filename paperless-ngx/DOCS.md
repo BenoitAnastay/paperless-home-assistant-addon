@@ -46,7 +46,6 @@ default_superuser:
 
 https://paperless-ngx.readthedocs.io/en/latest/configuration.html?highlight=paperless_url#hosting-security
 
-
 ### Option: `filename.format`
 
 https://paperless-ngx.readthedocs.io/en/latest/advanced_usage.html#advanced-file-name-handling

@@ -69,7 +69,7 @@ RUN wget --progress=dot:giga -O qpdf.tar.gz https://github.com/qpdf/qpdf/release
     && tar zxf qpdf.tar.gz \
     && mv qpdf-10.6.3 qpdf \
     && ls -lah 
-WORKDIR /qpdf
+WORKDIR /usr/src/qpdf
 RUN ./configure \
     && make
 

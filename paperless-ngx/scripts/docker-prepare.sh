@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2188
+# shellcheck disable=SC2153
 
 wait_for_postgres() {
 	attempt_num=1

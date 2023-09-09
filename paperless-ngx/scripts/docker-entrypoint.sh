@@ -93,12 +93,12 @@ install_languages() {
 		#    continue
 		#fi
 
-		if dpkg -s $pkg &>/dev/null; then
+		if dpkg -s "$pkg" &>/dev/null; then
 			echo "Package $pkg already installed!"
 			continue
 		fi
 
-		if ! apt-cache show $pkg &>/dev/null; then
+		if ! apt-cache show "$pkg" &>/dev/null; then
 			echo "Package $pkg not found! :("
 			continue
 		fi
@@ -114,13 +114,13 @@ install_languages() {
 echo "Paperless-ngx docker container starting..."
 
 # Install additional languages if specified
-if [[ ! -z "$PAPERLESS_OCR_LANGUAGES" ]]; then
+if [[ -n "$PAPERLESS_OCR_LANGUAGES" ]]; then
 	install_languages "$PAPERLESS_OCR_LANGUAGES"
 fi
 
 initialize
 
-cat scripts/setup_superuser.py | python3 manage.py shell
+python3 manage.py shell < scripts/setup_superuser.py
 
 
 if [[ "$1" != "/"* ]]; then

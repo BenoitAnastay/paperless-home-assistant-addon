@@ -15,18 +15,21 @@ COPY requirements.txt /tmp/
 ARG version=v1.17.4
 
 ## WIP : Need to change repository to 3.15 and downgrade packages
+RUN \
+    echo "https://dl-cdn.alpinelinux.org/alpine/v3.15/main" > /etc/apk/repositories && \
+    echo "https://dl-cdn.alpinelinux.org/alpine/v3.15/community" >> /etc/apk/repositories
 
 # hadolint ignore=DL3003,DL3042
 RUN \
-    apk add --no-cache --virtual .build-dependencies \
+    apk update \
+    && apk add --no-cache --virtual .build-dependencies \
         freetype-dev=2.13.0-r5 \
         gcc=12.2.1_git20220924-r10 \
         musl-dev=1.2.4-r1 \
-    && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/v3.15/main/ --force-broken-world \
+    && apk add --no-cache \
         python3=3.9.18-r0 \
         py3-pip=20.3.4-r1 \
         python3-dev=3.9.18-r0 \
-    && apk add --no-cache \
         qpdf=11.3.0-r0 \
         font-liberation=2.1.5-r2 \
         imagemagick=7.1.1.13-r0	\

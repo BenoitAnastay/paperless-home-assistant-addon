@@ -1,90 +1,61 @@
-ARG BUILD_FROM=homeassistant/amd64-base-debian:bookworm
+ARG BUILD_FROM=ghcr.io/hassio-addons/base:14.1.0
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
+# Set shell
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+# Add env
+ENV TERM="xterm-256color"
+
+# Copy Python requirements file
+COPY requirements.txt /tmp/
+
+# Setup base
 ARG version=v1.17.4
 
-#Dependencies
-# hadolint ignore=DL3008
-RUN apt-get update \
-    && apt-get -y install --no-install-recommends \
-    build-essential \
-    curl \
-    file \
-    fonts-liberation \
-    gettext \
-    gosu \
-    ghostscript \
-    gnupg \
-    icc-profiles-free \
-    imagemagick \
-    jq \
-    libatlas-base-dev \
-    libffi-dev \
-    libssl-dev \
-    liblept5 \
-    libmagic-dev \
-    libpq-dev \
-    libqpdf-dev \
-    libxml2 \
-    libxml2-dev \
-    libxslt1-dev \
-    libzbar0 \
-    optipng \
-    p7zip-full \
-    pngquant \
-    python3-pip \
-    python3-dev \
-    python3-scipy \
-    qpdf \
-    sudo \
-    tesseract-ocr \
-    tesseract-ocr-eng \
-    tesseract-ocr-deu \
-    tesseract-ocr-fra \
-    tesseract-ocr-ita \
-    tesseract-ocr-spa \
-    tzdata \
-    unpaper \
-    unzip \
-    wget \
-    zlib1g \
-    default-libmysqlclient-dev \
-    pkg-config \
-    mime-support\
-    poppler-utils \
-    && mkdir /var/log/supervisord /var/run/supervisord \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+## WIP : Need to change repository to 3.15 and downgrade packages
+
+# hadolint ignore=DL3003,DL3042
+RUN \
+    apk add --no-cache --virtual .build-dependencies \
+        freetype-dev=2.13.0-r5 \
+        gcc=12.2.1_git20220924-r10 \
+        musl-dev=1.2.4-r1 \
+    && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/v3.15/main/ --force-broken-world \
+        python3=3.9.18-r0 \
+        py3-pip=20.3.4-r1 \
+        python3-dev=3.9.18-r0 \
+    && apk add --no-cache \
+        qpdf=11.3.0-r0 \
+        font-liberation=2.1.5-r2 \
+        imagemagick=7.1.1.13-r0	\
+        gnupg=2.4.3-r0 \
+        libmagic=5.45-r0 \
+        libzbar=0.23.92-r2	\
+        poppler-utils=23.05.0-r0 \
+        shared-mime-info=2.2-r5	\
+        unpaper=7.0.0-r1 \
+        ghostscript=10.01.2-r0 \
+        libxml2=2.11.4-r0 \
+        pngquant=3.0.1-r1 \
+        zlib=1.2.13-r1 \
+        tesseract-ocr=5.3.2-r0 \
+        tesseract-ocr-data-eng=5.3.2-r0	\
+        tesseract-ocr-data-fra=5.3.2-r0	\
+        ocrmypdf=14.1.0-r1 \
+        redis=7.0.13-r0	
+
 
 RUN wget --progress=dot:giga -O paperless.tar.xz https://github.com/paperless-ngx/paperless-ngx/releases/download/$version/paperless-ngx-$version.tar.xz \
-    && 7z x paperless.tar.xz \
-    && 7z x paperless.tar -o/usr/src/ 
+    && tar -xf paperless-ngx-$version.tar.xz \
+    && mv paperless-ngx /opt/paperless
 
-WORKDIR /usr/src 
-
-# Fix aarch64 builds
-# see: https://github.com/pikepdf/pikepdf/issues/194#issuecomment-1020419586
-RUN wget --progress=dot:giga -O qpdf.tar.gz https://github.com/qpdf/qpdf/releases/download/release-qpdf-10.6.3/qpdf-10.6.3.tar.gz \
-    && tar zxf qpdf.tar.gz \
-    && mv qpdf-10.6.3 qpdf \
-    && ls -lah 
-WORKDIR /usr/src/qpdf
-RUN ./configure \
-    && make
-
-WORKDIR /usr/src/paperless-ngx/
-
-# We need to make the directory before coping to it
-RUN mkdir -p /usr/src/paperless/src && cp requirements.txt /usr/src/paperless/requirements.txt
-
-# copy app
-RUN cp -R ./src /usr/src/paperless/
-
+WORKDIR /opt/paperless
 
 # Install requirements
 # hadolint ignore=DL3013
-RUN python3 -m pip install --no-cache-dir --upgrade pip supervisor setuptools && env QPDF_SOURCE_TREE=/qpdf && python3 -m pip install --no-cache-dir -r requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
 
 
 # Download NLTK Stopwords

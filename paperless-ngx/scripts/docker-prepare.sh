@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2188
 
 wait_for_postgres() {
 	attempt_num=1
@@ -13,9 +14,9 @@ wait_for_postgres() {
 		port="5432"
 	fi
 
-	while ! </dev/tcp/$host/$port; do
+	while ! </dev/tcp/"$host"/"$port"; do
 
-		if [ $attempt_num -eq $max_attempts ]; then
+		if [ "$attempt_num" -eq $max_attempts ]; then
 			echo "Unable to connect to database."
 			exit 1
 		else
@@ -23,7 +24,7 @@ wait_for_postgres() {
 
 		fi
 
-		attempt_num=$(expr "$attempt_num" + 1)
+		attempt_num=$(("$attempt_num" + 1))
 		sleep 5
 	done
 }

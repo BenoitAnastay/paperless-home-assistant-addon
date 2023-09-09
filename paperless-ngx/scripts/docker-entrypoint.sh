@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 set -e
@@ -10,16 +9,23 @@ echo "Entry script"
 ./scripts/wait-for-redis.sh
 
 # Load config
-export PAPERLESS_URL=$(jq --raw-output ".url // empty" $CONFIG_PATH)
-export PAPERLESS_FILENAME_FORMAT=$(jq --raw-output ".filename.format" $CONFIG_PATH)
-export PAPERLESS_OCR_LANGUAGE=$(jq --raw-output ".ocr.language" $CONFIG_PATH)
+PAPERLESS_URL=$(jq --raw-output ".url // empty" $CONFIG_PATH)
+export PAPERLESS_URL
+PAPERLESS_FILENAME_FORMAT=$(jq --raw-output ".filename.format" $CONFIG_PATH)
+export PAPERLESS_FILENAME_FORMAT
+PAPERLESS_OCR_LANGUAGE=$(jq --raw-output ".ocr.language" $CONFIG_PATH)
+export PAPERLESS_OCR_LANGUAGE
 
-export DEFAULT_USERNAME=$(jq --raw-output ".default_superuser.username" $CONFIG_PATH)
-export DEFAULT_EMAIL=$(jq --raw-output ".default_superuser.email" $CONFIG_PATH)
-export DEFAULT_PASSWORD=$(jq --raw-output ".default_superuser.password" $CONFIG_PATH)
+DEFAULT_USERNAME=$(jq --raw-output ".default_superuser.username" $CONFIG_PATH)
+export DEFAULT_USERNAME
+DEFAULT_EMAIL=$(jq --raw-output ".default_superuser.email" $CONFIG_PATH)
+export DEFAULT_EMAIL
+DEFAULT_PASSWORD=$(jq --raw-output ".default_superuser.password" $CONFIG_PATH)
+export DEFAULT_PASSWORD
 
 
-export PAPERLESS_TIME_ZONE=$(jq --raw-output ".timezone.timezone" $CONFIG_PATH)
+PAPERLESS_TIME_ZONE=$(jq --raw-output ".timezone.timezone" $CONFIG_PATH)
+export PAPERLESS_TIME_ZONE
 
 # Change Paperless directories so that we can access the files
 export PAPERLESS_CONSUMPTION_DIR=/share/paperless/consume

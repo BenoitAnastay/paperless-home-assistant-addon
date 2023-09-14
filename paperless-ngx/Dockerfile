@@ -8,9 +8,6 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Add env
 ENV TERM="xterm-256color"
 
-# Copy Python requirements file
-COPY requirements.txt /tmp/
-
 # Setup base
 ARG version=v1.17.4
 

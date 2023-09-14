@@ -22,43 +22,76 @@ RUN \
 # hadolint ignore=DL3003,DL3042
 RUN \
     apk update \
+    && apk add --no-cache musl=1.2.2-r9 \
     && apk add --no-cache --virtual .build-dependencies \
-        freetype-dev=2.13.0-r5 \
-        gcc=12.2.1_git20220924-r10 \
-        musl-dev=1.2.4-r1 \
+        freetype-dev=2.11.1-r2 \
+        gcc=10.3.1_git20211027-r0 \
+        g++=10.3.1_git20211027-r0 \
+        gfortran=10.3.1_git20211027-r0 \
+        musl-dev=1.2.2-r9 \
+        libpq-dev=14.9-r0 \
+        mariadb-dev=10.6.14-r0 \
+        openblas-dev=0.3.18-r1 \
+        qpdf-dev=10.4.0-r0 \
+        make=4.3-r0	\
     && apk add --no-cache \
         python3=3.9.18-r0 \
         py3-pip=20.3.4-r1 \
         python3-dev=3.9.18-r0 \
-        qpdf=11.3.0-r0 \
-        font-liberation=2.1.5-r2 \
-        imagemagick=7.1.1.13-r0	\
-        gnupg=2.4.3-r0 \
-        libmagic=5.45-r0 \
-        libzbar=0.23.92-r2	\
-        poppler-utils=23.05.0-r0 \
-        shared-mime-info=2.2-r5	\
-        unpaper=7.0.0-r1 \
-        ghostscript=10.01.2-r0 \
-        libxml2=2.11.4-r0 \
-        pngquant=3.0.1-r1 \
-        zlib=1.2.13-r1 \
-        tesseract-ocr=5.3.2-r0 \
-        tesseract-ocr-data-eng=5.3.2-r0	\
-        tesseract-ocr-data-fra=5.3.2-r0	\
-        ocrmypdf=14.1.0-r1 \
-        redis=7.0.13-r0	
+        openblas=0.3.18-r1 \
+        qpdf=10.4.0-r0 \
+        ttf-liberation=2.00.5-r0 \
+        imagemagick=7.1.0.16-r0	\
+        gnupg=2.2.31-r2 \
+        file=5.41-r0 \
+        mailcap=2.1.54-r0 \
+        libmagic=5.41-r0 \
+        libzbar=0.23.90-r1 \
+        poppler-utils=21.11.0-r0 \
+        shared-mime-info=2.1-r2	\
+        unpaper=6.1-r2 \
+        ghostscript=9.55.0-r2 \
+        libxml2=2.9.14-r2 \
+        libxslt=1.1.35-r0 \
+        pngquant=2.16.0-r0 \
+        zlib=1.2.12-r3 \
+        tesseract-ocr=4.1.3-r0 \
+        tesseract-ocr-data-fra=4.1.3-r0	\
+        tesseract-ocr-data-deu=4.1.3-r0	\
+        tesseract-ocr-data-ita=4.1.3-r0	\
+        tesseract-ocr-data-spa=4.1.3-r0	\
+        ocrmypdf=12.7.1-r0 \
+        redis=6.2.13-r0 \
+        supervisor=4.2.2-r2
 
+## WIP : Need to change repository to 3.16 for qpdf
+RUN \
+    echo "https://dl-cdn.alpinelinux.org/alpine/v3.16/main" > /etc/apk/repositories && \
+    echo "https://dl-cdn.alpinelinux.org/alpine/v3.16/community" >> /etc/apk/repositories
 
-RUN wget --progress=dot:giga -O paperless.tar.xz https://github.com/paperless-ngx/paperless-ngx/releases/download/$version/paperless-ngx-$version.tar.xz \
-    && tar -xf paperless-ngx-$version.tar.xz \
+RUN \
+    apk update \
+    && apk add --no-cache musl=1.2.2-r9 \
+    && apk add --no-cache --virtual .build-dependencies \
+        qpdf-dev=10.6.3-r0 \
+    && apk add --no-cache \
+        qpdf=10.6.3-r0
+
+## WIP : revert to 3.15 to avoid later issues 
+RUN \
+    echo "https://dl-cdn.alpinelinux.org/alpine/v3.15/main" > /etc/apk/repositories && \
+    echo "https://dl-cdn.alpinelinux.org/alpine/v3.15/community" >> /etc/apk/repositories
+
+RUN wget -q -O paperless.tar.xz https://github.com/paperless-ngx/paperless-ngx/releases/download/$version/paperless-ngx-$version.tar.xz \
+    && tar -xf paperless-ngx.tar.xz \
     && mv paperless-ngx /opt/paperless
 
 WORKDIR /opt/paperless
 
 # Install requirements
 # hadolint ignore=DL3013
-RUN pip3 install --no-cache-dir -r requirements.txt
+RUN pip3 install --no-cache-dir --upgrade pip \
+    && pip3 install --no-cache-dir -r requirements.txt
 
 
 # Download NLTK Stopwords
@@ -69,12 +102,8 @@ RUN [ "python3", "-c", "import nltk; nltk.download('all', download_dir='/usr/src
 
 #### Redis Setup
 # hadolint ignore=DL3008
-RUN apt-get install --no-install-recommends redis-server redis-tools -y && sed -i "s/bind .*/bind 127.0.0.1/g" /etc/redis/redis.conf
-
-# Clean Up
-RUN apt-get -y purge build-essential libqpdf-dev \
-    && apt-get -y autoremove --purge \
-    && rm -rf /var/lib/apt/lists/* 
+RUN sed -i "s/bind .*/bind 127.0.0.1/g" /etc/redis/redis.conf \
+    && apk del --no-cache --purge .build-dependencies
 
 # copy scripts
 # FROM ORIGINAL DOCKER FILE: this fixes issues with imagemagick and PDF
@@ -115,4 +144,31 @@ EXPOSE 8000
 
 CMD ["/usr/local/bin/supervisord", "-c", "/etc/supervisord.conf"]
 
-LABEL maintainer="Rudertier <Rudertiers@users.noreply.github.com>"
+# Build arguments
+ARG BUILD_ARCH
+ARG BUILD_DATE
+ARG BUILD_DESCRIPTION
+ARG BUILD_NAME
+ARG BUILD_REF
+ARG BUILD_REPOSITORY
+ARG BUILD_VERSION
+
+# Labels
+LABEL \
+    io.hass.name="${BUILD_NAME}" \
+    io.hass.description="${BUILD_DESCRIPTION}" \
+    io.hass.arch="${BUILD_ARCH}" \
+    io.hass.type="addon" \
+    io.hass.version=${BUILD_VERSION} \
+    maintainer="Benoit Anastay <45088785+BenoitAnastay@users.noreply.github.com>" \
+    org.opencontainers.image.title="${BUILD_NAME}" \
+    org.opencontainers.image.description="${BUILD_DESCRIPTION}" \
+    org.opencontainers.image.vendor="Benoit Anastay Custom Addon" \
+    org.opencontainers.image.authors="Benoit Anastay <45088785+BenoitAnastay@users.noreply.github.com>" \
+    org.opencontainers.image.licenses="MIT" \
+    org.opencontainers.image.url="https://github.com/paperless-ngx/paperless-ngx" \
+    org.opencontainers.image.source="https://github.com/${BUILD_REPOSITORY}" \
+    org.opencontainers.image.documentation="https://github.com/${BUILD_REPOSITORY}/blob/main/README.md" \
+    org.opencontainers.image.created=${BUILD_DATE} \
+    org.opencontainers.image.revision=${BUILD_REF} \
+    org.opencontainers.image.version=${BUILD_VERSION}

@@ -11,75 +11,54 @@ ENV TERM="xterm-256color"
 # Setup base
 ARG version=v1.17.4
 
-## WIP : Need to change repository to 3.15 and downgrade packages
-RUN \
-    echo "https://dl-cdn.alpinelinux.org/alpine/v3.15/main" > /etc/apk/repositories && \
-    echo "https://dl-cdn.alpinelinux.org/alpine/v3.15/community" >> /etc/apk/repositories
+# hadolint ignore=DL3003,DL3042,DL3018
+RUN apk add --no-cache \
+    gcc \
+        g++ \
+        gfortran \
+        musl \
+        musl-dev \
+        openblas-dev \
+        make \
+        python3 \
+        py3-pip \
+        python3-dev \
+        openblas \
+        qpdf \
+        ttf-liberation \
+        imagemagick \
+        gnupg \
+        file \
+        mailcap \
+        libmagic \
+        libzbar \
+        poppler-utils \
+        shared-mime-info \
+        unpaper \
+        ghostscript \
+        libxml2 \
+        libxslt \
+        libxml2-dev \
+        libxslt-dev \
+        pngquant \
+        zlib \
+        tesseract-ocr \
+        tesseract-ocr-data-fra \
+        tesseract-ocr-data-deu \
+        tesseract-ocr-data-ita \
+        tesseract-ocr-data-spa \
+        ocrmypdf \
+        redis \
+        supervisor \
+        mariadb-dev \
+        mariadb-connector-c-dev \
+        mariadb-connector-c \
+        freetype-dev \
+        libpq-dev \
+        qpdf-dev \
+        qpdf
 
-# hadolint ignore=DL3003,DL3042
-RUN \
-    apk update \
-    && apk add --no-cache musl=1.2.2-r9 \
-    && apk add --no-cache \
-        gcc=10.3.1_git20211027-r0 \
-        g++=10.3.1_git20211027-r0 \
-        gfortran=10.3.1_git20211027-r0 \
-        musl-dev=1.2.2-r9 \
-        openblas-dev=0.3.18-r1 \
-        make=4.3-r0	\
-        python3=3.9.18-r0 \
-        py3-pip=20.3.4-r1 \
-        python3-dev=3.9.18-r0 \
-        openblas=0.3.18-r1 \
-        qpdf=10.4.0-r0 \
-        ttf-liberation=2.00.5-r0 \
-        imagemagick=7.1.0.16-r0	\
-        gnupg=2.2.31-r2 \
-        file=5.41-r0 \
-        mailcap=2.1.54-r0 \
-        libmagic=5.41-r0 \
-        libzbar=0.23.90-r1 \
-        poppler-utils=21.11.0-r0 \
-        shared-mime-info=2.1-r2	\
-        unpaper=6.1-r2 \
-        ghostscript=9.55.0-r2 \
-        libxml2=2.9.14-r2 \
-        libxslt=1.1.35-r0 \
-        libxml2-dev=2.9.14-r2 \
-        libxslt-dev=1.1.35-r0 \
-        pngquant=2.16.0-r0 \
-        zlib=1.2.12-r3 \
-        tesseract-ocr=4.1.3-r0 \
-        tesseract-ocr-data-fra=4.1.3-r0	\
-        tesseract-ocr-data-deu=4.1.3-r0	\
-        tesseract-ocr-data-ita=4.1.3-r0	\
-        tesseract-ocr-data-spa=4.1.3-r0	\
-        ocrmypdf=12.7.1-r0 \
-        redis=6.2.13-r0 \
-        supervisor=4.2.2-r2 \
-        mariadb-dev=10.6.14-r0 \
-        mariadb-connector-c-dev=3.1.13-r2 \
-        mariadb-connector-c=3.1.13-r2 \
-        freetype-dev=2.11.1-r2 \
-        libpq-dev=14.9-r0
-
-## WIP : Need to change repository to 3.16 for qpdf
-RUN \
-    echo "https://dl-cdn.alpinelinux.org/alpine/v3.17/main" > /etc/apk/repositories && \
-    echo "https://dl-cdn.alpinelinux.org/alpine/v3.17/community" >> /etc/apk/repositories
-
-RUN \
-    apk update \
-    && apk add --no-cache \
-        qpdf-dev=11.2.0-r0 \
-        qpdf=11.2.0-r0
-
-## WIP : revert to 3.15 to avoid later issues 
-RUN \
-    echo "https://dl-cdn.alpinelinux.org/alpine/v3.15/main" > /etc/apk/repositories && \
-    echo "https://dl-cdn.alpinelinux.org/alpine/v3.15/community" >> /etc/apk/repositories
-
-RUN wget -q -O paperless.tar.xz https://github.com/paperless-ngx/paperless-ngx/releases/download/$version/paperless-ngx-$version.tar.xz \
+RUN wget -q -O paperless.tar.xz https://github.com/BenoitAnastay/paperless-ngx/releases/download/v1.17.4/paperless-ngx-v1.17.4.tar.xz \
     && tar -xf paperless.tar.xz \
     && mv paperless-ngx /opt/paperless
 
@@ -88,6 +67,8 @@ WORKDIR /opt/paperless
 # Install requirements
 # hadolint ignore=DL3013
 RUN pip3 install --no-cache-dir --upgrade pip \
+    && pip3 install --no-cache-dir --upgrade wheel \
+    && pip3 install --no-cache-dir https://files.pythonhosted.org/packages/26/b5/9330f004b9a3b2b6a31f59f46f1617ce9ca15c0e7fe64288c20385a05c9d/scipy-1.8.1.tar.gz
     && pip3 install --no-cache-dir --ignore-installed -r requirements.txt
 
 

@@ -45,6 +45,8 @@ RUN \
         ghostscript=9.55.0-r2 \
         libxml2=2.9.14-r2 \
         libxslt=1.1.35-r0 \
+        libxml2-dev=2.9.14-r2 \
+        libxslt-dev=1.1.35-r0 \
         pngquant=2.16.0-r0 \
         zlib=1.2.12-r3 \
         tesseract-ocr=4.1.3-r0 \

@@ -88,7 +88,7 @@ WORKDIR /opt/paperless
 # Install requirements
 # hadolint ignore=DL3013
 RUN pip3 install --no-cache-dir --upgrade pip \
-    && pip3 install --no-cache-dir -r requirements.txt
+    && pip3 install --no-cache-dir --ignore-installed -r requirements.txt
 
 
 # Download NLTK Stopwords

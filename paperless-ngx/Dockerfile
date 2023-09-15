@@ -80,7 +80,7 @@ RUN \
     echo "https://dl-cdn.alpinelinux.org/alpine/v3.15/community" >> /etc/apk/repositories
 
 RUN wget -q -O paperless.tar.xz https://github.com/paperless-ngx/paperless-ngx/releases/download/$version/paperless-ngx-$version.tar.xz \
-    && tar -xf paperless-ngx.tar.xz \
+    && tar -xf paperless.tar.xz \
     && mv paperless-ngx /opt/paperless
 
 WORKDIR /opt/paperless

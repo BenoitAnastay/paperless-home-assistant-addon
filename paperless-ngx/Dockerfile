@@ -28,6 +28,7 @@ RUN \
         musl-dev=1.2.2-r9 \
         libpq-dev=14.9-r0 \
         mariadb-dev=10.6.14-r0 \
+        mariadb-connector-c-dev=3.1.13-r2 \
         openblas-dev=0.3.18-r1 \
         qpdf-dev=10.4.0-r0 \
         make=4.3-r0	\

@@ -20,16 +20,13 @@ RUN \
 RUN \
     apk update \
     && apk add --no-cache musl=1.2.2-r9 \
-    && apk add --no-cache --virtual .build-dependencies \
-        freetype-dev=2.11.1-r2 \
+    && apk add --no-cache \
         gcc=10.3.1_git20211027-r0 \
         g++=10.3.1_git20211027-r0 \
         gfortran=10.3.1_git20211027-r0 \
         musl-dev=1.2.2-r9 \
         openblas-dev=0.3.18-r1 \
-        qpdf-dev=10.4.0-r0 \
         make=4.3-r0	\
-    && apk add --no-cache \
         python3=3.9.18-r0 \
         py3-pip=20.3.4-r1 \
         python3-dev=3.9.18-r0 \
@@ -61,6 +58,7 @@ RUN \
         mariadb-dev=10.6.14-r0 \
         mariadb-connector-c-dev=3.1.13-r2 \
         mariadb-connector-c=3.1.13-r2 \
+        freetype-dev=2.11.1-r2 \
         libpq-dev=14.9-r0
 
 ## WIP : Need to change repository to 3.16 for qpdf

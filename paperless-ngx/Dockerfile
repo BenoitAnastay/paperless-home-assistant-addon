@@ -26,9 +26,6 @@ RUN \
         g++=10.3.1_git20211027-r0 \
         gfortran=10.3.1_git20211027-r0 \
         musl-dev=1.2.2-r9 \
-        libpq-dev=14.9-r0 \
-        mariadb-dev=10.6.14-r0 \
-        mariadb-connector-c-dev=3.1.13-r2 \
         openblas-dev=0.3.18-r1 \
         qpdf-dev=10.4.0-r0 \
         make=4.3-r0	\
@@ -60,7 +57,11 @@ RUN \
         tesseract-ocr-data-spa=4.1.3-r0	\
         ocrmypdf=12.7.1-r0 \
         redis=6.2.13-r0 \
-        supervisor=4.2.2-r2
+        supervisor=4.2.2-r2 \
+        mariadb-dev=10.6.14-r0 \
+        mariadb-connector-c-dev=3.1.13-r2 \
+        mariadb-connector-c=3.1.13-r2 \
+        libpq-dev=14.9-r0
 
 ## WIP : Need to change repository to 3.16 for qpdf
 RUN \
@@ -69,7 +70,6 @@ RUN \
 
 RUN \
     apk update \
-    && apk add --no-cache musl=1.2.2-r9 \
     && apk add --no-cache --virtual .build-dependencies \
         qpdf-dev=10.6.3-r0 \
     && apk add --no-cache \

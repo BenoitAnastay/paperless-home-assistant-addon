@@ -65,15 +65,15 @@ RUN \
 
 ## WIP : Need to change repository to 3.16 for qpdf
 RUN \
-    echo "https://dl-cdn.alpinelinux.org/alpine/v3.16/main" > /etc/apk/repositories && \
-    echo "https://dl-cdn.alpinelinux.org/alpine/v3.16/community" >> /etc/apk/repositories
+    echo "https://dl-cdn.alpinelinux.org/alpine/v3.18/main" > /etc/apk/repositories && \
+    echo "https://dl-cdn.alpinelinux.org/alpine/v3.18/community" >> /etc/apk/repositories
 
 RUN \
     apk update \
     && apk add --no-cache --virtual .build-dependencies \
-        qpdf-dev=10.6.3-r0 \
+        qpdf-dev=11.3.0-r0 \
     && apk add --no-cache \
-        qpdf=10.6.3-r0
+        qpdf=11.3.0-r0
 
 ## WIP : revert to 3.15 to avoid later issues 
 RUN \

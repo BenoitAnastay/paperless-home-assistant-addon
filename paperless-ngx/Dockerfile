@@ -68,7 +68,7 @@ WORKDIR /opt/paperless
 # hadolint ignore=DL3013
 RUN pip3 install --no-cache-dir --upgrade pip \
     && pip3 install --no-cache-dir --upgrade wheel \
-    && pip3 install --no-cache-dir https://files.pythonhosted.org/packages/26/b5/9330f004b9a3b2b6a31f59f46f1617ce9ca15c0e7fe64288c20385a05c9d/scipy-1.8.1.tar.gz
+    && pip3 install --no-cache-dir https://files.pythonhosted.org/packages/26/b5/9330f004b9a3b2b6a31f59f46f1617ce9ca15c0e7fe64288c20385a05c9d/scipy-1.8.1.tar.gz \
     && pip3 install --no-cache-dir --ignore-installed -r requirements.txt
 
 

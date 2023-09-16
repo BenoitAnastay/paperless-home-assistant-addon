@@ -106,7 +106,11 @@ initialize() {
 	done
 	set -e
 
-	"${gosu_cmd[@]}" /sbin/docker-prepare.sh
+	if [ "$(id -u)" == "$(id -u paperless)" ]; then
+		/sbin/docker-prepare.sh
+	else
+		exec su paperless -c "/sbin/docker-prepare.sh"
+	fi
 
 	# Leave this last thing
 	custom_container_init

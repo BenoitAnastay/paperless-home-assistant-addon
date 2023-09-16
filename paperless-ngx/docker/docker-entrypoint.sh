@@ -122,23 +122,23 @@ install_languages() {
 	if [ ${#langs[@]} -eq 0 ]; then
 		return
 	fi
-	apt-get update
+	apk update
 
 	for lang in "${langs[@]}"; do
-		pkg="tesseract-ocr-$lang"
+		pkg="tesseract-ocr-data-$lang"
 
-		if dpkg -s "$pkg" &>/dev/null; then
+		if apk list -I | grep "$pkg" &>/dev/null; then
 			echo "Package $pkg already installed!"
 			continue
 		fi
 
-		if ! apt-cache show "$pkg" &>/dev/null; then
+		if ! apk list | grep "$pkg" &>/dev/null; then
 			echo "Package $pkg not found! :("
 			continue
 		fi
 
 		echo "Installing package $pkg..."
-		if ! apt-get -y install "$pkg" &>/dev/null; then
+		if ! apk add "$pkg" &>/dev/null; then
 			echo "Could not install $pkg"
 			exit 1
 		fi
@@ -146,11 +146,6 @@ install_languages() {
 }
 
 echo "Paperless-ngx docker container starting..."
-
-gosu_cmd=(gosu paperless)
-if [ "$(id -u)" == "$(id -u paperless)" ]; then
-	gosu_cmd=()
-fi
 
 # Install additional languages if specified
 if [[ -n "$PAPERLESS_OCR_LANGUAGES" ]]; then
@@ -161,7 +156,11 @@ initialize
 
 if [[ "$1" != "/"* ]]; then
 	echo Executing management command "$@"
-	exec "${gosu_cmd[@]}" python3 manage.py "$@"
+	if [ "$(id -u)" == "$(id -u paperless)" ]; then
+		exec python3 manage.py "$@"
+	else
+		exec su paperless -c "python3 manage.py $*"
+	fi
 else
 	echo Executing "$@"
 	exec "$@"

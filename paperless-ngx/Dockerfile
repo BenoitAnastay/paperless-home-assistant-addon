@@ -58,14 +58,15 @@ RUN set -eux \
         libpq-dev \
         qpdf-dev \
         qpdf \
+        gettext \
     && echo "Installing supervisor" \
         && python3 -m pip install --default-timeout=1000 --upgrade --no-cache-dir supervisor==4.2.5
 
 RUN wget -q -O paperless.tar.xz https://github.com/BenoitAnastay/paperless-ngx/releases/download/v1.17.4/paperless-ngx-v1.17.4.tar.xz \
     && tar -xf paperless.tar.xz \
-    && mv paperless-ngx /opt/paperless
+    && mv paperless-ngx /usr/src/paperless
 
-WORKDIR /opt/paperless
+WORKDIR /usr/src/paperless
 
 # Install requirements
 # hadolint ignore=DL3013
@@ -78,7 +79,7 @@ RUN pip3 install --no-cache-dir --upgrade pip \
     && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" stopwords \
     && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" punkt
 
-WORKDIR /opt/paperless/docker/
+WORKDIR /usr/src/paperless/docker/
 
 COPY [ \
   "docker/imagemagick-policy.xml", \
@@ -117,21 +118,16 @@ RUN set -eux \
     && chmod +x install_management_commands.sh \
     && ./install_management_commands.sh
 
-WORKDIR /opt/paperless/
+WORKDIR /usr/src/paperless/src/
 
 RUN set -eux \
   && addgroup --gid 1000 paperless \
-  && adduser -D -u 1000 -G paperless -h /opt/paperless/ paperless \
-  && chown -R paperless:paperless /opt/paperless/ \
-  && gosu paperless python3 manage.py collectstatic --clear --no-input --link \
-  && gosu paperless python3 manage.py compilemessages
-
-WORKDIR /opt/paperless/src/
+  && adduser -D -u 1000 -G paperless -h /usr/src/paperless/ paperless \
+  && chown -R paperless:paperless /usr/src/paperless/ \
+  && su paperless -c "python3 manage.py collectstatic --clear --no-input --link" \
+  && su paperless -c "python3 manage.py compilemessages"
 
 ENV PAPERLESS_REDIS="redis://localhost:6379"
-
-RUN paperless python3 manage.py collectstatic --clear --no-input \
-    && paperless python3 manage.py compilemessages
 
 
 VOLUME ["/usr/src/paperless/data", \

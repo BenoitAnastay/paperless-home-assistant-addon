@@ -78,7 +78,7 @@ RUN pip3 install --no-cache-dir --upgrade pip \
     && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" stopwords \
     && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" punkt
 
-WORKDIR /usr/src/paperless/src/docker/
+WORKDIR /opt/paperless/docker/
 
 COPY [ \
   "docker/imagemagick-policy.xml", \
@@ -117,16 +117,16 @@ RUN set -eux \
     && chmod +x install_management_commands.sh \
     && ./install_management_commands.sh
 
-WORKDIR /usr/src/paperless
+WORKDIR /opt/paperless/
 
 RUN set -eux \
   && addgroup --gid 1000 paperless \
-  && useradd --uid 1000 --gid paperless --home-dir /usr/src/paperless paperless \
-  && chown -R paperless:paperless /usr/src/paperless \
+  && adduser -D -u 1000 -G paperless -h /opt/paperless/ paperless \
+  && chown -R paperless:paperless /opt/paperless/ \
   && gosu paperless python3 manage.py collectstatic --clear --no-input --link \
   && gosu paperless python3 manage.py compilemessages
 
-WORKDIR /usr/src/paperless/src/
+WORKDIR /opt/paperless/src/
 
 ENV PAPERLESS_REDIS="redis://localhost:6379"
 

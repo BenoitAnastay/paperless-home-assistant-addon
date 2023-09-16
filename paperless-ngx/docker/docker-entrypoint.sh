@@ -122,23 +122,23 @@ install_languages() {
 	if [ ${#langs[@]} -eq 0 ]; then
 		return
 	fi
-	apk update
+	apt-get update
 
 	for lang in "${langs[@]}"; do
-		pkg="tesseract-ocr-data-$lang"
+		pkg="tesseract-ocr-$lang"
 
-		if apk info -vv | grep \'"$pkg"\' &>/dev/null; then
+		if dpkg -s "$pkg" &>/dev/null; then
 			echo "Package $pkg already installed!"
 			continue
 		fi
 
-		if ! apk search "$pkg" &>/dev/null; then
+		if ! apt-cache show "$pkg" &>/dev/null; then
 			echo "Package $pkg not found! :("
 			continue
 		fi
 
 		echo "Installing package $pkg..."
-		if ! apk install "$pkg" &>/dev/null; then
+		if ! apt-get -y install "$pkg" &>/dev/null; then
 			echo "Could not install $pkg"
 			exit 1
 		fi

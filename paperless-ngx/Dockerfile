@@ -12,8 +12,10 @@ ENV TERM="xterm-256color"
 ARG version=v1.17.4
 
 # hadolint ignore=DL3003,DL3042,DL3018
-RUN apk add --no-cache \
-    gcc \
+RUN set -eux \
+  echo "Installing system packages" \
+    && apk add --no-cache \
+        gcc \
         g++ \
         gfortran \
         musl \
@@ -55,7 +57,9 @@ RUN apk add --no-cache \
         freetype-dev \
         libpq-dev \
         qpdf-dev \
-        qpdf
+        qpdf \
+    && echo "Installing supervisor" \
+        && python3 -m pip install --default-timeout=1000 --upgrade --no-cache-dir supervisor==4.2.5
 
 RUN wget -q -O paperless.tar.xz https://github.com/BenoitAnastay/paperless-ngx/releases/download/v1.17.4/paperless-ngx-v1.17.4.tar.xz \
     && tar -xf paperless.tar.xz \
@@ -67,38 +71,60 @@ WORKDIR /opt/paperless
 # hadolint ignore=DL3013
 RUN pip3 install --no-cache-dir --upgrade pip \
     && pip3 install --no-cache-dir --upgrade wheel \
-    && pip3 install --no-cache-dir --ignore-installed -r requirements.txt
+    echo "Installing Python requirements" \
+    && pip3 install --no-cache-dir --default-timeout=1000 --requirement requirements.txt \
+    && echo "Installing NLTK data" \
+    && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" snowball_data \
+    && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" stopwords \
+    && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" punkt
 
+WORKDIR /usr/src/paperless/src/docker/
 
-# Download NLTK Stopwords
-RUN mkdir -p /usr/src/paperless/nltk
-ENV PAPERLESS_NLTK_DIR="/usr/src/paperless/nltk"
-# hadolint ignore=SC1072
-RUN [ "python3", "-c", "import nltk; nltk.download('all', download_dir='/usr/src/paperless/nltk')" ]
+COPY [ \
+  "docker/imagemagick-policy.xml", \
+  "docker/supervisord.conf", \
+  "docker/docker-entrypoint.sh", \
+  "docker/docker-prepare.sh", \
+  "docker/paperless_cmd.sh", \
+  "docker/wait-for-redis.py", \
+  "docker/env-from-file.sh", \
+  "docker/management_script.sh", \
+  "docker/flower-conditional.sh", \
+  "docker/install_management_commands.sh", \
+  "/usr/src/paperless/src/docker/" \
+]
 
-#### Redis Setup
-# hadolint ignore=DL3008
-RUN sed -i "s/bind .*/bind 127.0.0.1/g" /etc/redis/redis.conf \
-    && apk del --no-cache --purge .build-dependencies
-
-# copy scripts
-# FROM ORIGINAL DOCKER FILE: this fixes issues with imagemagick and PDF
-RUN cp docker/imagemagick-policy.xml /etc/ImageMagick-6/policy.xml \
-    && cp gunicorn.conf.py /usr/src/paperless \
-    && cp docker/supervisord.conf /etc/supervisord.conf
-
-# RUN cp docker/docker-entrypoint.sh /sbin/docker-entrypoint.sh
-COPY scripts/docker-entrypoint.sh /sbin/docker-entrypoint.sh
-COPY scripts/docker-prepare.sh /sbin/docker-prepare.sh
-
+RUN set -eux \
+  && echo "Configuring ImageMagick" \
+    && mv imagemagick-policy.xml /etc/ImageMagick-6/policy.xml \
+  && echo "Configuring supervisord" \
+    && mkdir /var/log/supervisord /var/run/supervisord \
+    && mv supervisord.conf /etc/supervisord.conf \
+  && echo "Setting up Docker scripts" \
+    && mv docker-entrypoint.sh /sbin/docker-entrypoint.sh \
+    && chmod 755 /sbin/docker-entrypoint.sh \
+    && mv docker-prepare.sh /sbin/docker-prepare.sh \
+    && chmod 755 /sbin/docker-prepare.sh \
+    && mv wait-for-redis.py /sbin/wait-for-redis.py \
+    && chmod 755 /sbin/wait-for-redis.py \
+    && mv env-from-file.sh /sbin/env-from-file.sh \
+    && chmod 755 /sbin/env-from-file.sh \
+    && mv paperless_cmd.sh /usr/local/bin/paperless_cmd.sh \
+    && chmod 755 /usr/local/bin/paperless_cmd.sh \
+    && mv flower-conditional.sh /usr/local/bin/flower-conditional.sh \
+    && chmod 755 /usr/local/bin/flower-conditional.sh \
+  && echo "Installing managment commands" \
+    && chmod +x install_management_commands.sh \
+    && ./install_management_commands.sh
 
 WORKDIR /usr/src/paperless
 
-# add users, setup scripts
-RUN addgroup --gid 1000 paperless \
-    && useradd --uid 1000 --gid paperless --home-dir /usr/src/paperless paperless \
-    && chown -R paperless:paperless . \
-    && chmod 755 /sbin/docker-entrypoint.sh
+RUN set -eux \
+  && addgroup --gid 1000 paperless \
+  && useradd --uid 1000 --gid paperless --home-dir /usr/src/paperless paperless \
+  && chown -R paperless:paperless /usr/src/paperless \
+  && gosu paperless python3 manage.py collectstatic --clear --no-input --link \
+  && gosu paperless python3 manage.py compilemessages
 
 WORKDIR /usr/src/paperless/src/
 
@@ -111,14 +137,16 @@ RUN paperless python3 manage.py collectstatic --clear --no-input \
     && paperless python3 manage.py compilemessages
 
 
-VOLUME ["/usr/src/paperless/data", "/usr/src/paperless/media", "/usr/src/paperless/consume", "/usr/src/paperless/export"]
+VOLUME ["/usr/src/paperless/data", \
+        "/usr/src/paperless/media", \
+        "/usr/src/paperless/consume", \
+        "/usr/src/paperless/export"]
 
-COPY scripts/setup_superuser.py scripts/setup_superuser.py
-ENTRYPOINT ["/bin/bash", "/sbin/docker-entrypoint.sh"]
+ENTRYPOINT ["/sbin/docker-entrypoint.sh"]
+
 EXPOSE 8000
 
-
-CMD ["/usr/local/bin/supervisord", "-c", "/etc/supervisord.conf"]
+CMD ["/usr/local/bin/paperless_cmd.sh"]
 
 # Build arguments
 ARG BUILD_ARCH

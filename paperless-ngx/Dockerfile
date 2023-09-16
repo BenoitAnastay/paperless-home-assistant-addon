@@ -130,9 +130,6 @@ WORKDIR /usr/src/paperless/src/
 
 ENV PAPERLESS_REDIS="redis://localhost:6379"
 
-COPY scripts/wait-for-redis.sh scripts/wait-for-redis.sh
-RUN chmod +x scripts/wait-for-redis.sh
-
 RUN paperless python3 manage.py collectstatic --clear --no-input \
     && paperless python3 manage.py compilemessages
 

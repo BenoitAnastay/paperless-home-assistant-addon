@@ -71,7 +71,7 @@ WORKDIR /opt/paperless
 # hadolint ignore=DL3013
 RUN pip3 install --no-cache-dir --upgrade pip \
     && pip3 install --no-cache-dir --upgrade wheel \
-    echo "Installing Python requirements" \
+    && echo "Installing Python requirements" \
     && pip3 install --no-cache-dir --default-timeout=1000 --requirement requirements.txt \
     && echo "Installing NLTK data" \
     && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" snowball_data \

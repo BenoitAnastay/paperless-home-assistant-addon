@@ -96,7 +96,7 @@ COPY [ \
 
 RUN set -eux \
   && echo "Configuring ImageMagick" \
-    && mv imagemagick-policy.xml /etc/ImageMagick-6/policy.xml \
+    && mv imagemagick-policy.xml /etc/ImageMagick-7/policy.xml \
   && echo "Configuring supervisord" \
     && mkdir /var/log/supervisord /var/run/supervisord \
     && mv supervisord.conf /etc/supervisord.conf \

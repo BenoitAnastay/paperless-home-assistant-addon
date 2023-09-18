@@ -59,6 +59,7 @@ RUN set -eux \
         qpdf-dev \
         qpdf \
         gettext \
+        linux-headers \
     && echo "Installing supervisor" \
         && python3 -m pip install --default-timeout=1000 --upgrade --no-cache-dir supervisor==4.2.5
 

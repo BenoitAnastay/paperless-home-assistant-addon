@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base:14.1.0
+ARG BUILD_FROM=ghcr.io/hassio-addons/debian-base:7.1.0
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -11,59 +11,62 @@ ENV TERM="xterm-256color"
 # Setup base
 ARG version=v1.17.4
 
-# hadolint ignore=DL3003,DL3042,DL3018
+# Packages need for running
+ARG RUNTIME_PACKAGES="\
+  # General utils
+  curl \
+  # Docker specific
+  gosu \
+  # Timezones support
+  tzdata \
+  # fonts for text file thumbnail generation
+  fonts-liberation \
+  gettext \
+  ghostscript \
+  gnupg \
+  icc-profiles-free \
+  imagemagick \
+  # PostgreSQL
+  libpq5 \
+  postgresql-client \
+  # MySQL / MariaDB
+  mariadb-client \
+  # OCRmyPDF dependencies
+  tesseract-ocr \
+  tesseract-ocr-eng \
+  tesseract-ocr-deu \
+  tesseract-ocr-fra \
+  tesseract-ocr-ita \
+  tesseract-ocr-spa \
+  unpaper \
+  pngquant \
+  jbig2dec \
+  # lxml
+  libxml2 \
+  libxslt1.1 \
+  # itself
+  qpdf \
+  # Mime type detection
+  file \
+  libmagic1 \
+  media-types \
+  zlib1g \
+  # Barcode splitter
+  libzbar0 \
+  poppler-utils"
+
+# Install basic runtime packages.
+# These change very infrequently
+# hadolint ignore=DL3003,DL3042,DL3008
 RUN set -eux \
   echo "Installing system packages" \
-    && apk add --no-cache \
-        gcc \
-        g++ \
-        gfortran \
-        musl \
-        musl-dev \
-        openblas-dev \
-        make \
-        python3 \
-        py3-pip \
-        python3-dev \
-        openblas \
-        ttf-liberation \
-        imagemagick \
-        gnupg \
-        file \
-        mailcap \
-        libmagic \
-        libzbar \
-        poppler-utils \
-        shared-mime-info \
-        unpaper \
-        ghostscript \
-        libxml2 \
-        libxslt \
-        libxml2-dev \
-        libxslt-dev \
-        pngquant \
-        zlib \
-        tesseract-ocr \
-        tesseract-ocr-data-fra \
-        tesseract-ocr-data-deu \
-        tesseract-ocr-data-ita \
-        tesseract-ocr-data-spa \
-        ocrmypdf \
-        redis \
-        supervisor \
-        mariadb-dev \
-        mariadb-connector-c-dev \
-        mariadb-connector-c \
-        freetype-dev \
-        libpq-dev \
-        qpdf-dev \
-        qpdf \
-        gettext \
-        linux-headers \
-    && echo "Installing supervisor" \
-        && python3 -m pip install --default-timeout=1000 --upgrade --no-cache-dir supervisor==4.2.5
-
-RUN mkdir /usr/src \
+    && apt-get update \
+    && apt-get install --yes --quiet --no-install-recommends ${RUNTIME_PACKAGES} \
+    && rm -rf /var/lib/apt/lists/* \
+  && echo "Installing supervisor" \
+    && python3 -m pip install --default-timeout=1000 --upgrade --no-cache-dir supervisor==4.2.5 \
+  && echo "Download Paperless-ngx" \
+    && mkdir /usr/src \
     && wget -q -O paperless.tar.xz https://github.com/BenoitAnastay/paperless-ngx/releases/download/v1.17.4/paperless-ngx-v1.17.4.tar.xz \
     && tar -xf paperless.tar.xz \
     && mv paperless-ngx /usr/src/paperless
@@ -82,20 +85,6 @@ RUN pip3 install --no-cache-dir --upgrade pip \
     && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" punkt
 
 WORKDIR /usr/src/paperless/docker/
-
-COPY [ \
-  "docker/imagemagick-policy.xml", \
-  "docker/supervisord.conf", \
-  "docker/docker-entrypoint.sh", \
-  "docker/docker-prepare.sh", \
-  "docker/paperless_cmd.sh", \
-  "docker/wait-for-redis.py", \
-  "docker/env-from-file.sh", \
-  "docker/management_script.sh", \
-  "docker/flower-conditional.sh", \
-  "docker/install_management_commands.sh", \
-  "/usr/src/paperless/src/docker/" \
-]
 
 RUN set -eux \
   && echo "Configuring ImageMagick" \

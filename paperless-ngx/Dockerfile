@@ -53,7 +53,10 @@ ARG RUNTIME_PACKAGES="\
   zlib1g \
   # Barcode splitter
   libzbar0 \
-  poppler-utils"
+  poppler-utils \
+  python3 \
+  python3-pip \
+  python3-dev"
 
 # Install basic runtime packages.
 # These change very infrequently

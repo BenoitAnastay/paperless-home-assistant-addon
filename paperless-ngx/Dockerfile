@@ -71,7 +71,6 @@ RUN set -eux \
     && rm /usr/lib/python3.11/EXTERNALLY-MANAGED \
     && python3 -m pip install --default-timeout=1000 --upgrade --no-cache-dir supervisor==4.2.5 \
   && echo "Download Paperless-ngx" \
-    && mkdir /usr/src \
     && wget -q -O paperless.tar.xz https://github.com/BenoitAnastay/paperless-ngx/releases/download/v1.17.4/paperless-ngx-v1.17.4.tar.xz \
     && tar -xf paperless.tar.xz \
     && mv paperless-ngx /usr/src/paperless

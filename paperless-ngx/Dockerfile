@@ -73,16 +73,39 @@ RUN set -eux \
 
 WORKDIR /usr/src/paperless
 
+# Packages needed only for building a few quick Python
+# dependencies
+ARG BUILD_PACKAGES="\
+  build-essential \
+  git \
+  # https://www.psycopg.org/docs/install.html#prerequisites
+  libpq-dev \
+  # https://github.com/PyMySQL/mysqlclient#linux
+  default-libmysqlclient-dev \
+  pkg-config"
+
 # Install requirements
-# hadolint ignore=DL3013
-RUN pip3 install --no-cache-dir --upgrade pip \
-    && pip3 install --no-cache-dir --upgrade wheel \
-    && echo "Installing Python requirements" \
-    && pip3 install --no-cache-dir --default-timeout=1000 --requirement requirements.txt \
-    && echo "Installing NLTK data" \
+# hadolint ignore=DL3042,DL3008,DL3013
+RUN --mount=type=cache,target=/root/.cache/pip/,id=pip-cache \
+  set -eux \
+  && echo "Installing build system packages" \
+    && apt-get update \
+    && apt-get install --yes --quiet --no-install-recommends ${BUILD_PACKAGES} \
+    && python3 -m pip install --no-cache-dir --upgrade wheel \
+  && echo "Installing Python requirements" \
+    && python3 -m pip install --default-timeout=1000 --requirement requirements.txt \
+  && echo "Installing NLTK data" \
     && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" snowball_data \
     && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" stopwords \
-    && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" punkt
+    && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" punkt \
+  && echo "Cleaning up image" \
+    && apt-get -y purge ${BUILD_PACKAGES} \
+    && apt-get -y autoremove --purge \
+    && apt-get clean --yes \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /tmp/* \
+    && rm -rf /var/tmp/* \
+    && rm -rf /var/cache/apt/archives/
 
 WORKDIR /usr/src/paperless/docker/
 
@@ -111,12 +134,14 @@ RUN set -eux \
 
 WORKDIR /usr/src/paperless/src/
 
+# add users, setup scripts
+# Mount the compiled frontend to expected location
 RUN set -eux \
   && addgroup --gid 1000 paperless \
-  && adduser -D -u 1000 -G paperless -h /usr/src/paperless/ paperless \
-  && chown -R paperless:paperless /usr/src/paperless/ \
-  && su paperless -c "python3 manage.py collectstatic --clear --no-input --link" \
-  && su paperless -c "python3 manage.py compilemessages"
+  && useradd --uid 1000 --gid paperless --home-dir /usr/src/paperless paperless \
+  && chown -R paperless:paperless /usr/src/paperless \
+  && gosu paperless python3 manage.py collectstatic --clear --no-input --link \
+  && gosu paperless python3 manage.py compilemessages
 
 ENV PAPERLESS_REDIS="redis://localhost:6379"
 

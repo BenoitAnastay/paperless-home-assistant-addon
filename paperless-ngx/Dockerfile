@@ -56,7 +56,8 @@ ARG RUNTIME_PACKAGES="\
   poppler-utils \
   python3 \
   python3-pip \
-  python3-dev"
+  python3-dev \
+  python3-full"
 
 # Install basic runtime packages.
 # These change very infrequently

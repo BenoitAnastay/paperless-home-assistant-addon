@@ -58,7 +58,8 @@ ARG RUNTIME_PACKAGES="\
   python3-pip \
   python3-dev \
   python3-full \
-  wget"
+  wget \
+  xz-utils"
 
 # Install basic runtime packages.
 # These change very infrequently

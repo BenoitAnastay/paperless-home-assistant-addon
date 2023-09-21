@@ -1,7 +1,7 @@
 {
   "name": "Paperless-ngx",
   "version": "dev",
-  "slug": "paperless",
+  "slug": "paperless-ngx",
   "url": "https://github.com/paperless-ngx/paperless-ngx",
   "description": "Paperless is an application that manages your personal documents. With the help of a document scanner, paperless transforms your wieldy physical document binders into a searchable archive and provides many utilities for finding and managing your documents.",
   "webui": "http://[HOST]:[PORT:8000]",

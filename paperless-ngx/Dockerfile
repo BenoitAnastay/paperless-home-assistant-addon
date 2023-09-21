@@ -157,6 +157,8 @@ VOLUME ["/usr/src/paperless/data", \
         "/usr/src/paperless/consume", \
         "/usr/src/paperless/export"]
 
+COPY docker/env.sh /sbin/env-from-file.sh
+
 ENTRYPOINT ["/sbin/docker-entrypoint.sh"]
 
 EXPOSE 8000

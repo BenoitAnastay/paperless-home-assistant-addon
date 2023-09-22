@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2086
 
+#start redis
+redis-server --daemonize yes
+
 # Replace env 
 
 set -eu

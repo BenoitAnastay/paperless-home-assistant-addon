@@ -59,7 +59,9 @@ ARG RUNTIME_PACKAGES="\
   python3-dev \
   python3-full \
   wget \
-  xz-utils"
+  xz-utils \
+  redis-server \
+  redis-tools"
 
 # Install basic runtime packages.
 # These change very infrequently
@@ -150,7 +152,7 @@ RUN set -eux \
   && gosu paperless python3 manage.py compilemessages
 
 ENV PAPERLESS_REDIS="redis://localhost:6379"
-
+RUN sed -i "s/bind .*/bind 127.0.0.1/g" /etc/redis/redis.conf
 
 VOLUME ["/usr/src/paperless/data", \
         "/usr/src/paperless/media", \

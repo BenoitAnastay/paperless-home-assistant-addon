@@ -4,6 +4,7 @@
 # Replace env 
 
 set -eu
+CONFIG_PATH=/data/options.json
 
 PAPERLESS_URL=$(jq --raw-output ".url // empty" $CONFIG_PATH)
 PAPERLESS_FILENAME_FORMAT=$(jq --raw-output ".filename.format" $CONFIG_PATH)

@@ -14,54 +14,54 @@ ARG version=v1.17.4
 # Packages need for running
 ARG RUNTIME_PACKAGES="\
   # General utils
-  curl \
+  curl=7.88.1-10+deb12u1 \
   # Docker specific
-  gosu \
+  gosu=1.14-1+b6 \
   # Timezones support
-  tzdata \
+  tzdata=2023c-5 \
   # fonts for text file thumbnail generation
-  fonts-liberation \
-  gettext \
-  ghostscript \
-  gnupg \
-  icc-profiles-free \
-  imagemagick \
+  fonts-liberation=1:1.07.4-11 \
+  gettext=0.21-12 \
+  ghostscript=10.0.0~dfsg-11+deb12u1 \
+  gnupg=2.2.40-1.1 \
+  icc-profiles-free=2.0.1+dfsg-1.1 \
+  imagemagick=8:6.9.11.60+dfsg-1.6 \
   # PostgreSQL
-  libpq5 \
-  postgresql-client \
+  libpq5=15.3-0+deb12u1 \
+  postgresql-client=15+248 \
   # MySQL / MariaDB
-  mariadb-client \
+  mariadb-client=1:10.11.3-1 \
   # OCRmyPDF dependencies
-  tesseract-ocr \
-  tesseract-ocr-eng \
-  tesseract-ocr-deu \
-  tesseract-ocr-fra \
-  tesseract-ocr-ita \
-  tesseract-ocr-spa \
-  unpaper \
-  pngquant \
-  jbig2dec \
+  tesseract-ocr=5.3.0-2 \
+  tesseract-ocr-eng=1:4.1.0-2 \
+  tesseract-ocr-deu=1:4.1.0-2 \
+  tesseract-ocr-fra=1:4.1.0-2 \
+  tesseract-ocr-ita=1:4.1.0-2 \
+  tesseract-ocr-spa=1:4.1.0-2 \
+  unpaper=7.0.0-0.1 \
+  pngquant=2.17.0-1 \
+  jbig2dec=0.19-3 \
   # lxml
-  libxml2 \
-  libxslt1.1 \
+  libxml2=2.9.14+dfsg-1.3~deb12u1 \
+  libxslt1.1=1.1.35-1 \
   # itself
-  qpdf \
+  qpdf=11.3.0-1 \
   # Mime type detection
-  file \
-  libmagic1 \
-  media-types \
-  zlib1g \
+  file=1:5.44-3 \
+  libmagic1=1:5.44-3 \
+  media-types=10.0.0 \
+  zlib1g=1:1.2.13.dfsg-1 \
   # Barcode splitter
-  libzbar0 \
-  poppler-utils \
-  python3 \
-  python3-pip \
-  python3-dev \
-  python3-full \
-  wget \
-  xz-utils \
-  redis-server \
-  redis-tools"
+  libzbar0=0.23.92-7 \
+  poppler-utils=22.12.0-2+b1 \
+  python3=3.11.2-1+b1 \
+  python3-pip=23.0.1+dfsg-1 \
+  python3-dev=3.11.2-1+b1 \
+  python3-full=3.11.2-1+b1 \
+  wget=1.21.3-1+b1 \
+  xz-utils=5.4.1-0.2 \
+  redis-server=5:7.0.11-1 \
+  redis-tools=5:7.0.11-1"
 
 # Install basic runtime packages.
 # These change very infrequently

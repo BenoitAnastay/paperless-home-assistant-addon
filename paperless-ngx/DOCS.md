@@ -15,6 +15,7 @@ comparison to installing any other Home Assistant add-on.
 1. Click the "Install" button to install the add-on.
 1. Start the "Paperless-ngx" add-on.
 1. Check the logs of the "Paperless-ngx" add-on to see it in action.
+
 ## File Storage
 
 All the files are stored in the `share/paperless` directory. This includes the `consume` directory as well as the `data` and `media` directories. Files added into `consume` will be ingested by Paperless.

@@ -10,15 +10,15 @@ description: Paperless is an application that manages your personal documents. W
 webui: http://[HOST]:[PORT:8000]
 stage: experimental
 arch:
-- aarch64
-- amd64
+  - aarch64
+  - amd64
 startup: system
 ports:
   8000/tcp: 8000
 ports_description:
   8000/tcp: Web interface
 map:
-- share:rw
+  - share:rw
 options:
   filename: "{created_year}/{correspondent}/{title}"
   language: eng

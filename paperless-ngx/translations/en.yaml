@@ -1,0 +1,15 @@
+---
+configuration:
+  filename:
+    name: Filename
+    description: Default file format
+  language:
+    name: Language
+    description: >-
+      List of langages to install for OCR
+  default_superuser:
+    name: Default superuser
+    description: Superuser credentials
+  timezone:
+    name: Timezone
+    description: Timezone

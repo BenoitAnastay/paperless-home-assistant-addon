@@ -13,3 +13,5 @@ configuration:
   timezone:
     name: Timezone
     description: Timezone
+network:
+  8000/tcp: Web interface

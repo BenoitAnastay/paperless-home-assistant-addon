@@ -23,7 +23,7 @@
       ],
       "versioningTemplate": "deb",
       "datasourceTemplate": "repology",
-      "depNameTemplate": "debian_12/{{package}}"
+      "depNameTemplate": "debian_12/{{{replace 'postgresql-client' 'postgresql' package}}}"
     }
   ],
   "packageRules": [

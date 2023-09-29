@@ -163,6 +163,9 @@ VOLUME ["/usr/src/paperless/data", \
 COPY rootfs/sbin/env-from-file.sh /sbin/env-from-file.sh
 COPY rootfs/sbin/docker-entrypoint.sh /sbin/docker-entrypoint.sh
 
+RUN chmod 755 /sbin/docker-entrypoint.sh \
+  && chmod 755 /sbin/env-from-file.sh
+
 ENTRYPOINT ["/sbin/docker-entrypoint.sh"]
 
 EXPOSE 8000

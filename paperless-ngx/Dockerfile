@@ -161,6 +161,7 @@ VOLUME ["/usr/src/paperless/data", \
 
 # Copy root filesystem
 COPY rootfs/sbin/env-from-file.sh /sbin/env-from-file.sh
+COPY rootfs/sbin/docker-entrypoint.sh /sbin/docker-entrypoint.sh
 
 ENTRYPOINT ["/sbin/docker-entrypoint.sh"]
 

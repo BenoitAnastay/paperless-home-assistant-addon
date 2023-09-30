@@ -1,4 +1,5 @@
 #!/usr/bin/env bashio
+set +u
 
 # Source: https://github.com/sameersbn/docker-gitlab/
 map_uidgid() {
@@ -61,6 +62,13 @@ custom_container_init() {
 }
 
 initialize() {
+
+	# Setup environment from secrets before anything else
+	# Check for a version of this var with _FILE appended
+	# and convert the contents to the env var value
+	# Source it so export is persistent
+	# shellcheck disable=SC1091
+	source /sbin/env-from-file.sh
 
 	# Change the user and group IDs if needed
 	map_uidgid
@@ -142,13 +150,6 @@ gosu_cmd=(gosu paperless)
 if [ "$(id -u)" == "$(id -u paperless)" ]; then
 	gosu_cmd=()
 fi
-
-# Setup environment from secrets before anything else
-# Check for a version of this var with _FILE appended
-# and convert the contents to the env var value
-# Source it so export is persistent
-# shellcheck disable=SC1091
-source /sbin/env-from-file.sh
 
 # Install additional languages if specified
 if [[ -n "$PAPERLESS_OCR_LANGUAGES" ]]; then

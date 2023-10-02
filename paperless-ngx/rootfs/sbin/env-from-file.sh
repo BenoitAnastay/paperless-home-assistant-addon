@@ -8,7 +8,7 @@ redis-server --daemonize yes
 PAPERLESS_URL="http://"+$(bashio::info.hostname)+":8000"
 PAPERLESS_FILENAME_FORMAT=$(bashio::config 'filename')
 PAPERLESS_OCR_LANGUAGE=$(bashio::config 'language')
-PAPERLESS_ADMIN_USER=$(bashio::config 'default_superuser.usename')
+PAPERLESS_ADMIN_USER=$(bashio::config 'default_superuser.username')
 PAPERLESS_ADMIN_MAIL=$(bashio::config 'default_superuser.email')
 PAPERLESS_ADMIN_PASSWORD=$(bashio::config 'default_superuser.password')
 PAPERLESS_TIME_ZONE=$(bashio::info.timezone)

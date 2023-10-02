@@ -30,3 +30,5 @@ export PAPERLESS_MEDIA_ROOT
 mkdir -p $PAPERLESS_CONSUMPTION_DIR
 mkdir -p $PAPERLESS_DATA_DIR
 mkdir -p $PAPERLESS_MEDIA_ROOT
+
+chown -R paperless:paperless /usr/src/paperless

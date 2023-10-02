@@ -4,7 +4,7 @@
 #start redis
 redis-server --daemonize yes
 
-# Replace env 
+# Replace env
 PAPERLESS_URL="http://"+$(bashio::info.hostname)+":8000"
 PAPERLESS_FILENAME_FORMAT=$(bashio::config 'filename')
 PAPERLESS_OCR_LANGUAGE=$(bashio::config 'language')
@@ -26,3 +26,7 @@ export PAPERLESS_TIME_ZONE
 export PAPERLESS_CONSUMPTION_DIR
 export PAPERLESS_DATA_DIR
 export PAPERLESS_MEDIA_ROOT
+
+mkdir -p $PAPERLESS_CONSUMPTION_DIR
+mkdir -p $PAPERLESS_DATA_DIR
+mkdir -p $PAPERLESS_MEDIA_ROOT

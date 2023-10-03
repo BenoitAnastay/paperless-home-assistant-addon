@@ -5,7 +5,7 @@ configuration:
     description: Default file format
   language:
     name: Main Language
-    desciption: The main language to use for OCR
+    description: The main language to use for OCR
   language_packages:
     name: Languages packs
     description: >-

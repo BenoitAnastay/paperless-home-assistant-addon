@@ -4,7 +4,10 @@ configuration:
     name: Filename
     description: Default file format
   language:
-    name: Language
+    name: Main Language
+    desciption: The main language to use for OCR
+  language_packages:
+    name: Languages packs
     description: >-
       List of langages to install for OCR
   default_superuser:

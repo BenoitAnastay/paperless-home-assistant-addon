@@ -69,6 +69,9 @@ initialize() {
 	# shellcheck disable=SC1091
 	source /sbin/env-from-file.sh
 
+	# Install additional languages if specified
+	install_languages "$PAPERLESS_OCR_LANGUAGES"
+
 	# Change the user and group IDs if needed
 	map_uidgid
 
@@ -149,9 +152,6 @@ gosu_cmd=(gosu paperless)
 if [ "$(id -u)" == "$(id -u paperless)" ]; then
 	gosu_cmd=()
 fi
-
-# Install additional languages if specified
-install_languages "$PAPERLESS_OCR_LANGUAGES"
 
 initialize
 

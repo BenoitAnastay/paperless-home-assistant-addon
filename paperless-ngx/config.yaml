@@ -23,6 +23,7 @@ map:
 options:
   filename: "{created_year}/{correspondent}/{title}"
   language: eng
+  language_packages: eng deu fra ita spa
   default_superuser:
     username:
     email:
@@ -31,6 +32,7 @@ options:
 schema:
   filename: str
   language: str
+  language_packages: str
   default_superuser:
     username: str
     email: email

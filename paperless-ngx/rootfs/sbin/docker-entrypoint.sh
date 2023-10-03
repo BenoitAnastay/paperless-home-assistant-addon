@@ -1,5 +1,4 @@
 #!/usr/bin/env bashio
-set +u
 
 # Source: https://github.com/sameersbn/docker-gitlab/
 map_uidgid() {
@@ -152,9 +151,7 @@ if [ "$(id -u)" == "$(id -u paperless)" ]; then
 fi
 
 # Install additional languages if specified
-if [[ -n "$PAPERLESS_OCR_LANGUAGES" ]]; then
-	install_languages "$PAPERLESS_OCR_LANGUAGES"
-fi
+install_languages "$PAPERLESS_OCR_LANGUAGES"
 
 initialize
 

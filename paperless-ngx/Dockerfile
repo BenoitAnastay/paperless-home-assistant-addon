@@ -94,8 +94,7 @@ ARG BUILD_PACKAGES="\
 
 # Install requirements
 # hadolint ignore=DL3042,DL3008,DL3013
-RUN --mount=type=cache,target=/root/.cache/pip/,id=pip-cache \
-  set -eux \
+RUN set -eux \
   && echo "Installing build system packages" \
     && apt-get update \
     && apt-get install --yes --quiet --no-install-recommends ${BUILD_PACKAGES} \

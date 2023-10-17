@@ -34,3 +34,5 @@ mkdir -p $PAPERLESS_DATA_DIR
 mkdir -p $PAPERLESS_MEDIA_ROOT
 
 chown -R paperless:paperless /usr/src/paperless
+
+/sbin/docker-entrypoint.sh $1

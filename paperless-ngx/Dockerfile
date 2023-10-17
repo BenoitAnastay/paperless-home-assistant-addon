@@ -160,13 +160,11 @@ VOLUME ["/usr/src/paperless/data", \
         "/usr/src/paperless/export"]
 
 # Copy root filesystem
-COPY rootfs/sbin/env-from-file.sh /sbin/env-from-file.sh
-COPY rootfs/sbin/docker-entrypoint.sh /sbin/docker-entrypoint.sh
+COPY rootfs/run.sh /run.sh
 
-RUN chmod 755 /sbin/docker-entrypoint.sh \
-  && chmod 755 /sbin/env-from-file.sh
+RUN chmod 755 /run.sh 
 
-ENTRYPOINT ["/sbin/docker-entrypoint.sh"]
+ENTRYPOINT ["/run.sh"]
 
 EXPOSE 8000
 

@@ -5,7 +5,6 @@
 redis-server --daemonize yes
 
 # Replace env
-PAPERLESS_URL="http://"+$(bashio::info.hostname)+":8000"
 PAPERLESS_FILENAME_FORMAT=$(bashio::config 'filename')
 PAPERLESS_OCR_LANGUAGE=$(bashio::config 'language')
 PAPERLESS_OCR_LANGUAGES=$(bashio::config 'language_packages')
@@ -16,6 +15,14 @@ PAPERLESS_TIME_ZONE=$(bashio::info.timezone)
 PAPERLESS_CONSUMPTION_DIR=/share/paperless/consume
 PAPERLESS_DATA_DIR=/share/paperless/data
 PAPERLESS_MEDIA_ROOT=/share/paperless/media
+
+#This set the URL of paperless
+if bashio::config.has_value 'url'; then
+  PAPERLESS_URL=$(bashio::config 'url')
+  bashio::log.info "Use custom defined URL $URL"
+else
+  PAPERLESS_URL="http://"+$(bashio::info.hostname)+":8000"
+fi
 
 export PAPERLESS_URL
 export PAPERLESS_FILENAME_FORMAT

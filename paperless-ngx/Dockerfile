@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/debian-base:7.1.0
+ARG BUILD_FROM=ghcr.io/hassio-addons/debian-base:7.2.0
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -14,7 +14,7 @@ ARG version=v1.17.4
 # Packages need for running
 ARG RUNTIME_PACKAGES="\
   # General utils
-  curl=7.88.1-10+deb12u1 \
+  curl=7.88.1-10+deb12u4 \
   # Docker specific
   gosu=1.14-1+b6 \
   # Timezones support
@@ -22,7 +22,7 @@ ARG RUNTIME_PACKAGES="\
   # fonts for text file thumbnail generation
   fonts-liberation=1:1.07.4-11 \
   gettext=0.21-12 \
-  ghostscript=10.0.0~dfsg-11+deb12u1 \
+  ghostscript=10.0.0~dfsg-11+deb12u2 \
   gnupg=2.2.40-1.1 \
   icc-profiles-free=2.0.1+dfsg-1.1 \
   imagemagick=8:6.9.11.60+dfsg-1.6 \
@@ -30,7 +30,7 @@ ARG RUNTIME_PACKAGES="\
   libpq5=15.3-0+deb12u1 \
   postgresql-client=15+248 \
   # MySQL / MariaDB
-  mariadb-client=1:10.11.3-1 \
+  mariadb-client=1:10.11.4-1~deb12u1 \
   # OCRmyPDF dependencies
   tesseract-ocr=5.3.0-2 \
   tesseract-ocr-eng=1:4.1.0-2 \

@@ -40,7 +40,7 @@ In Home Assistant Information from paperless can be accessed trought a REST-Sens
     Authorization: !secret paperless_auth_header
   params:
     query: "tag:inbox"
-  value_template: "{{ value_json.count | int }}"
+  value_template: "{{'{{ value_json.count | int }}'}}"
   name: "Paperless Inbox"
   icon: mdi:inbox
 ```

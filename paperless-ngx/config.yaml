@@ -31,7 +31,7 @@ options:
     password:
   timezone: UTC
 schema:
-  url: str?
+  url: "str?"
   filename: str
   language: str
   language_packages: str

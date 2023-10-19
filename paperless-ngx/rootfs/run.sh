@@ -19,7 +19,7 @@ PAPERLESS_MEDIA_ROOT=/share/paperless/media
 #This set the URL of paperless
 if bashio::config.has_value 'url'; then
   PAPERLESS_URL=$(bashio::config 'url')
-  bashio::log.info "Use custom defined URL $URL"
+  bashio::log.info "Use custom defined URL $PAPERLESS_URL"
 else
   PAPERLESS_URL="http://"+$(bashio::info.hostname)+":8000"
 fi

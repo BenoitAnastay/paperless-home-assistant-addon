@@ -1,5 +1,8 @@
 ---
 configuration:
+  url:
+    name: Paperless URL
+    description: You can set the value of PAPERLESS_URL manually
   filename:
     name: Filename
     description: Default file format

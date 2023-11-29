@@ -27,7 +27,7 @@ ARG RUNTIME_PACKAGES="\
   icc-profiles-free=2.0.1+dfsg-1.1 \
   imagemagick=8:6.9.11.60+dfsg-1.6 \
   # PostgreSQL
-  libpq5=15.3-0+deb12u1 \
+  libpq5=15.5-0+deb12u1 \
   postgresql-client=15+248 \
   # MySQL / MariaDB
   mariadb-client=1:10.11.4-1~deb12u1 \
@@ -87,7 +87,7 @@ ARG BUILD_PACKAGES="\
   build-essential \
   git \
   # https://www.psycopg.org/docs/install.html#prerequisites
-  libpq-dev \
+  libpq-dev=15.5-0+deb12u1 \
   # https://github.com/PyMySQL/mysqlclient#linux
   default-libmysqlclient-dev \
   pkg-config"

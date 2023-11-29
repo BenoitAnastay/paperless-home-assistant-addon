@@ -27,7 +27,7 @@ ARG RUNTIME_PACKAGES="\
   icc-profiles-free=2.0.1+dfsg-1.1 \
   imagemagick=8:6.9.11.60+dfsg-1.6 \
   # PostgreSQL
-  libpq5=15.3-0+deb12u1 \
+  libpq5=15.5-0+deb12u1 \
   postgresql-client=15+248 \
   # MySQL / MariaDB
   mariadb-client=1:10.11.4-1~deb12u1 \
@@ -75,7 +75,7 @@ RUN set -eux \
     && rm /usr/lib/python3.11/EXTERNALLY-MANAGED \
     && python3 -m pip install --default-timeout=1000 --upgrade --no-cache-dir supervisor==4.2.5 \
   && echo "Download Paperless-ngx" \
-    && wget -q -O paperless.tar.xz https://github.com/BenoitAnastay/paperless-ngx/releases/download/v1.17.4/paperless-ngx-v1.17.4.tar.xz \
+    && wget -q -O paperless.tar.xz https://github.com/paperless-ngx/paperless-ngx/releases/download/v2.0.0/paperless-ngx-v2.0.0.tar.xz \
     && tar -xf paperless.tar.xz \
     && mv paperless-ngx /usr/src/paperless
 
@@ -87,7 +87,7 @@ ARG BUILD_PACKAGES="\
   build-essential \
   git \
   # https://www.psycopg.org/docs/install.html#prerequisites
-  libpq-dev \
+  libpq-dev=15.5-0+deb12u1 \
   # https://github.com/PyMySQL/mysqlclient#linux
   default-libmysqlclient-dev \
   pkg-config"

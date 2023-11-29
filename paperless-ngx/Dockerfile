@@ -75,7 +75,7 @@ RUN set -eux \
     && rm /usr/lib/python3.11/EXTERNALLY-MANAGED \
     && python3 -m pip install --default-timeout=1000 --upgrade --no-cache-dir supervisor==4.2.5 \
   && echo "Download Paperless-ngx" \
-    && wget -q -O paperless.tar.xz https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Windows-x86_64.exe \
+    && wget -q -O paperless.tar.xz https://github.com/paperless-ngx/paperless-ngx/releases/download/v2.0.0/paperless-ngx-v2.0.0.tar.xz \
     && tar -xf paperless.tar.xz \
     && mv paperless-ngx /usr/src/paperless
 

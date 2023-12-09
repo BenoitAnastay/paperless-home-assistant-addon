@@ -60,7 +60,7 @@ ARG RUNTIME_PACKAGES="\
   python3-full=3.11.2-1+b1 \
   wget \
   xz-utils=5.4.1-0.2 \
-  redis-server=5:7.0.11-1 \
+  redis-server=5:7.0.11-1+deb12u1 \
   redis-tools=5:7.0.11-1"
 
 # Install basic runtime packages.

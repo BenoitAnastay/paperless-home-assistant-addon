@@ -45,7 +45,7 @@ ARG RUNTIME_PACKAGES="\
   libxml2=2.9.14+dfsg-1.3~deb12u1 \
   libxslt1.1=1.1.35-1 \
   # itself
-  qpdf=11.3.0-1 \
+  qpdf=11.3.0-1+deb12u1 \
   # Mime type detection
   file=1:5.44-3 \
   libmagic1=1:5.44-3 \

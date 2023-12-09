@@ -18,7 +18,7 @@ ARG RUNTIME_PACKAGES="\
   # Docker specific
   gosu=1.14-1+b6 \
   # Timezones support
-  tzdata=2023c-5 \
+  tzdata=2023c-5+deb12u1 \
   # fonts for text file thumbnail generation
   fonts-liberation=1:1.07.4-11 \
   gettext=0.21-12 \

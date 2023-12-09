@@ -24,6 +24,13 @@ else
   PAPERLESS_URL="http://"+$(bashio::info.hostname)+":8000"
 fi
 
+if bashio::config.has_value 'polling_interval'; then
+  PAPERLESS_CONSUMER_POLLING=$(bashio::config 'polling_interval')
+  bashio::log.info "Pooling interval set to $PAPERLESS_CONSUMER_POLLING"
+else
+  PAPERLESS_CONSUMER_POLLING=0
+fi
+
 export PAPERLESS_URL
 export PAPERLESS_FILENAME_FORMAT
 export PAPERLESS_OCR_LANGUAGE
@@ -32,6 +39,7 @@ export PAPERLESS_ADMIN_USER
 export PAPERLESS_ADMIN_MAIL
 export PAPERLESS_ADMIN_PASSWORD
 export PAPERLESS_TIME_ZONE
+export PAPERLESS_CONSUMER_POLLING
 export PAPERLESS_CONSUMPTION_DIR
 export PAPERLESS_DATA_DIR
 export PAPERLESS_MEDIA_ROOT

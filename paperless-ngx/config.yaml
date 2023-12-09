@@ -21,7 +21,6 @@ ports_description:
 map:
   - share:rw
 options:
-  url:
   filename: "{created_year}/{correspondent}/{title}"
   language: eng
   language_packages: eng deu fra ita spa
@@ -31,7 +30,7 @@ options:
     password:
   timezone: UTC
 schema:
-  url: "str?"
+  url: str?
   filename: str
   language: str
   language_packages: str
@@ -40,3 +39,4 @@ schema:
     email: email
     password: password
   timezone: str
+  polling_interval: int?

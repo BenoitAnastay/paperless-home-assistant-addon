@@ -19,5 +19,8 @@ configuration:
   timezone:
     name: Timezone
     description: Timezone
+  polling_interval:
+    name: Consume directory polling interval
+    description: Might be useful when the directory is on a network share
 network:
   8000/tcp: Web interface

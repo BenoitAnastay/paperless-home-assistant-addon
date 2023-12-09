@@ -61,7 +61,7 @@ ARG RUNTIME_PACKAGES="\
   wget \
   xz-utils=5.4.1-0.2 \
   redis-server=5:7.0.11-1+deb12u1 \
-  redis-tools=5:7.0.11-1"
+  redis-tools=5:7.0.11-1+deb12u1"
 
 # Install basic runtime packages.
 # These change very infrequently

@@ -12,6 +12,8 @@ PAPERLESS_ADMIN_USER=$(bashio::config 'default_superuser.username')
 PAPERLESS_ADMIN_MAIL=$(bashio::config 'default_superuser.email')
 PAPERLESS_ADMIN_PASSWORD=$(bashio::config 'default_superuser.password')
 PAPERLESS_TIME_ZONE=$(bashio::info.timezone)
+PAPERLESS_CONSUMER_ENABLE_BARCODES=$(bashio::config 'barcodes_enabled')
+PAPERLESS_CONSUMER_ENABLE_ASN_BARCODE=$(bashio::config 'barcodes_asn')
 PAPERLESS_CONSUMPTION_DIR=/share/paperless/consume
 PAPERLESS_DATA_DIR=/share/paperless/data
 PAPERLESS_MEDIA_ROOT=/share/paperless/media
@@ -43,6 +45,8 @@ export PAPERLESS_CONSUMER_POLLING
 export PAPERLESS_CONSUMPTION_DIR
 export PAPERLESS_DATA_DIR
 export PAPERLESS_MEDIA_ROOT
+export PAPERLESS_CONSUMER_ENABLE_BARCODES
+export PAPERLESS_CONSUMER_ENABLE_ASN_BARCODE
 
 mkdir -p $PAPERLESS_CONSUMPTION_DIR
 mkdir -p $PAPERLESS_DATA_DIR

@@ -14,7 +14,7 @@ ARG version=v1.17.4
 # Packages need for running
 ARG RUNTIME_PACKAGES="\
   # General utils
-  curl=7.88.1-10+deb12u4 \
+  curl=7.88.1-10+deb12u5 \
   # Docker specific
   gosu=1.14-1+b6 \
   # Timezones support

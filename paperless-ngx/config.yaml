@@ -40,3 +40,6 @@ schema:
     password: password
   timezone: str
   polling_interval: int?
+  barcodes:
+    enabled: bool?
+    asn: bool?

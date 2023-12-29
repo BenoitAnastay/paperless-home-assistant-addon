@@ -8,8 +8,8 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Add env
 ENV TERM="xterm-256color"
 
-# Setup base
-ARG version=v1.17.4
+# Paperless version
+ARG PAPERLESS_VERSION="v2.2.1"
 
 # Packages need for running
 ARG RUNTIME_PACKAGES="\
@@ -75,7 +75,7 @@ RUN set -eux \
     && rm /usr/lib/python3.11/EXTERNALLY-MANAGED \
     && python3 -m pip install --default-timeout=1000 --upgrade --no-cache-dir supervisor==4.2.5 \
   && echo "Download Paperless-ngx" \
-    && wget -q -O paperless.tar.xz https://github.com/paperless-ngx/paperless-ngx/releases/download/v2.1.3/paperless-ngx-v2.1.3.tar.xz \
+    && wget -q -O paperless.tar.xz https://github.com/paperless-ngx/paperless-ngx/releases/download/${PAPERLESS_VERSION}/paperless-ngx-${PAPERLESS_VERSION}.tar.xz \
     && tar -xf paperless.tar.xz \
     && mv paperless-ngx /usr/src/paperless
 
@@ -162,7 +162,7 @@ VOLUME ["/usr/src/paperless/data", \
 # Copy root filesystem
 COPY rootfs/run.sh /run.sh
 
-RUN chmod 755 /run.sh 
+RUN chmod 755 /run.sh
 
 ENTRYPOINT ["/run.sh"]
 

@@ -5,4 +5,6 @@
 # Run Parless-ngx
 # ==============================================================================
 
-/sbin/docker-entrypoint.sh
+cd /usr/src/paperless/src/
+
+/sbin/docker-entrypoint.sh "/usr/local/bin/paperless_cmd.sh"

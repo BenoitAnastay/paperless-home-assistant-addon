@@ -162,10 +162,6 @@ VOLUME ["/usr/src/paperless/data", \
 # Copy root filesystem
 COPY rootfs/ /
 
-EXPOSE 8000
-
-CMD ["/usr/local/bin/paperless_cmd.sh"]
-
 # Build arguments
 ARG BUILD_ARCH
 ARG BUILD_DATE

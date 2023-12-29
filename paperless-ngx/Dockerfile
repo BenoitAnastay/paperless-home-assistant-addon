@@ -1,5 +1,5 @@
 ARG BUILD_FROM=ghcr.io/hassio-addons/debian-base:7.3.0
-ARG PAPERLESS_VERSION=v2.2.1
+ARG PAPERLESS_VERSION="v2.2.1"
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 

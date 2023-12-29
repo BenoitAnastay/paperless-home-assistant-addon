@@ -1,0 +1,8 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+# Benoit Anastay Add-on: Paperless-ngx
+# Run Parless-ngx
+# ==============================================================================
+
+/sbin/docker-entrypoint.sh

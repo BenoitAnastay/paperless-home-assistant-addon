@@ -1,5 +1,4 @@
 ARG BUILD_FROM=ghcr.io/hassio-addons/debian-base:7.3.0
-ARG PAPERLESS_VERSION="v2.2.1"
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -8,6 +7,9 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Add env
 ENV TERM="xterm-256color"
+
+# Paperless version
+ARG PAPERLESS_VERSION="v2.2.1"
 
 # Packages need for running
 ARG RUNTIME_PACKAGES="\

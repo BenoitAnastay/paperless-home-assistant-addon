@@ -43,3 +43,5 @@ schema:
   polling_interval: int?
   barcodes_enabled: bool?
   barcodes_asn: bool?
+  consumer_recursive: bool?
+  consumer_subdirs_as_tags: bool?

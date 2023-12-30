@@ -3,6 +3,7 @@ name: Paperless-ngx
 version: dev
 slug: paperless-ngx
 url: https://github.com/paperless-ngx/paperless-ngx
+init: false
 description:
   Paperless is an application that manages your personal documents. With
   the help of a document scanner, paperless transforms your wieldy physical document

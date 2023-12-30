@@ -68,16 +68,16 @@ ARG RUNTIME_PACKAGES="\
 # hadolint ignore=DL3003,DL3042,DL3008
 RUN set -eux \
   echo "Installing system packages" \
-    && apt-get update \
-    && apt-get install --yes --quiet --no-install-recommends ${RUNTIME_PACKAGES} \
-    && rm -rf /var/lib/apt/lists/* \
+  && apt-get update \
+  && apt-get install --yes --quiet --no-install-recommends ${RUNTIME_PACKAGES} \
+  && rm -rf /var/lib/apt/lists/* \
   && echo "Installing supervisor" \
-    && rm /usr/lib/python3.11/EXTERNALLY-MANAGED \
-    && python3 -m pip install --default-timeout=1000 --upgrade --no-cache-dir supervisor==4.2.5 \
+  && rm /usr/lib/python3.11/EXTERNALLY-MANAGED \
+  && python3 -m pip install --default-timeout=1000 --upgrade --no-cache-dir supervisor==4.2.5 \
   && echo "Download Paperless-ngx" \
-    && wget -q -O paperless.tar.xz https://github.com/paperless-ngx/paperless-ngx/releases/download/${PAPERLESS_VERSION}/paperless-ngx-${PAPERLESS_VERSION}.tar.xz \
-    && tar -xf paperless.tar.xz \
-    && mv paperless-ngx /usr/src/paperless
+  && wget -q -O paperless.tar.xz https://github.com/paperless-ngx/paperless-ngx/releases/download/${PAPERLESS_VERSION}/paperless-ngx-${PAPERLESS_VERSION}.tar.xz \
+  && tar -xf paperless.tar.xz \
+  && mv paperless-ngx /usr/src/paperless
 
 WORKDIR /usr/src/paperless
 
@@ -97,48 +97,48 @@ ARG BUILD_PACKAGES="\
 RUN --mount=type=cache,target=/root/.cache/pip/,id=pip-cache \
   set -eux \
   && echo "Installing build system packages" \
-    && apt-get update \
-    && apt-get install --yes --quiet --no-install-recommends ${BUILD_PACKAGES} \
-    && python3 -m pip install --no-cache-dir --upgrade wheel \
+  && apt-get update \
+  && apt-get install --yes --quiet --no-install-recommends ${BUILD_PACKAGES} \
+  && python3 -m pip install --no-cache-dir --upgrade wheel \
   && echo "Installing Python requirements" \
-    && python3 -m pip install --default-timeout=1000 --requirement requirements.txt \
+  && python3 -m pip install --default-timeout=1000 --requirement requirements.txt \
   && echo "Installing NLTK data" \
-    && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" snowball_data \
-    && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" stopwords \
-    && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" punkt \
+  && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" snowball_data \
+  && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" stopwords \
+  && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" punkt \
   && echo "Cleaning up image" \
-    && apt-get -y purge ${BUILD_PACKAGES} \
-    && apt-get -y autoremove --purge \
-    && apt-get clean --yes \
-    && rm -rf /var/lib/apt/lists/* \
-    && rm -rf /tmp/* \
-    && rm -rf /var/tmp/* \
-    && rm -rf /var/cache/apt/archives/
+  && apt-get -y purge ${BUILD_PACKAGES} \
+  && apt-get -y autoremove --purge \
+  && apt-get clean --yes \
+  && rm -rf /var/lib/apt/lists/* \
+  && rm -rf /tmp/* \
+  && rm -rf /var/tmp/* \
+  && rm -rf /var/cache/apt/archives/
 
 WORKDIR /usr/src/paperless/docker/
 
 RUN set -eux \
   && echo "Configuring ImageMagick" \
-    && mv imagemagick-policy.xml /etc/ImageMagick-6/policy.xml \
+  && mv imagemagick-policy.xml /etc/ImageMagick-6/policy.xml \
   && echo "Configuring supervisord" \
-    && mkdir /var/log/supervisord /var/run/supervisord \
-    && mv supervisord.conf /etc/supervisord.conf \
+  && mkdir /var/log/supervisord /var/run/supervisord \
+  && mv supervisord.conf /etc/supervisord.conf \
   && echo "Setting up Docker scripts" \
-    && mv docker-entrypoint.sh /sbin/docker-entrypoint.sh \
-    && chmod 755 /sbin/docker-entrypoint.sh \
-    && mv docker-prepare.sh /sbin/docker-prepare.sh \
-    && chmod 755 /sbin/docker-prepare.sh \
-    && mv wait-for-redis.py /sbin/wait-for-redis.py \
-    && chmod 755 /sbin/wait-for-redis.py \
-    && mv env-from-file.sh /sbin/env-from-file.sh \
-    && chmod 755 /sbin/env-from-file.sh \
-    && mv paperless_cmd.sh /usr/local/bin/paperless_cmd.sh \
-    && chmod 755 /usr/local/bin/paperless_cmd.sh \
-    && mv flower-conditional.sh /usr/local/bin/flower-conditional.sh \
-    && chmod 755 /usr/local/bin/flower-conditional.sh \
+  && mv docker-entrypoint.sh /sbin/docker-entrypoint.sh \
+  && chmod 755 /sbin/docker-entrypoint.sh \
+  && mv docker-prepare.sh /sbin/docker-prepare.sh \
+  && chmod 755 /sbin/docker-prepare.sh \
+  && mv wait-for-redis.py /sbin/wait-for-redis.py \
+  && chmod 755 /sbin/wait-for-redis.py \
+  && mv env-from-file.sh /sbin/env-from-file.sh \
+  && chmod 755 /sbin/env-from-file.sh \
+  && mv paperless_cmd.sh /usr/local/bin/paperless_cmd.sh \
+  && chmod 755 /usr/local/bin/paperless_cmd.sh \
+  && mv flower-conditional.sh /usr/local/bin/flower-conditional.sh \
+  && chmod 755 /usr/local/bin/flower-conditional.sh \
   && echo "Installing managment commands" \
-    && chmod +x install_management_commands.sh \
-    && ./install_management_commands.sh
+  && chmod +x install_management_commands.sh \
+  && ./install_management_commands.sh
 
 WORKDIR /usr/src/paperless/src/
 
@@ -155,20 +155,12 @@ ENV PAPERLESS_REDIS="redis://localhost:6379"
 RUN sed -i "s/bind .*/bind 127.0.0.1/g" /etc/redis/redis.conf
 
 VOLUME ["/usr/src/paperless/data", \
-        "/usr/src/paperless/media", \
-        "/usr/src/paperless/consume", \
-        "/usr/src/paperless/export"]
+  "/usr/src/paperless/media", \
+  "/usr/src/paperless/consume", \
+  "/usr/src/paperless/export"]
 
 # Copy root filesystem
-COPY rootfs/run.sh /run.sh
-
-RUN chmod 755 /run.sh
-
-ENTRYPOINT ["/run.sh"]
-
-EXPOSE 8000
-
-CMD ["/usr/local/bin/paperless_cmd.sh"]
+COPY rootfs/ /
 
 # Build arguments
 ARG BUILD_ARCH
@@ -181,20 +173,20 @@ ARG BUILD_VERSION
 
 # Labels
 LABEL \
-    io.hass.name="${BUILD_NAME}" \
-    io.hass.description="${BUILD_DESCRIPTION}" \
-    io.hass.arch="${BUILD_ARCH}" \
-    io.hass.type="addon" \
-    io.hass.version=${BUILD_VERSION} \
-    maintainer="Benoit Anastay <45088785+BenoitAnastay@users.noreply.github.com>" \
-    org.opencontainers.image.title="${BUILD_NAME}" \
-    org.opencontainers.image.description="${BUILD_DESCRIPTION}" \
-    org.opencontainers.image.vendor="Benoit Anastay Custom Addon" \
-    org.opencontainers.image.authors="Benoit Anastay <45088785+BenoitAnastay@users.noreply.github.com>" \
-    org.opencontainers.image.licenses="MIT" \
-    org.opencontainers.image.url="https://github.com/paperless-ngx/paperless-ngx" \
-    org.opencontainers.image.source="https://github.com/${BUILD_REPOSITORY}" \
-    org.opencontainers.image.documentation="https://github.com/${BUILD_REPOSITORY}/blob/main/README.md" \
-    org.opencontainers.image.created=${BUILD_DATE} \
-    org.opencontainers.image.revision=${BUILD_REF} \
-    org.opencontainers.image.version=${BUILD_VERSION}
+  io.hass.name="${BUILD_NAME}" \
+  io.hass.description="${BUILD_DESCRIPTION}" \
+  io.hass.arch="${BUILD_ARCH}" \
+  io.hass.type="addon" \
+  io.hass.version=${BUILD_VERSION} \
+  maintainer="Benoit Anastay <benoit@anastay.dev>" \
+  org.opencontainers.image.title="${BUILD_NAME}" \
+  org.opencontainers.image.description="${BUILD_DESCRIPTION}" \
+  org.opencontainers.image.vendor="Benoit Anastay Add-on" \
+  org.opencontainers.image.authors="Benoit Anastay <benoit@anastay.dev>" \
+  org.opencontainers.image.licenses="MIT" \
+  org.opencontainers.image.url="https://github.com/paperless-ngx/paperless-ngx" \
+  org.opencontainers.image.source="https://github.com/${BUILD_REPOSITORY}" \
+  org.opencontainers.image.documentation="https://github.com/${BUILD_REPOSITORY}/blob/main/README.md" \
+  org.opencontainers.image.created=${BUILD_DATE} \
+  org.opencontainers.image.revision=${BUILD_REF} \
+  org.opencontainers.image.version=${BUILD_VERSION}

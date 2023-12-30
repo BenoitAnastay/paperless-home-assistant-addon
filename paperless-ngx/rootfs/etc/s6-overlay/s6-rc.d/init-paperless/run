@@ -1,0 +1,17 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+# Benoit Anastay Add-on: Paperless-ngx
+# Configures Parless-ngx
+# ==============================================================================
+
+PAPERLESS_CONSUMPTION_DIR=/share/paperless/consume
+PAPERLESS_DATA_DIR=/share/paperless/data
+PAPERLESS_MEDIA_ROOT=/share/paperless/media
+
+
+mkdir -p $PAPERLESS_CONSUMPTION_DIR
+mkdir -p $PAPERLESS_DATA_DIR
+mkdir -p $PAPERLESS_MEDIA_ROOT
+
+chown -R paperless:paperless /usr/src/paperless

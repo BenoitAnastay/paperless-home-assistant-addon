@@ -34,7 +34,7 @@ This repository is a custom addon to run paperless-ngx in Home Assistant. Click 
 [issue]: https://github.com/BenoitAnastay/paperless-home-assistant-addon/issues
 [license-shield]: https://img.shields.io/github/license/BenoitAnastay/paperless-home-assistant-addon.svg
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2023.svg
-[project-stage-shield]: https://img.shields.io/badge/project%20stage-experimental-yellow.svg
+[project-stage-shield]: https://img.shields.io/badge/project%20stage-stable-green.svg
 [releases-shield]: https://img.shields.io/github/release/BenoitAnastay/paperless-home-assistant-addon.svg
 [releases]: https://github.com/BenoitAnastay/paperless-home-assistant-addon/releases
 [repository]: https://github.com/BenoitAnastay/home-assistant-addons-repository

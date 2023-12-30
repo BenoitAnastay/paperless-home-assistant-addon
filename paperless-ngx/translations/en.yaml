@@ -28,5 +28,11 @@ configuration:
   barcodes_asn:
     name: ASN Barcodes
     description: Enable ASN barcodes
+  consumer_recursive:
+    name: Recusive consuming
+    description: Enable recursive watching of the consumption directory.
+  consumer_subdirs_as_tags:
+    name: Subdirectories as tags
+    description: Set the names of subdirectories as tags for consumed files
 network:
   8000/tcp: Web interface

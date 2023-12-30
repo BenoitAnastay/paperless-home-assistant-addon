@@ -10,7 +10,6 @@ description:
   binders into a searchable archive and provides many utilities for finding and managing
   your documents.
 webui: http://[HOST]:[PORT:8000]
-stage: experimental
 arch:
   - aarch64
   - amd64

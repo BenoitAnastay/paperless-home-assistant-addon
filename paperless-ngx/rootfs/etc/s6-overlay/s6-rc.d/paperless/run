@@ -1,8 +1,11 @@
-#!/usr/bin/env bashio
-# shellcheck disable=SC2086
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+# Benoit Anastay Add-on: Paperless-ngx
+# Run Parless-ngx
+# ==============================================================================
 
-#start redis
-redis-server --daemonize yes
+cd /usr/src/paperless/src/ || exit
 
 # Replace env
 PAPERLESS_FILENAME_FORMAT=$(bashio::config 'filename')
@@ -48,10 +51,4 @@ export PAPERLESS_MEDIA_ROOT
 export PAPERLESS_CONSUMER_ENABLE_BARCODES
 export PAPERLESS_CONSUMER_ENABLE_ASN_BARCODE
 
-mkdir -p $PAPERLESS_CONSUMPTION_DIR
-mkdir -p $PAPERLESS_DATA_DIR
-mkdir -p $PAPERLESS_MEDIA_ROOT
-
-chown -R paperless:paperless /usr/src/paperless
-
-/sbin/docker-entrypoint.sh $1
+/sbin/docker-entrypoint.sh "/usr/local/bin/paperless_cmd.sh"

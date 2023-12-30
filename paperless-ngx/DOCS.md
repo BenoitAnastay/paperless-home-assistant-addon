@@ -45,6 +45,8 @@ timezone: Europe/Paris
 polling_interval: 0
 barcodes_enabled: false
 barcodes_asn: false
+consumer_recursive: false
+consumer_subdirs_as_tags: false
 ```
 
 ### Option: `url`
@@ -86,6 +88,17 @@ Enables the scanning and page separation based on detected barcodes. This allows
 
 Enables the detection of barcodes in the scanned document and setting the ASN (archive serial number) if a properly formatted barcode is detected.
 [Docs](https://docs.paperless-ngx.com/configuration/#PAPERLESS_CONSUMER_ENABLE_ASN_BARCODE))
+
+### Option: `consumer_recursive`
+Enable recursive watching of the consumption directory. Paperless will then pickup files from files in subdirectories within your consumption directory as well.
+[Docs](https://docs.paperless-ngx.com/configuration/#PAPERLESS_CONSUMER_RECURSIVE))
+
+### Option: `consumer_subdirs_as_tags`
+Set the names of subdirectories as tags for consumed files. E.g.
+`<CONSUMPTION_DIR>/foo/bar/file.pdf` will add the tags "foo" and
+"bar" to the consumed file. Paperless will create any tags that
+don't exist yet.
+[Docs](https://docs.paperless-ngx.com/configuration/#PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS))
 
 [addon-badge]: https://my.home-assistant.io/badges/supervisor_addon.svg
 [addon]: https://my.home-assistant.io/redirect/supervisor_addon/?addon=ca5234a0_paperless-ngx&repository_url=https%3A%2F%2Fgithub.com%2FBenoitAnastay%2Fhome-assistant-addons-repository

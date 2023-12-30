@@ -90,10 +90,12 @@ Enables the detection of barcodes in the scanned document and setting the ASN (a
 [Docs](https://docs.paperless-ngx.com/configuration/#PAPERLESS_CONSUMER_ENABLE_ASN_BARCODE))
 
 ### Option: `consumer_recursive`
+
 Enable recursive watching of the consumption directory. Paperless will then pickup files from files in subdirectories within your consumption directory as well.
 [Docs](https://docs.paperless-ngx.com/configuration/#PAPERLESS_CONSUMER_RECURSIVE))
 
 ### Option: `consumer_subdirs_as_tags`
+
 Set the names of subdirectories as tags for consumed files. E.g.
 `<CONSUMPTION_DIR>/foo/bar/file.pdf` will add the tags "foo" and
 "bar" to the consumed file. Paperless will create any tags that

@@ -18,7 +18,19 @@ Paperless is an application that manages your personal documents. With the help 
 
 This repository is a custom addon to run paperless-ngx in Home Assistant. Click the button below to install it.
 
-[![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FBenoitAnastay%2Fhome-assistant-addons-repository)
+## Installation
+
+The installation of this add-on is pretty straightforward and not different in
+comparison to installing any other Home Assistant add-on.
+
+1. Click the Home Assistant My button below to open the add-on on your Home
+   Assistant instance.
+
+   [![Open this add-on in your Home Assistant instance.][addon-badge]][addon]
+
+1. Click the "Install" button to install the add-on.
+1. Start the "Paperless-ngx" add-on.
+1. Check the logs of the "Paperless-ngx" add-on to see it in action.
 
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
@@ -38,3 +50,5 @@ This repository is a custom addon to run paperless-ngx in Home Assistant. Click 
 [releases-shield]: https://img.shields.io/github/release/BenoitAnastay/paperless-home-assistant-addon.svg
 [releases]: https://github.com/BenoitAnastay/paperless-home-assistant-addon/releases
 [repository]: https://github.com/BenoitAnastay/home-assistant-addons-repository
+[addon]: https://my.home-assistant.io/redirect/supervisor_addon/?addon=ca5234a0_paperless-ngx&repository_url=https%3A%2F%2Fgithub.com%2FBenoitAnastay%2Fhome-assistant-addons-repository
+

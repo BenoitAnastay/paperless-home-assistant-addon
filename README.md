@@ -51,3 +51,4 @@ comparison to installing any other Home Assistant add-on.
 [releases]: https://github.com/BenoitAnastay/paperless-home-assistant-addon/releases
 [repository]: https://github.com/BenoitAnastay/home-assistant-addons-repository
 [addon]: https://my.home-assistant.io/redirect/supervisor_addon/?addon=ca5234a0_paperless-ngx&repository_url=https%3A%2F%2Fgithub.com%2FBenoitAnastay%2Fhome-assistant-addons-repository
+[addon-badge]: https://my.home-assistant.io/badges/supervisor_addon.svg

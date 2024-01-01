@@ -45,9 +45,10 @@ comparison to installing any other Home Assistant add-on.
 [github-actions]: https://github.com/BenoitAnastay/paperless-home-assistant-addon/actions
 [issue]: https://github.com/BenoitAnastay/paperless-home-assistant-addon/issues
 [license-shield]: https://img.shields.io/github/license/BenoitAnastay/paperless-home-assistant-addon.svg
-[maintenance-shield]: https://img.shields.io/maintenance/yes/2023.svg
+[maintenance-shield]: https://img.shields.io/maintenance/yes/2024.svg
 [project-stage-shield]: https://img.shields.io/badge/project%20stage-stable-green.svg
 [releases-shield]: https://img.shields.io/github/release/BenoitAnastay/paperless-home-assistant-addon.svg
 [releases]: https://github.com/BenoitAnastay/paperless-home-assistant-addon/releases
 [repository]: https://github.com/BenoitAnastay/home-assistant-addons-repository
 [addon]: https://my.home-assistant.io/redirect/supervisor_addon/?addon=ca5234a0_paperless-ngx&repository_url=https%3A%2F%2Fgithub.com%2FBenoitAnastay%2Fhome-assistant-addons-repository
+[addon-badge]: https://my.home-assistant.io/badges/supervisor_addon.svg

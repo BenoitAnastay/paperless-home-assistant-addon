@@ -22,6 +22,8 @@ PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS=$(bashio::config 'consumer_subdirs_as_tags')
 PAPERLESS_CONSUMPTION_DIR=/share/paperless/consume
 PAPERLESS_DATA_DIR=/share/paperless/data
 PAPERLESS_MEDIA_ROOT=/share/paperless/media
+PAPERLESS_USE_X_FORWARD_HOST=true
+PAPERLESS_USE_X_FORWARD_PORT=true
 
 #This set the URL of paperless
 if bashio::config.has_value 'url'; then
@@ -54,5 +56,7 @@ export PAPERLESS_CONSUMER_ENABLE_BARCODES
 export PAPERLESS_CONSUMER_ENABLE_ASN_BARCODE
 export PAPERLESS_CONSUMER_RECURSIVE
 export PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS
+export PAPERLESS_USE_X_FORWARD_HOST
+export PAPERLESS_USE_X_FORWARD_PORT
 
 /sbin/docker-entrypoint.sh "/usr/local/bin/paperless_cmd.sh"

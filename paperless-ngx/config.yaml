@@ -5,6 +5,7 @@ slug: paperless-ngx
 url: https://github.com/paperless-ngx/paperless-ngx
 init: false
 ingress: true
+ingress_stream: true
 description:
   Paperless is an application that manages your personal documents. With
   the help of a document scanner, paperless transforms your wieldy physical document
@@ -15,11 +16,12 @@ arch:
   - amd64
 startup: system
 ports:
-  8000/tcp: 8000
+  80/tcp: null
 ports_description:
-  8000/tcp: Web interface
+  80/tcp: Web interface (Not required for Ingress)
 map:
   - share:rw
+  - ssl
 options:
   filename: "{created_year}/{correspondent}/{title}"
   language: eng
@@ -29,6 +31,9 @@ options:
     email:
     password:
   timezone: UTC
+  ssl: true
+  certfile: fullchain.pem
+  keyfile: privkey.pem
 schema:
   url: str?
   filename: str
@@ -44,3 +49,6 @@ schema:
   barcodes_asn: bool?
   consumer_recursive: bool?
   consumer_subdirs_as_tags: bool?
+  ssl: bool
+  certfile: str
+  keyfile: str

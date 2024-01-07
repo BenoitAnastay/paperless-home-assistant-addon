@@ -9,7 +9,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV TERM="xterm-256color"
 
 # Paperless version
-ARG PAPERLESS_VERSION="v2.2.1"
+ARG PAPERLESS_VERSION="v2.3.1"
 
 # Packages need for running
 ARG RUNTIME_PACKAGES="\
@@ -58,6 +58,7 @@ ARG RUNTIME_PACKAGES="\
   python3-pip=23.0.1+dfsg-1 \
   python3-dev=3.11.2-1+b1 \
   python3-full=3.11.2-1+b1 \
+  python3-zxing-cpp=1.4.0-3+b1 \ 
   wget \
   xz-utils=5.4.1-0.2 \
   redis-server=5:7.0.11-1+deb12u1 \

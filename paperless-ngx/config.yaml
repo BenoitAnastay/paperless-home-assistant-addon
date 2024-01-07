@@ -20,6 +20,7 @@ ports:
 ports_description:
   80/tcp: Web interface (Not required for Ingress)
 map:
+  - addon_config:rw
   - share:rw
   - ssl
 options:

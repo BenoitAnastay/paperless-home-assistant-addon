@@ -5,15 +5,9 @@
 # Configures NGINX for use with Paperless-ngx
 # ==============================================================================
 
-# Generate Ingress NGINX configuration
-bashio::var.json \
-    interface "$(bashio::addon.ip_address)" \
-    | tempio \
-        -template /etc/nginx/templates/ingress.gtpl \
-        -out /etc/nginx/servers/ingress.conf
-
 # Generate direct access configuration, if enabled.
 if bashio::var.has_value "$(bashio::addon.port 80)"; then
+    bashio::log.red "Ingress is disabled because a listening port is defined"
     bashio::config.require.ssl
     bashio::var.json \
         certfile "$(bashio::config 'certfile')" \
@@ -22,4 +16,21 @@ if bashio::var.has_value "$(bashio::addon.port 80)"; then
         | tempio \
             -template /etc/nginx/templates/direct.gtpl \
             -out /etc/nginx/servers/direct.conf
+
+    # Generate Disabled Ingress NGINX configuration
+    bashio::var.json \
+        interface "$(bashio::addon.ip_address)" \
+        | tempio \
+            -template /etc/nginx/templates/ingress-disabled.gtpl \
+            -out /etc/nginx/servers/ingress.conf
+else
+    ingress_entry=$(bashio::addon.ingress_entry)
+    echo -n "${ingress_entry}" > /var/run/s6/container_environment/PAPERLESS_FORCE_SCRIPT_NAME
+    bashio::log.blue "Ingress is enabled"
+    # Generate Ingress NGINX configuration
+    bashio::var.json \
+        interface "$(bashio::addon.ip_address)" \
+        | tempio \
+            -template /etc/nginx/templates/ingress.gtpl \
+            -out /etc/nginx/servers/ingress.conf
 fi

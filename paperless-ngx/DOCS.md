@@ -20,7 +20,7 @@ comparison to installing any other Home Assistant add-on.
 
 Media files are stored in the `share/paperless` directory. This includes the `consume` and `media` directories. Files added into `consume` will be ingested by Paperless.
 
-`paperless.conf`  file and `data` directory are located in `/addon_config/paperless_ngx` 
+`paperless.conf` file and `data` directory are located in `/addon_config/paperless_ngx`
 
 ## Backing up
 
@@ -125,6 +125,7 @@ The private key file to use for SSL.
 **Note**: _The file MUST be stored in `/ssl/`, which is the default_
 
 ### More personalisation
+
 You can add more configurations options in `/addon_config/paperless_ngx/paperless.conf`
 
 [addon-badge]: https://my.home-assistant.io/badges/supervisor_addon.svg

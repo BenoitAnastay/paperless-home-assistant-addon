@@ -19,3 +19,5 @@ mkdir -p $PAPERLESS_DATA_DIR
 mkdir -p $PAPERLESS_MEDIA_ROOT
 
 chown -R paperless:paperless /usr/src/paperless
+
+cp /usr/src/paperless/paperless.conf /config/paperless.conf.exemple

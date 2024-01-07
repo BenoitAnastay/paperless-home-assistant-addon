@@ -34,5 +34,14 @@ configuration:
   consumer_subdirs_as_tags:
     name: Subdirectories as tags
     description: Set the names of subdirectories as tags for consumed files
+  ssl:
+    name: SSL
+    description: Enable SSL support
+  certfile:
+    name: SSL Certfile
+    description: Name of ssl cert file (in /ssl/ directory)
+  keyfile:
+    name: SSL Keyfile
+    description: Name of ssl key file (in /ssl/ directory)
 network:
-  8000/tcp: Web interface
+  80/tcp: Web interface (Not required for Ingress)

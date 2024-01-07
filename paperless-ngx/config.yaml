@@ -19,6 +19,7 @@ ports:
 ports_description:
   8000/tcp: Web interface
 map:
+  - addon_config:rw
   - share:rw
 options:
   filename: "{created_year}/{correspondent}/{title}"

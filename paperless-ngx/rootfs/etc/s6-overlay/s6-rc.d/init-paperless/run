@@ -6,11 +6,11 @@
 # ==============================================================================
 
 PAPERLESS_CONSUMPTION_DIR=/share/paperless/consume
-PAPERLESS_DATA_DIR=/config
+PAPERLESS_DATA_DIR=/config/data
 PAPERLESS_MEDIA_ROOT=/share/paperless/media
 
 if bashio::fs.directory_exists '/share/paperless/data'; then
-    bashio::log.info "Migrating 'data' folder from share storage to /addon_configs/papeless_ngx"
+    bashio::log.info "Migrating 'data' folder from share storage to /addon_configs/papeless_ngx/data"
     mv /share/paperless/data /config
 fi
 

@@ -20,7 +20,7 @@ PAPERLESS_CONSUMER_ENABLE_ASN_BARCODE=$(bashio::config 'barcodes_asn')
 PAPERLESS_CONSUMER_RECURSIVE=$(bashio::config 'consumer_recursive')
 PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS=$(bashio::config 'consumer_subdirs_as_tags')
 PAPERLESS_CONSUMPTION_DIR=/share/paperless/consume
-PAPERLESS_DATA_DIR=/config
+PAPERLESS_DATA_DIR=/config/data
 PAPERLESS_MEDIA_ROOT=/share/paperless/media
 PAPERLESS_CONFIGURATION_PATH="/config/paperless.conf"
 

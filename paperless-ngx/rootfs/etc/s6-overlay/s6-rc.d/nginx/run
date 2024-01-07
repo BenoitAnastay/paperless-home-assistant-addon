@@ -1,0 +1,12 @@
+#!/command/with-contenv bashio
+# ==============================================================================
+# Benoit Anastay Add-on: Paperlexx-ngx
+# Runs the Nginx daemon
+# ==============================================================================
+
+# Wait for Paperless-ngx to become available
+bashio::net.wait_for 8000
+
+bashio::log.info "Starting NGinx...."
+
+exec nginx

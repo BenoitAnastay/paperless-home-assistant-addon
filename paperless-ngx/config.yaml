@@ -31,7 +31,7 @@ options:
     email:
     password:
   timezone: UTC
-  ssl: true
+  ssl: false
   certfile: fullchain.pem
   keyfile: privkey.pem
 schema:

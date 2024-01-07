@@ -18,7 +18,9 @@ comparison to installing any other Home Assistant add-on.
 
 ## File Storage
 
-All the files are stored in the `share/paperless` directory. This includes the `consume` directory as well as the `data` and `media` directories. Files added into `consume` will be ingested by Paperless.
+Media files are stored in the `share/paperless` directory. This includes the `consume` and `media` directories. Files added into `consume` will be ingested by Paperless.
+
+`paperless.conf` file and `data` directory are located in `/addon_config/paperless_ngx`
 
 ## Backing up
 
@@ -47,6 +49,9 @@ barcodes_enabled: false
 barcodes_asn: false
 consumer_recursive: false
 consumer_subdirs_as_tags: false
+ssl: false
+certfile: fullchain.pem
+keyfile: privkey.pem
 ```
 
 ### Option: `url`
@@ -101,6 +106,27 @@ Set the names of subdirectories as tags for consumed files. E.g.
 "bar" to the consumed file. Paperless will create any tags that
 don't exist yet.
 [Docs](https://docs.paperless-ngx.com/configuration/#PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS))
+
+### Option: `ssl`
+
+Enables/Disables SSL (HTTPS) on the web interface of Grocy
+Panel. Set it `true` to enable it, `false` otherwise.
+
+### Option: `certfile`
+
+The certificate file to use for SSL.
+
+**Note**: _The file MUST be stored in `/ssl/`, which is the default_
+
+### Option: `keyfile`
+
+The private key file to use for SSL.
+
+**Note**: _The file MUST be stored in `/ssl/`, which is the default_
+
+### More personalisation
+
+You can add more configurations options in `/addon_config/paperless_ngx/paperless.conf`
 
 [addon-badge]: https://my.home-assistant.io/badges/supervisor_addon.svg
 [addon]: https://my.home-assistant.io/redirect/supervisor_addon/?addon=ca5234a0_paperless-ngx&repository_url=https%3A%2F%2Fgithub.com%2FBenoitAnastay%2Fhome-assistant-addons-repository

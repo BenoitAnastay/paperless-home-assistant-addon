@@ -20,7 +20,7 @@
       "matchStringsStrategy": "any",
       "matchStrings": ["PAPERLESS_VERSION=\"v(?<currentValue>.*?)\""],
       "datasourceTemplate": "github-releases",
-      "depName": "paperless-ngx/paperless-ngx"
+      "depNameTemplate": "paperless-ngx/paperless-ngx"
     },
     {
       "fileMatch": ["/Dockerfile$"],

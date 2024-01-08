@@ -12,10 +12,13 @@ ENV TERM="xterm-256color"
 ARG PAPERLESS_VERSION="v2.3.2"
 
 # Renovate packages
+
 # renovate: datasource=repology depName=debian_12/gnupg2
 ENV GNUPG_VERSION="2.2.40-1.1"
+
 # renovate: datasource=repology depName=debian_12/postgresql-15
 ENV POSTGRESQL_VERSION="15.5-0+deb12u1"
+
 # renovate: datasource=repology depName=debian_12/zlib
 ENV ZLIB_VERSION="1:1.2.13.dfsg-1"
 

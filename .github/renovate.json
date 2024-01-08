@@ -35,48 +35,28 @@
   ],
   "packageRules": [
     {
-      "matchDatasources": [
-        "repology"
-      ],
-      "matchPackageNames": [
-        "gnupg"
-      ],
-      "replacementName": "gnupg2"
+      "matchDatasources": ["repology"],
+      "matchPackageNames": ["debian_12/gnupg"],
+      "replacementName": "debian_12/gnupg2"
     },
     {
-      "matchDatasources": [
-        "repology"
-      ],
-      "matchPackageNames": [
-        "postgresql-client"
-      ],
-      "replacementName": "postgresql-15"
+      "matchDatasources": ["repology"],
+      "matchPackageNames": ["debian_12/postgresql-client"],
+      "replacementName": "debian_12/postgresql-15"
     },
     {
-      "matchDatasources": [
-        "repology"
-      ],
-      "matchPackageNames": [
-        "libpq"
-      ],
-      "replacementName": "postgresql-15"
+      "matchDatasources": ["repology"],
+      "matchPackageNames": ["debian_12/libpq"],
+      "replacementName": "debian_12/postgresql-15"
     },
     {
-      "matchDatasources": [
-        "repology"
-      ],
-      "matchPackageNames": [
-        "libpq-dev"
-      ],
-      "replacementName": "postgresql-15"
+      "matchDatasources": ["repology"],
+      "matchPackageNames": ["debian_12/libpq-dev"],
+      "replacementName": "debian_12/postgresql-15"
     },
     {
-      "matchDatasources": [
-        "repology"
-      ],
-      "matchPackageNames": [
-        "zlib1g"
-      ],
+      "matchDatasources": ["repology"],
+      "matchPackageNames": ["zlib1g"],
       "replacementName": "zlib"
     },
     {

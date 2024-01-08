@@ -30,10 +30,55 @@
       ],
       "versioningTemplate": "deb",
       "datasourceTemplate": "repology",
-      "depNameTemplate": "debian_12/{{{replace 'postgresql-client' 'postgresql' package}}}"
+      "depNameTemplate": "debian_12/{{{package}}}"
     }
   ],
   "packageRules": [
+    {
+      "matchDatasources": [
+        "repology"
+      ],
+      "matchPackageNames": [
+        "gnupg"
+      ],
+      "replacementName": "gnupg2"
+    },
+    {
+      "matchDatasources": [
+        "repology"
+      ],
+      "matchPackageNames": [
+        "postgresql-client"
+      ],
+      "replacementName": "postgresql-15"
+    },
+    {
+      "matchDatasources": [
+        "repology"
+      ],
+      "matchPackageNames": [
+        "libpq"
+      ],
+      "replacementName": "postgresql-15"
+    },
+    {
+      "matchDatasources": [
+        "repology"
+      ],
+      "matchPackageNames": [
+        "libpq-dev"
+      ],
+      "replacementName": "postgresql-15"
+    },
+    {
+      "matchDatasources": [
+        "repology"
+      ],
+      "matchPackageNames": [
+        "zlib1g"
+      ],
+      "replacementName": "zlib"
+    },
     {
       "matchDatasources": ["repology"],
       "automerge": true

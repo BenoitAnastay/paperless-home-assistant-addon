@@ -98,7 +98,7 @@ ARG BUILD_PACKAGES="\
   build-essential \
   git \
   # https://www.psycopg.org/docs/install.html#prerequisites
-  libpq-dev=15.5-0+deb12u1 \
+  libpq-dev=${POSTGRESQL_VERSION} \
   # https://github.com/PyMySQL/mysqlclient#linux
   default-libmysqlclient-dev \
   pkg-config"

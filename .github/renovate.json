@@ -5,6 +5,16 @@
   "labels": ["dependencies", "no-stale"],
   "commitMessagePrefix": "⬆️",
   "commitMessageTopic": "{{depName}}",
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["^Dockerfile$"],
+      "matchStrings": [
+        "#\\s*renovate:\\s*datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\sENV .*?_VERSION=\"(?<currentValue>.*)\"\\s"
+      ],
+      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
+    }
+  ],
   "regexManagers": [
     {
       "fileMatch": ["/Dockerfile$", "/build.yaml$"],
@@ -34,31 +44,6 @@
     }
   ],
   "packageRules": [
-    {
-      "matchDatasources": ["repology"],
-      "matchPackageNames": ["debian_12/gnupg"],
-      "replacementName": "debian_12/gnupg2"
-    },
-    {
-      "matchDatasources": ["repology"],
-      "matchPackageNames": ["debian_12/postgresql-client"],
-      "replacementName": "debian_12/postgresql-15"
-    },
-    {
-      "matchDatasources": ["repology"],
-      "matchPackageNames": ["debian_12/libpq"],
-      "replacementName": "debian_12/postgresql-15"
-    },
-    {
-      "matchDatasources": ["repology"],
-      "matchPackageNames": ["debian_12/libpq-dev"],
-      "replacementName": "debian_12/postgresql-15"
-    },
-    {
-      "matchDatasources": ["repology"],
-      "matchPackageNames": ["zlib1g"],
-      "replacementName": "zlib"
-    },
     {
       "matchDatasources": ["repology"],
       "automerge": true

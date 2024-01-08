@@ -37,7 +37,7 @@ ARG RUNTIME_PACKAGES="\
   imagemagick=8:6.9.11.60+dfsg-1.6 \
   # PostgreSQL
   libpq5=${POSTGRESQL_VERSION} \
-  postgresql-client=${POSTGRESQL_VERSION} \
+  postgresql-client-15=${POSTGRESQL_VERSION} \
   # MySQL / MariaDB
   mariadb-client=1:10.11.4-1~deb12u1 \
   # OCRmyPDF dependencies

@@ -11,6 +11,15 @@ ENV TERM="xterm-256color"
 # Paperless version
 ARG PAPERLESS_VERSION="v2.3.2"
 
+# Renovate packages
+# renovate: datasource=repology depName=debian_12/gnupg2
+ENV GNUPG_VERSION="2.2.40-1.1"
+# renovate: datasource=repology depName=debian_12/postgresql-15
+ENV POSTGRESQL_VERSION="15.5-0+deb12u1"
+# renovate: datasource=repology depName=debian_12/zlib
+ENV ZLIB_VERSION="1:1.2.13.dfsg-1"
+
+
 # Packages need for running
 ARG RUNTIME_PACKAGES="\
   # General utils
@@ -23,12 +32,12 @@ ARG RUNTIME_PACKAGES="\
   fonts-liberation=1:1.07.4-11 \
   gettext=0.21-12 \
   ghostscript=10.0.0~dfsg-11+deb12u3 \
-  gnupg=2.2.40-1.1 \
+  gnupg=${GNUPG_VERSION} \
   icc-profiles-free=2.0.1+dfsg-1.1 \
   imagemagick=8:6.9.11.60+dfsg-1.6 \
   # PostgreSQL
-  libpq5=15.5-0+deb12u1 \
-  postgresql-client=15+248 \
+  libpq5=${POSTGRESQL_VERSION} \
+  postgresql-client-15=${POSTGRESQL_VERSION} \
   # MySQL / MariaDB
   mariadb-client=1:10.11.4-1~deb12u1 \
   # OCRmyPDF dependencies
@@ -50,7 +59,7 @@ ARG RUNTIME_PACKAGES="\
   file=1:5.44-3 \
   libmagic1=1:5.44-3 \
   media-types=10.0.0 \
-  zlib1g=1:1.2.13.dfsg-1 \
+  zlib1g=${ZLIB_VERSION} \
   # Barcode splitter
   libzbar0=0.23.92-7 \
   poppler-utils=22.12.0-2+b1 \
@@ -89,7 +98,7 @@ ARG BUILD_PACKAGES="\
   build-essential \
   git \
   # https://www.psycopg.org/docs/install.html#prerequisites
-  libpq-dev=15.5-0+deb12u1 \
+  libpq-dev=${POSTGRESQL_VERSION} \
   # https://github.com/PyMySQL/mysqlclient#linux
   default-libmysqlclient-dev \
   pkg-config"

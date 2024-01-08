@@ -18,6 +18,13 @@
     {
       "fileMatch": ["/Dockerfile$"],
       "matchStringsStrategy": "any",
+      "matchStrings": ["PAPERLESS_VERSION=\"v(?<currentValue>.*?)\""],
+      "datasourceTemplate": "github-releases",
+      "depName": "paperless-ngx/paperless-ngx"
+    },
+    {
+      "fileMatch": ["/Dockerfile$"],
+      "matchStringsStrategy": "any",
       "matchStrings": [
         "\\s\\s(?<package>[a-z0-9][a-z0-9-]+)=(?<currentValue>[a-z0-9-:_+~.]+)\\s+"
       ],

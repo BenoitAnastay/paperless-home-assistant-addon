@@ -39,36 +39,36 @@
         "repology"
       ],
       "matchPackageNames": [
-        "gnupg"
+        "debian_12/gnupg"
       ],
-      "replacementName": "gnupg2"
+      "replacementName": "debian_12/gnupg2"
     },
     {
       "matchDatasources": [
         "repology"
       ],
       "matchPackageNames": [
-        "postgresql-client"
+        "debian_12/postgresql-client"
       ],
-      "replacementName": "postgresql-15"
+      "replacementName": "debian_12/postgresql-15"
     },
     {
       "matchDatasources": [
         "repology"
       ],
       "matchPackageNames": [
-        "libpq"
+        "debian_12/libpq"
       ],
-      "replacementName": "postgresql-15"
+      "replacementName": "debian_12/postgresql-15"
     },
     {
       "matchDatasources": [
         "repology"
       ],
       "matchPackageNames": [
-        "libpq-dev"
+        "debian_12/libpq-dev"
       ],
-      "replacementName": "postgresql-15"
+      "replacementName": "debian_12/postgresql-15"
     },
     {
       "matchDatasources": [

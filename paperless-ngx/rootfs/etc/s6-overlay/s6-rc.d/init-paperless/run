@@ -5,6 +5,8 @@
 # Configures Parless-ngx
 # ==============================================================================
 
+declare -a urls=()
+
 PAPERLESS_CONSUMPTION_DIR=/share/paperless/consume
 PAPERLESS_DATA_DIR=/config/data
 PAPERLESS_MEDIA_ROOT=/share/paperless/media
@@ -21,3 +23,38 @@ mkdir -p $PAPERLESS_MEDIA_ROOT
 chown -R paperless:paperless /usr/src/paperless
 
 cp /usr/src/paperless/paperless.conf /config/paperless.conf.exemple
+
+# Get HA Port
+result=$(bashio::api.supervisor GET /core/info true || true)
+port=$(bashio::jq "$result" ".data.port")
+addon_port=$(bashio::addon.port 80)
+
+# Get all possible URLs
+result=$(bashio::api.supervisor GET /core/api/config true || true)
+urls+=("$(bashio::info.hostname)")
+urls+=("$(bashio::jq "$result" '.internal_url' | cut -d'/' -f3 | cut -d':' -f1)")
+urls+=("$(bashio::jq "$result" '.external_url' | cut -d'/' -f3 | cut -d':' -f1)")
+
+# Get supported interfaces
+for interface in $(bashio::network.interfaces); do
+    urls+=(bashio::network.ipv6_address "${interface}")
+    urls+=(bashio::network.ipv4_address "${interface}")
+done
+
+# Loop through URls to
+CSRF=""
+for url in "${urls[@]}"; do
+    if  bashio::var.has_value "${url}"; then
+        if [[ "${url}" != "null" ]]; then
+            CSRF="https://${url}:${port},http://${url}:${port}",${CSRF}
+            if bashio::var.has_value "$(bashio::addon.port 80)"; then
+                CSRF="https://${url}:${addon_port},http://${url}:${addon_port}",${CSRF}
+            fi
+        fi
+    fi
+done
+CSRF=${CSRF::-1}
+
+# Save CSFR
+echo -n "${CSRF}" > /var/run/s6/container_environment/PAPERLESS_CSRF_TRUSTED_ORIGINS
+bashio::log.blue "PAPERLESS_CSRF_TRUSTED_ORIGINS is set to ${CSRF}"

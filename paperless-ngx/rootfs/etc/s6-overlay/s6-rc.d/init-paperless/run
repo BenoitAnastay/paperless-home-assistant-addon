@@ -6,6 +6,7 @@
 # ==============================================================================
 
 declare -a urls=()
+CSRF=""
 
 PAPERLESS_CONSUMPTION_DIR=/share/paperless/consume
 PAPERLESS_DATA_DIR=/config/data
@@ -41,8 +42,15 @@ for interface in $(bashio::network.interfaces); do
     urls+=("$(bashio::network.ipv4_address "${interface}" | cut -d'/' -f1)")
 done
 
-# Loop through URls to
-CSRF=""
+# Add internal and external URL as it
+if [[ "$(bashio::jq "$result" '.external_url')" != "null" ]]; then
+    CSRF=$(bashio::jq "$result" '.external_url')
+fi
+if [[ "$(bashio::jq "$result" '.internal_url')" != "null" ]]; then
+    CSRF=$(bashio::jq "$result" '.internal_url'),${CSRF}
+fi
+
+# Loop through URls to add them in the CSRF string
 for url in "${urls[@]}"; do
     if  bashio::var.has_value "${url}"; then
         if [[ "${url}" != "null" ]]; then

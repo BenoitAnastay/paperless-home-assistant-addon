@@ -37,8 +37,8 @@ urls+=("$(bashio::jq "$result" '.external_url' | cut -d'/' -f3 | cut -d':' -f1)"
 
 # Get supported interfaces
 for interface in $(bashio::network.interfaces); do
-    urls+=(bashio::network.ipv6_address "${interface}")
-    urls+=(bashio::network.ipv4_address "${interface}")
+    urls+=("$(bashio::network.ipv6_address "${interface}" | cut -d'/' -f1)")
+    urls+=("$(bashio::network.ipv4_address "${interface}" | cut -d'/' -f1)")
 done
 
 # Loop through URls to

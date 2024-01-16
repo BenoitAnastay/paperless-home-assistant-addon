@@ -6,6 +6,7 @@ url: https://github.com/paperless-ngx/paperless-ngx
 init: false
 ingress: true
 ingress_stream: true
+panel_icon: mdi:leaf
 homeassistant_api: true
 hassio_api: true
 description:

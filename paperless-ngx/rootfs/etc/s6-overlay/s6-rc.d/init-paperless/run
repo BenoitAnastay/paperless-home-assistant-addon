@@ -66,3 +66,10 @@ CSRF=${CSRF::-1}
 # Save CSFR
 echo -n "${CSRF}" > /var/run/s6/container_environment/PAPERLESS_CSRF_TRUSTED_ORIGINS
 bashio::log.blue "PAPERLESS_CSRF_TRUSTED_ORIGINS is set to ${CSRF}"
+
+# Update Supervisord.conf to enable Ingress
+bashio::var.json \
+        ingress_entry "$(bashio::addon.ingress_entry)" \
+        | tempio \
+            -template /etc/s6-overlay/s6-rc.d/init-paperless/supervisord.gtpl \
+            -out  /etc/supervisord.conf

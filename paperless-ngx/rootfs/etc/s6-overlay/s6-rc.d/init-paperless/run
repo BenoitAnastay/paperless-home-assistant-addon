@@ -32,7 +32,7 @@ addon_port=$(bashio::addon.port 80)
 
 # Get all possible URLs
 result=$(bashio::api.supervisor GET /core/api/config true || true)
-urls+=("$(bashio::info.hostname)")
+urls+=("$(bashio::info.hostname).local")
 urls+=("$(bashio::jq "$result" '.internal_url' | cut -d'/' -f3 | cut -d':' -f1)")
 urls+=("$(bashio::jq "$result" '.external_url' | cut -d'/' -f3 | cut -d':' -f1)")
 

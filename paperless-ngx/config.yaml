@@ -40,6 +40,8 @@ options:
   keyfile: privkey.pem
 schema:
   url: str?
+  csrf_allowed:
+    - str?
   filename: str
   language: str
   language_packages: str

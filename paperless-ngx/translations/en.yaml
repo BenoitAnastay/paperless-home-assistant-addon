@@ -3,6 +3,9 @@ configuration:
   url:
     name: Paperless URL
     description: You can set the value of PAPERLESS_URL manually
+  csrf_allowed:
+    name: CSRF Allowed domains
+    description: List of domains you want to manually add to CSRD_ALLOWED
   filename:
     name: Filename
     description: Default file format

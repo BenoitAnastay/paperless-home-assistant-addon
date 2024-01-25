@@ -76,6 +76,12 @@ keyfile: privkey.pem
 
 https://paperless-ngx.readthedocs.io/en/latest/configuration.html?highlight=paperless_url#hosting-security
 
+### Option: `csrf_allowed`
+
+Used to add domains to`PAPERLESS_CSRF_TRUSTED_ORIGINS`
+
+https://paperless-ngx.readthedocs.io/en/latest/configuration.html?highlight=paperless_url#hosting-security
+
 ### Option: `filename`
 
 https://paperless-ngx.readthedocs.io/en/latest/advanced_usage.html#advanced-file-name-handling

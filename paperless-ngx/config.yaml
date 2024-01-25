@@ -1,6 +1,6 @@
 ---
 name: Paperless-ngx
-version: dev
+version: dev22
 slug: paperless-ngx
 url: https://github.com/paperless-ngx/paperless-ngx
 init: false
@@ -40,6 +40,8 @@ options:
   keyfile: privkey.pem
 schema:
   url: str?
+  csrf_allowed:
+    - str?
   filename: str
   language: str
   language_packages: str

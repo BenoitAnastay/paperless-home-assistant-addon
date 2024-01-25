@@ -46,5 +46,8 @@ configuration:
   keyfile:
     name: SSL Keyfile
     description: Name of ssl key file (in /ssl/ directory)
+  max_upload:
+    name: Max Upload
+    description: In Megabyte set the max upload file size
 network:
   80/tcp: Web interface (Not required for Ingress)

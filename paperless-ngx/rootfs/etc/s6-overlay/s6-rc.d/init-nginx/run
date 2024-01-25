@@ -26,3 +26,10 @@ bashio::var.json \
     | tempio \
         -template /etc/nginx/templates/ingress.gtpl \
         -out /etc/nginx/servers/ingress.conf
+
+# Generate server_params
+bashio::var.json \
+    max_upload "^$(bashio::config 'max_upload')" \
+    | tempio \
+        -template /etc/nginx/templates/server_params.gtpl \
+        -out /etc/nginx/includes/server_params.conf

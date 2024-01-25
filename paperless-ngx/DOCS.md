@@ -148,6 +148,10 @@ The private key file to use for SSL.
 
 **Note**: _The file MUST be stored in `/ssl/`, which is the default_
 
+### Option: `max_upload`
+
+Let you set `client_max_body_size` of _nginx_ manually
+
 ### More personalisation
 
 You can add more configurations options in `/addon_config/paperless_ngx/paperless.conf`

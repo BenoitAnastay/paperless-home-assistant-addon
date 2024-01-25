@@ -30,7 +30,7 @@ Another way is to make a copy of the `data` and `media` directories.
 
 **NOTE: Making a snapshot that includes this addon but does not include the `share` directory will not back up your data!!**
 
-## CSRF Validation Failled 
+## CSRF Validation Failled
 
 There is a validation of domain name used for some requests, those domains are extracted from Internal URL, External URL and Hostname of home assistant.
 
@@ -40,13 +40,13 @@ You can find those settings in the network configuration of Home Assistant
 
 When set to automatic, those settings cannot be resolved by the Add-on therefore you might need to setup your Internal and External URL manually
 
-### Reverse Proxy and dedicated URL 
+### Reverse Proxy and dedicated URL
 
 For URL dedicated to paperless you'll have to set `url` in configuration tab of the Add-on (see bellow)
 
 ## Ingress and API
 
-For API you'll need to enable *direct access* to the Add-on by setting up a port under network in configuration tab
+For API you'll need to enable _direct access_ to the Add-on by setting up a port under network in configuration tab
 
 ## Configuration
 

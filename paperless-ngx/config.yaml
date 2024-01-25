@@ -58,3 +58,4 @@ schema:
   ssl: bool
   certfile: str
   keyfile: str
+  max_upload: int?

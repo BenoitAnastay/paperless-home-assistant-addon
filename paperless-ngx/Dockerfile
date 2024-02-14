@@ -64,7 +64,7 @@ ARG RUNTIME_PACKAGES="\
   media-types=10.0.0 \
   zlib1g=${ZLIB_VERSION} \
   # Barcode splitter
-  libzbar0=0.23.92-7 \
+  libzbar0=0.23.92-7+deb12u1 \
   poppler-utils=22.12.0-2+b1 \
   python3=3.11.2-1+b1 \
   python3-pip=23.0.1+dfsg-1 \
@@ -73,8 +73,8 @@ ARG RUNTIME_PACKAGES="\
   python3-zxing-cpp=1.4.0-3+b1 \ 
   wget \
   xz-utils=5.4.1-0.2 \
-  redis-server=5:7.0.11-1+deb12u1 \
-  redis-tools=5:7.0.11-1+deb12u1 \
+  redis-server=5:7.0.15-1~deb12u1 \
+  redis-tools=5:7.0.15-1~deb12u1 \
   nginx=1.22.1-9"
 
 # Install basic runtime packages.

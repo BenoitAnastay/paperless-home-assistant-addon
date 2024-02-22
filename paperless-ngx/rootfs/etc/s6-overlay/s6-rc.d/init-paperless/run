@@ -17,6 +17,8 @@ if bashio::fs.directory_exists '/share/paperless/data'; then
     mv /share/paperless/data /config
 fi
 
+chown -R paperless:paperless /share/paperless
+
 mkdir -p $PAPERLESS_CONSUMPTION_DIR
 mkdir -p $PAPERLESS_DATA_DIR
 mkdir -p $PAPERLESS_MEDIA_ROOT

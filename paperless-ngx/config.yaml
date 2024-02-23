@@ -7,6 +7,7 @@ init: false
 ingress: true
 ingress_stream: true
 panel_icon: mdi:leaf
+panel_admin: false
 homeassistant_api: true
 hassio_api: true
 description:

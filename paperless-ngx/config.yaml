@@ -32,9 +32,9 @@ options:
   language: eng
   language_packages: eng deu fra ita spa
   default_superuser:
-    username:
-    email:
-    password:
+    username: admin
+    email: admin@local.dev
+    password: changeme
   timezone: UTC
   ssl: false
   certfile: fullchain.pem

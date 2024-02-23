@@ -11,6 +11,7 @@ CSRF=""
 PAPERLESS_CONSUMPTION_DIR=/share/paperless/consume
 PAPERLESS_DATA_DIR=/config/data
 PAPERLESS_MEDIA_ROOT=/share/paperless/media
+PAPERLESS_ADMIN_PASSWORD=$(bashio::config 'default_superuser.password')
 
 if bashio::fs.directory_exists '/share/paperless/data'; then
     bashio::log.info "Migrating 'data' folder from share storage to /addon_configs/papeless_ngx/data"
@@ -18,6 +19,13 @@ if bashio::fs.directory_exists '/share/paperless/data'; then
 fi
 
 chown -R paperless:paperless /share/paperless
+
+if ! bashio::fs.directory_exists "${PAPERLESS_DATA_DIR}"; then
+    if bashio::var.equals "${PAPERLESS_ADMIN_PASSWORD}" "changeme"; then
+        bashio::log.error "Please change default admin password before running addon"
+        bashio::exit.nok
+    fi
+fi
 
 mkdir -p $PAPERLESS_CONSUMPTION_DIR
 mkdir -p $PAPERLESS_DATA_DIR

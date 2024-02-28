@@ -18,7 +18,9 @@ if bashio::fs.directory_exists '/share/paperless/data'; then
     mv /share/paperless/data /config
 fi
 
-chown -R paperless:paperless /share/paperless
+if bashio::fs.directory_exists '/share/paperless'; then
+    chown -R paperless:paperless /share/paperless
+fi
 
 if ! bashio::fs.directory_exists "${PAPERLESS_DATA_DIR}"; then
     if bashio::var.equals "${PAPERLESS_ADMIN_PASSWORD}" "changeme"; then

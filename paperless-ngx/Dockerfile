@@ -75,7 +75,6 @@ ARG RUNTIME_PACKAGES="\
   python3-pip=23.0.1+dfsg-1 \
   python3-dev=3.11.2-1+b1 \
   python3-full=3.11.2-1+b1 \
-  python3-zxing-cpp=1.4.0-3+b1 \ 
   wget \
   xz-utils=5.4.1-0.2 \
   redis-server=${REDIS_VERSION} \
@@ -121,6 +120,8 @@ RUN --mount=type=cache,target=/root/.cache/pip/,id=pip-cache \
   && python3 -m pip install --no-cache-dir --upgrade wheel \
   && echo "Installing Python requirements" \
   && python3 -m pip install --default-timeout=1000 --requirement requirements.txt \
+  && echo "Installing ZXing" \
+  && python3 -m pip install zxing-cpp \
   && echo "Installing NLTK data" \
   && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" snowball_data \
   && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" stopwords \

@@ -49,5 +49,11 @@ configuration:
   max_upload:
     name: Max Upload
     description: In Megabyte set the max upload file size
+  usermap_uid:
+    name: Paperless UID
+    description: UID of file owner
+  usermap_gid:
+    name: Paperless GID
+    description: must match host GID of file owner
 network:
   80/tcp: Web interface (Not required for Ingress)

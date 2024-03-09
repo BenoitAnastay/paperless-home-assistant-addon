@@ -27,6 +27,18 @@ PAPERLESS_USE_X_FORWARD_PORT=true
 PAPERLESS_CONSUMER_BARCODE_SCANNER=ZXING
 PAPERLESS_CONFIGURATION_PATH="/config/paperless.conf"
 
+if bashio::config.has_value 'usermap_uid'; then
+  USERMAP_UID=$(bashio::config 'usermap_uid')
+  echo -n "${USERMAP_UID}" > /var/run/s6/container_environment/USERMAP_UID
+  export USERMAP_UID
+fi
+
+if bashio::config.has_value 'usermap_gid'; then
+  USERMAP_GID=$(bashio::config 'usermap_gid')
+  echo -n "${USERMAP_GID}" > /var/run/s6/container_environment/USERMAP_GID
+  export USERMAP_GID
+fi
+
 #This set the URL of paperless
 if bashio::config.has_value 'url'; then
   PAPERLESS_URL=$(bashio::config 'url')

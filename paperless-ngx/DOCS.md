@@ -20,6 +20,8 @@ comparison to installing any other Home Assistant add-on.
 
 Media files are stored in the `share/paperless` directory. This includes the `consume` and `media` directories. Files added into `consume` will be ingested by Paperless.
 
+If you do use an external drive, mounted in your media directory, you can set `media_relative_path` to the relative path from /media/ (/media/`media_relative_path`).
+
 `paperless.conf` file and `data` directory are located in `/addon_config/paperless_ngx`
 
 ## Backing up

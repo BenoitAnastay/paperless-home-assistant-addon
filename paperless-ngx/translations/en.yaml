@@ -55,5 +55,8 @@ configuration:
   usermap_gid:
     name: Paperless GID
     description: must match host GID of file owner
+  media_relative_path:
+    name: Media relative path
+    description: If defined the storage location will be set in this media subfolder
 network:
   80/tcp: Web interface (Not required for Ingress)

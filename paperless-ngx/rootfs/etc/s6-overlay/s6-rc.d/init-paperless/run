@@ -7,19 +7,28 @@
 
 declare -a urls=()
 CSRF=""
+BASE_STORAGE_PATH=/share/paperless
 
-PAPERLESS_CONSUMPTION_DIR=/share/paperless/consume
+if bashio::config.has_value 'media_relative_path'; then
+    BASE_STORAGE_PATH=$(bashio::config 'media_relative_path')
+    bashio::log.info "The file storage is defined to ${BASE_STORAGE_PATH}"
+fi
+
+echo -n "${BASE_STORAGE_PATH}" > /var/run/s6/container_environment/BASE_STORAGE_PATH
+
+PAPERLESS_CONSUMPTION_DIR=${BASE_STORAGE_PATH}/consume
 PAPERLESS_DATA_DIR=/config/data
-PAPERLESS_MEDIA_ROOT=/share/paperless/media
+PAPERLESS_MEDIA_ROOT=${BASE_STORAGE_PATH}/media
 PAPERLESS_ADMIN_PASSWORD=$(bashio::config 'default_superuser.password')
 
 if bashio::fs.directory_exists '/share/paperless/data'; then
+    # ${BASE_STORAGE_PATH} not needed since the migration would always be from the share directory
     bashio::log.info "Migrating 'data' folder from share storage to /addon_configs/papeless_ngx/data"
     mv /share/paperless/data /config
 fi
 
-if bashio::fs.directory_exists '/share/paperless'; then
-    chown -R paperless:paperless /share/paperless
+if bashio::fs.directory_exists "${BASE_STORAGE_PATH}"; then
+    chown -R paperless:paperless ${BASE_STORAGE_PATH}
 fi
 
 if ! bashio::fs.directory_exists "${PAPERLESS_DATA_DIR}"; then

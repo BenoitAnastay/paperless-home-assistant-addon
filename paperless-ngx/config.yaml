@@ -1,6 +1,6 @@
 ---
 name: Paperless-ngx
-version: dev
+version: dev2
 slug: paperless-ngx
 url: https://github.com/paperless-ngx/paperless-ngx
 init: false
@@ -26,6 +26,7 @@ ports_description:
 map:
   - addon_config:rw
   - share:rw
+  - media:rw
   - ssl
 options:
   filename: "{created_year}/{correspondent}/{title}"
@@ -62,3 +63,4 @@ schema:
   max_upload: int?
   usermap_uid: int?
   usermap_gid: int?
+  media_relative_path: str?

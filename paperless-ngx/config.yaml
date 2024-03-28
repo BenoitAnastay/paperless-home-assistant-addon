@@ -1,7 +1,7 @@
 ---
 name: Paperless-ngx
 version: dev
-slug: paperless-ngx
+slug: paperless_ngx
 url: https://github.com/paperless-ngx/paperless-ngx
 init: false
 ingress: true

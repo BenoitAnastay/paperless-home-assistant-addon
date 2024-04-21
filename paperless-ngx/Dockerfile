@@ -75,6 +75,7 @@ ARG RUNTIME_PACKAGES="\
   python3-pip=23.0.1+dfsg-1 \
   python3-dev=3.11.2-1+b1 \
   python3-full=3.11.2-1+b1 \
+  python3-magic=2:0.4.26-3 \
   wget \
   xz-utils=5.4.1-0.2 \
   redis-server=${REDIS_VERSION} \
@@ -84,14 +85,17 @@ ARG RUNTIME_PACKAGES="\
 # Install basic runtime packages.
 # These change very infrequently
 # hadolint ignore=DL3003,DL3042,DL3008
-RUN set -eux \
+RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
+  set -eux \
   echo "Installing system packages" \
   && apt-get update \
   && apt-get install --yes --quiet --no-install-recommends ${RUNTIME_PACKAGES} \
   && rm -rf /var/lib/apt/lists/* \
   && echo "Installing supervisor" \
   && rm /usr/lib/python3.11/EXTERNALLY-MANAGED \
-  && python3 -m pip install --default-timeout=1000 --upgrade --no-cache-dir supervisor==4.2.5 \
+  && curl -LsSf https://astral.sh/uv/install.sh | sh \
+  && source $HOME/.cargo/env \
+  && uv pip install --system --upgrade --no-cache-dir supervisor==4.2.5 \
   && echo "Download Paperless-ngx" \
   && wget -q -O paperless.tar.xz https://github.com/paperless-ngx/paperless-ngx/releases/download/${PAPERLESS_VERSION}/paperless-ngx-${PAPERLESS_VERSION}.tar.xz \
   && tar -xf paperless.tar.xz \
@@ -112,16 +116,17 @@ ARG BUILD_PACKAGES="\
 
 # Install requirements
 # hadolint ignore=DL3042,DL3008,DL3013
-RUN --mount=type=cache,target=/root/.cache/pip/,id=pip-cache \
+RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   set -eux \
   && echo "Installing build system packages" \
   && apt-get update \
   && apt-get install --yes --quiet --no-install-recommends ${BUILD_PACKAGES} \
-  && python3 -m pip install --no-cache-dir --upgrade wheel \
+  && source $HOME/.cargo/env \
+  && uv pip install --system --no-cache-dir --upgrade wheel \
   && echo "Installing Python requirements" \
-  && python3 -m pip install --default-timeout=1000 --requirement requirements.txt \
+  && uv pip install --system --requirement requirements.txt \
   && echo "Installing ZXing" \
-  && python3 -m pip install zxing-cpp \
+  && uv pip install --system zxing-cpp \
   && echo "Installing NLTK data" \
   && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" snowball_data \
   && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" stopwords \

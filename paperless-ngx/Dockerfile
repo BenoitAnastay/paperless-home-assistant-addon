@@ -84,7 +84,7 @@ ARG RUNTIME_PACKAGES="\
 
 # Install basic runtime packages.
 # These change very infrequently
-# hadolint ignore=DL3003,DL3042,DL3008
+# hadolint ignore=DL3003,DL3042,DL3008,SC2086
 RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   set -eux \
   echo "Installing system packages" \
@@ -97,7 +97,7 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   && source $HOME/.cargo/env \
   && uv pip install --system --upgrade --no-cache-dir supervisor==4.2.5 \
   && echo "Download Paperless-ngx" \
-  && wget -q -O paperless.tar.xz https://github.com/paperless-ngx/paperless-ngx/releases/download/${PAPERLESS_VERSION}/paperless-ngx-${PAPERLESS_VERSION}.tar.xz \
+  && curl -J -L -s -o paperless.tar.xz https://github.com/paperless-ngx/paperless-ngx/releases/download/${PAPERLESS_VERSION}/paperless-ngx-${PAPERLESS_VERSION}.tar.xz \
   && tar -xf paperless.tar.xz \
   && mv paperless-ngx /usr/src/paperless
 
@@ -115,7 +115,7 @@ ARG BUILD_PACKAGES="\
   pkg-config"
 
 # Install requirements
-# hadolint ignore=DL3042,DL3008,DL3013
+# hadolint ignore=DL3042,DL3008,DL3013,SC2086
 RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   set -eux \
   && echo "Installing build system packages" \

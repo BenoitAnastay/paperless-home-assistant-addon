@@ -75,4 +75,8 @@ export PAPERLESS_USE_X_FORWARD_PORT
 export PAPERLESS_CONSUMER_BARCODE_SCANNER
 export PAPERLESS_CONFIGURATION_PATH
 
-/sbin/docker-entrypoint.sh "/usr/local/bin/paperless_cmd.sh"
+if bashio::fs.file_exists '/config/paperless.conf'; then
+    dotenv -f /config/paperless.conf -e true run /sbin/docker-entrypoint.sh "/usr/local/bin/paperless_cmd.sh"
+else
+    /sbin/docker-entrypoint.sh "/usr/local/bin/paperless_cmd.sh"
+fi

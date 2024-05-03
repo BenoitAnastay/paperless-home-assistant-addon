@@ -44,6 +44,7 @@ addon_port=$(bashio::addon.port 80)
 
 # Get all possible URLs
 result=$(bashio::api.supervisor GET /core/api/config true || true)
+urls+=("ingress.local")
 urls+=("$(bashio::info.hostname).local")
 urls+=("$(bashio::info.hostname)")
 urls+=("$(bashio::jq "$result" '.internal_url' | cut -d'/' -f3 | cut -d':' -f1)")

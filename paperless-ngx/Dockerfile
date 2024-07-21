@@ -17,7 +17,7 @@ ARG PAPERLESS_VERSION="v2.10.2"
 ENV GNUPG_VERSION="2.2.40-1.1"
 
 # renovate: datasource=repology depName=debian_12/postgresql-15
-ENV POSTGRESQL_VERSION="15.5-0+deb12u1"
+ENV POSTGRESQL_VERSION="15.7-0+deb12u1"
 
 # renovate: datasource=repology depName=debian_12/zlib
 ENV ZLIB_VERSION="1:1.2.13.dfsg-1"
@@ -33,7 +33,7 @@ ARG RUNTIME_PACKAGES="\
   # General utils
   curl=7.88.1-10+deb12u6 \
   # Docker specific
-  gosu=1.14-1+b6 \
+  gosu=1.14-1+b10 \
   # Timezones support
   tzdata=2024a-0+deb12u1 \
   # fonts for text file thumbnail generation

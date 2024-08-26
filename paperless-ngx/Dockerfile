@@ -130,7 +130,7 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   && echo "Installing NLTK data" \
   && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" snowball_data \
   && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" stopwords \
-  && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" punkt \
+  && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" punkt_tab \
   && echo "Cleaning up image" \
   && apt-get -y purge ${BUILD_PACKAGES} \
   && apt-get -y autoremove --purge \

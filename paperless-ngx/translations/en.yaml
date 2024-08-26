@@ -55,5 +55,8 @@ configuration:
   usermap_gid:
     name: Paperless GID
     description: must match host GID of file owner
+  ingress_auth:
+    name: Enable Ingress authentication
+    description: This allow a SSO, when logged in to home assistant, login and password will not be asked
 network:
   80/tcp: Web interface (Not required for Ingress)

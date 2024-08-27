@@ -8,6 +8,7 @@ server {
     include /etc/nginx/includes/server_params.conf;
 
     location / {
+        proxy_pass_request_headers off;
         # Adjust host and port as required.
         proxy_pass http://localhost:8000/;
 
@@ -21,6 +22,9 @@ server {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Host $host:{{ .port }};
+        proxy_set_header X-Remote-User-Display-Name "";
+        proxy_set_header X-Remote-User-Name "";
+        proxy_set_header X-Remote-User-Id "";
         add_header Referrer-Policy "strict-origin-when-cross-origin";
     }
 

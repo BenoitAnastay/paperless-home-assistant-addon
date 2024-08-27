@@ -19,7 +19,6 @@ PAPERLESS_CONSUMER_ENABLE_BARCODES=$(bashio::config 'barcodes_enabled')
 PAPERLESS_CONSUMER_ENABLE_ASN_BARCODE=$(bashio::config 'barcodes_asn')
 PAPERLESS_CONSUMER_RECURSIVE=$(bashio::config 'consumer_recursive')
 PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS=$(bashio::config 'consumer_subdirs_as_tags')
-PAPERLESS_ENABLE_HTTP_REMOTE_USER=$(bashio::config 'ingress_auth')
 PAPERLESS_CONSUMPTION_DIR=/share/paperless/consume
 PAPERLESS_DATA_DIR=/config/data
 PAPERLESS_MEDIA_ROOT=/share/paperless/media
@@ -27,6 +26,7 @@ PAPERLESS_USE_X_FORWARD_HOST=true
 PAPERLESS_USE_X_FORWARD_PORT=true
 PAPERLESS_CONSUMER_BARCODE_SCANNER=ZXING
 PAPERLESS_CONFIGURATION_PATH="/config/paperless.conf"
+PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME="HTTP_X_REMOTE_USER_NAME"
 
 if bashio::config.has_value 'usermap_uid'; then
   USERMAP_UID=$(bashio::config 'usermap_uid')
@@ -75,7 +75,7 @@ export PAPERLESS_USE_X_FORWARD_HOST
 export PAPERLESS_USE_X_FORWARD_PORT
 export PAPERLESS_CONSUMER_BARCODE_SCANNER
 export PAPERLESS_CONFIGURATION_PATH
-export PAPERLESS_ENABLE_HTTP_REMOTE_USER
+export PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME
 
 if bashio::fs.file_exists '/config/paperless.conf'; then
     dotenv -f /config/paperless.conf -e true run /sbin/docker-entrypoint.sh "/usr/local/bin/paperless_cmd.sh"

@@ -24,7 +24,7 @@ bashio::log.blue "Ingress is enabled"
 # Generate Ingress NGINX configuration
 bashio::var.json \
     interface "$(bashio::addon.ip_address)" \
-    ingress_auth "$(bashio::config 'ingress_auth')" \
+    ingress_auth "^$(bashio::config 'ingress_auth')" \
     | tempio \
         -template /etc/nginx/templates/ingress.gtpl \
         -out /etc/nginx/servers/ingress.conf

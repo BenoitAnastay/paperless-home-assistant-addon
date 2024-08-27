@@ -25,7 +25,7 @@ stdout_logfile=/dev/stdout
 stdout_logfile_maxbytes=0
 stderr_logfile=/dev/stderr
 stderr_logfile_maxbytes=0
-environment = HOME="/usr/src/paperless",USER="paperless",PAPERLESS_FORCE_SCRIPT_NAME="{{ .ingress_entry }}"
+environment = HOME="/usr/src/paperless",USER="paperless",PAPERLESS_FORCE_SCRIPT_NAME="{{ .ingress_entry }}",PAPERLESS_ENABLE_HTTP_REMOTE_USER_API="{{ .ingress_auth }}",PAPERLESS_ENABLE_HTTP_REMOTE_USER="{{ .ingress_auth }}"
 
 [program:consumer]
 command=python3 manage.py document_consumer

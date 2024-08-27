@@ -21,6 +21,9 @@ server {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Host $host:{{ .port }};
+        proxy_hide_header X-Remote-User-Display-Name;
+        proxy_hide_header X-Remote-User-Name;
+        proxy_hide_header X-Remote-User-Id;
         add_header Referrer-Policy "strict-origin-when-cross-origin";
     }
 

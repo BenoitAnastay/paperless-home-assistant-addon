@@ -19,7 +19,7 @@ server {
         proxy_set_header X-Forwarded-Host $server_name;
 
         {{ if .ingress_auth }}
-        fastcgi_param REMOTE_USER $x-remote-user-name;
+        proxy_pass_request_headers on;
         {{ end }}
 
         proxy_set_header Origin "http://ingress.local";

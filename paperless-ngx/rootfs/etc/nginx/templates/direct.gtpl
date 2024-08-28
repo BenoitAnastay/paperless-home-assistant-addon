@@ -8,7 +8,6 @@ server {
     include /etc/nginx/includes/server_params.conf;
 
     location / {
-        proxy_pass_request_headers off;
         # Adjust host and port as required.
         proxy_pass http://localhost:8000/;
 

@@ -82,6 +82,21 @@ ARG RUNTIME_PACKAGES="\
   redis-tools=${REDIS_VERSION} \
   nginx=1.22.1-9"
 
+# Buildx provided, must be defined to use though
+ARG TARGETARCH
+
+# Can be workflow provided, defaults set for manual building
+ARG JBIG2ENC_VERSION=0.29
+ARG QPDF_VERSION=11.9.0
+ARG GS_VERSION=10.03.1
+
+# Set Python environment variables
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    # Ignore warning from Whitenoise
+    PYTHONWARNINGS="ignore:::django.http.response:517" \
+    PNGX_CONTAINERIZED=1
+
 # Install basic runtime packages.
 # These change very infrequently
 # hadolint ignore=DL3003,DL3042,DL3008,SC2086
@@ -90,7 +105,37 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   echo "Installing system packages" \
   && apt-get update \
   && apt-get install --yes --quiet --no-install-recommends ${RUNTIME_PACKAGES} \
-  && rm -rf /var/lib/apt/lists/* \
+  && echo "Installing pre-built updates" \
+    && echo "Installing qpdf ${QPDF_VERSION}" \
+      && curl --fail --silent --show-error --location \
+        --output libqpdf29_${QPDF_VERSION}-1_${TARGETARCH}.deb \
+        https://github.com/paperless-ngx/builder/releases/download/qpdf-${QPDF_VERSION}/libqpdf29_${QPDF_VERSION}-1_${TARGETARCH}.deb \
+      && curl --fail --silent --show-error --location \
+        --output qpdf_${QPDF_VERSION}-1_${TARGETARCH}.deb \
+        https://github.com/paperless-ngx/builder/releases/download/qpdf-${QPDF_VERSION}/qpdf_${QPDF_VERSION}-1_${TARGETARCH}.deb \
+      && dpkg --install ./libqpdf29_${QPDF_VERSION}-1_${TARGETARCH}.deb \
+      && dpkg --install ./qpdf_${QPDF_VERSION}-1_${TARGETARCH}.deb \
+    && echo "Installing Ghostscript ${GS_VERSION}" \
+      && curl --fail --silent --show-error --location \
+        --output libgs10_${GS_VERSION}.dfsg-1_${TARGETARCH}.deb \
+        https://github.com/paperless-ngx/builder/releases/download/ghostscript-${GS_VERSION}/libgs10_${GS_VERSION}.dfsg-1_${TARGETARCH}.deb \
+      && curl --fail --silent --show-error --location \
+        --output ghostscript_${GS_VERSION}.dfsg-1_${TARGETARCH}.deb \
+        https://github.com/paperless-ngx/builder/releases/download/ghostscript-${GS_VERSION}/ghostscript_${GS_VERSION}.dfsg-1_${TARGETARCH}.deb \
+      && curl --fail --silent --show-error --location \
+        --output libgs10-common_${GS_VERSION}.dfsg-1_all.deb \
+        https://github.com/paperless-ngx/builder/releases/download/ghostscript-${GS_VERSION}/libgs10-common_${GS_VERSION}.dfsg-1_all.deb \
+      && dpkg --install ./libgs10-common_${GS_VERSION}.dfsg-1_all.deb \
+      && dpkg --install ./libgs10_${GS_VERSION}.dfsg-1_${TARGETARCH}.deb \
+      && dpkg --install ./ghostscript_${GS_VERSION}.dfsg-1_${TARGETARCH}.deb \
+      && echo "Installing jbig2enc" \
+        && curl --fail --silent --show-error --location \
+          --output jbig2enc_${JBIG2ENC_VERSION}-1_${TARGETARCH}.deb \
+          https://github.com/paperless-ngx/builder/releases/download/jbig2enc-${JBIG2ENC_VERSION}/jbig2enc_${JBIG2ENC_VERSION}-1_${TARGETARCH}.deb \
+        && dpkg --install ./jbig2enc_${JBIG2ENC_VERSION}-1_${TARGETARCH}.deb \
+      && echo "Cleaning up image layer" \
+        && rm --force --verbose *.deb \
+    && rm --recursive --force --verbose /var/lib/apt/lists/* \
   && echo "Installing supervisor" \
   && rm /usr/lib/python3.11/EXTERNALLY-MANAGED \
   && curl -LsSf https://astral.sh/uv/install.sh | sh \
@@ -170,6 +215,8 @@ WORKDIR /usr/src/paperless/src/
 # add users, setup scripts
 # Mount the compiled frontend to expected location
 RUN set -eux \
+ && echo "Creating gnupg directory" \
+    && mkdir -m700 --verbose /usr/src/paperless/.gnupg \
   && addgroup --gid 1000 paperless \
   && useradd --uid 1000 --gid paperless --home-dir /usr/src/paperless paperless \
   && chown -R paperless:paperless /usr/src/paperless \

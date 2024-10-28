@@ -82,6 +82,9 @@ ARG RUNTIME_PACKAGES="\
   redis-tools=${REDIS_VERSION} \
   nginx=1.22.1-9"
 
+# Buildx provided, must be defined to use though
+ARG TARGETARCH
+
 # Can be workflow provided, defaults set for manual building
 ARG JBIG2ENC_VERSION=0.29
 ARG QPDF_VERSION=11.9.0

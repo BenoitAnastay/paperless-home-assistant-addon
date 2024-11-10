@@ -31,7 +31,7 @@ ENV LIBZBAR0_VERSION="0.23.92-7+deb12u1"
 # Packages need for running
 ARG RUNTIME_PACKAGES="\
   # General utils
-  curl=7.88.1-10+deb12u7 \
+  curl=7.88.1-10+deb12u8 \
   # Docker specific
   gosu=1.14-1+b10 \
   # Timezones support

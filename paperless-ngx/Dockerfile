@@ -139,6 +139,7 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   && echo "Installing supervisor" \
   && rm /usr/lib/python3.11/EXTERNALLY-MANAGED \
   && curl -LsSf https://astral.sh/uv/install.sh | sh \
+  && source $HOME/.local/bin/env \
   && uv pip install --system --upgrade --no-cache-dir supervisor==4.2.5 \
   && echo "Download Paperless-ngx" \
   && curl -J -L -s -o paperless.tar.xz https://github.com/paperless-ngx/paperless-ngx/releases/download/${PAPERLESS_VERSION}/paperless-ngx-${PAPERLESS_VERSION}.tar.xz \

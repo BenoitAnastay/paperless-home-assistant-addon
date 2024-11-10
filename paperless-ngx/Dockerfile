@@ -166,7 +166,7 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   && echo "Installing build system packages" \
   && apt-get update \
   && apt-get install --yes --quiet --no-install-recommends ${BUILD_PACKAGES} \
-  && source $HOME/.cargo/env \
+  && source $HOME/.local/bin/env \
   && uv pip install --system --no-cache-dir --upgrade wheel \
   && echo "Installing Python requirements" \
   && uv pip install --system --requirement requirements.txt \

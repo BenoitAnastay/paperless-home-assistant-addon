@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/debian-base:7.5.1
+ARG BUILD_FROM=ghcr.io/hassio-addons/debian-base:7.5.2
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -139,7 +139,7 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   && echo "Installing supervisor" \
   && rm /usr/lib/python3.11/EXTERNALLY-MANAGED \
   && curl -LsSf https://astral.sh/uv/install.sh | sh \
-  && source $HOME/.cargo/env \
+  && source $HOME/.local/bin/env \
   && uv pip install --system --upgrade --no-cache-dir supervisor==4.2.5 \
   && echo "Download Paperless-ngx" \
   && curl -J -L -s -o paperless.tar.xz https://github.com/paperless-ngx/paperless-ngx/releases/download/${PAPERLESS_VERSION}/paperless-ngx-${PAPERLESS_VERSION}.tar.xz \
@@ -166,7 +166,7 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   && echo "Installing build system packages" \
   && apt-get update \
   && apt-get install --yes --quiet --no-install-recommends ${BUILD_PACKAGES} \
-  && source $HOME/.cargo/env \
+  && source $HOME/.local/bin/env \
   && uv pip install --system --no-cache-dir --upgrade wheel \
   && echo "Installing Python requirements" \
   && uv pip install --system --requirement requirements.txt \

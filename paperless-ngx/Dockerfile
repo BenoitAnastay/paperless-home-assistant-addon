@@ -224,6 +224,8 @@ RUN set -eux \
   && gosu paperless python3 manage.py compilemessages
 
 ENV PAPERLESS_REDIS="redis://localhost:6379"
+ENV PAPERLESS_DATA_DIR="/config/data"
+ENV PAPERLESS_MEDIA_ROOT="/share/paperless/media"
 RUN sed -i "s/bind .*/bind 127.0.0.1/g" /etc/redis/redis.conf
 
 VOLUME ["/usr/src/paperless/data", \

@@ -67,6 +67,7 @@ barcodes_enabled: false
 barcodes_asn: false
 barcodes_asn_prefix: ASN
 barcodes_upscale: 0.0
+barcodes_dpi: 300
 consumer_recursive: false
 consumer_subdirs_as_tags: false
 ssl: false
@@ -129,6 +130,11 @@ Defines the prefix that is used to identify a barcode as an ASN barcode.
 
 Defines the upscale factor used in barcode detection. Improves the detection of small barcodes.
 [Docs](https://docs.paperless-ngx.com/configuration/#PAPERLESS_CONSUMER_BARCODE_UPSCALE))
+
+### Option: `barcodes_dpi`
+
+During barcode detection every page from a PDF document needs to be converted to an image. A dpi value can be specified in the conversion process.
+[Docs](https://docs.paperless-ngx.com/configuration/#PAPERLESS_CONSUMER_BARCODE_DPI))
 
 ### Option: `consumer_recursive`
 

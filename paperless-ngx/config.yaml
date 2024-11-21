@@ -58,6 +58,7 @@ schema:
   barcodes_asn_prefix: str?
   barcodes_upscale: float?
   barcodes_dpi: int?
+  barcodes_max_pages: int?
   consumer_recursive: bool?
   consumer_subdirs_as_tags: bool?
   ssl: bool

@@ -68,6 +68,7 @@ barcodes_asn: false
 barcodes_asn_prefix: ASN
 barcodes_upscale: 0.0
 barcodes_dpi: 300
+barcodes_max_pages: 0
 consumer_recursive: false
 consumer_subdirs_as_tags: false
 ssl: false
@@ -135,6 +136,11 @@ Defines the upscale factor used in barcode detection. Improves the detection of 
 
 During barcode detection every page from a PDF document needs to be converted to an image. A dpi value can be specified in the conversion process.
 [Docs](https://docs.paperless-ngx.com/configuration/#PAPERLESS_CONSUMER_BARCODE_DPI))
+
+### Option: `barcodes_max_pages`
+
+Because barcode detection is a computationally-intensive operation, this setting limits the detection of barcodes to a number of first pages.
+[Docs](https://docs.paperless-ngx.com/configuration/#PAPERLESS_CONSUMER_BARCODE_MAX_PAGES))
 
 ### Option: `consumer_recursive`
 

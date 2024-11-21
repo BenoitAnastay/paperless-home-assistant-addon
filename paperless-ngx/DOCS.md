@@ -65,6 +65,7 @@ timezone: Europe/Paris
 polling_interval: 0
 barcodes_enabled: false
 barcodes_asn: false
+barcodes_asn_prefix: ASN
 consumer_recursive: false
 consumer_subdirs_as_tags: false
 ssl: false
@@ -117,6 +118,11 @@ Enables the scanning and page separation based on detected barcodes. This allows
 
 Enables the detection of barcodes in the scanned document and setting the ASN (archive serial number) if a properly formatted barcode is detected.
 [Docs](https://docs.paperless-ngx.com/configuration/#PAPERLESS_CONSUMER_ENABLE_ASN_BARCODE))
+
+### Option: `barcodes_asn_prefix`
+
+Defines the prefix that is used to identify a barcode as an ASN barcode.
+[Docs](https://docs.paperless-ngx.com/configuration/#PAPERLESS_CONSUMER_ASN_BARCODE_PREFIX))
 
 ### Option: `consumer_recursive`
 

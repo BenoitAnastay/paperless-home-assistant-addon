@@ -55,6 +55,7 @@ schema:
   polling_interval: int?
   barcodes_enabled: bool?
   barcodes_asn: bool?
+  barcodes_asn_prefix: str?
   consumer_recursive: bool?
   consumer_subdirs_as_tags: bool?
   ssl: bool

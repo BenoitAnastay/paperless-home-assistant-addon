@@ -41,7 +41,7 @@ In Home Assistant Information from paperless can be accessed trought a REST-Sens
   resource: http://ca5234a0-paperless-ngx/api/documents/?tags__name__iexact=inbox
   headers:
     Authorization: !secret paperless_auth_header
-  value_template: "{{ value_json.count | int }}"
+  value_template: "{{'{{ value_json.count | int }}'}}"
   name: "Paperless Inbox"
   icon: mdi:inbox
 ```
@@ -53,7 +53,7 @@ In Home Assistant Information from paperless can be accessed trought a REST-Sens
   resource: http://44849f5f-paperless-ngx/api/documents/?tags__name__iexact=inbox
   headers:
     Authorization: !secret paperless_auth_header
-  value_template: "{{ value_json.count | int }}"
+  value_template: "{{'{{ value_json.count | int }}'}}"
   name: "Paperless Inbox"
   icon: mdi:inbox
 ``` 

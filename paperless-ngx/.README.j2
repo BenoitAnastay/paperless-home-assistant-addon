@@ -34,19 +34,30 @@ The documentation for this addon can be found [here](DOCS.md)
 ## Integrate into Home Assistant
 
 In Home Assistant Information from paperless can be accessed trought a REST-Sensor:
-
-```
+{% if channel == "stable" %}
+``` yaml
 - platform: rest
   unique_id: 5dade7bc-ddb7-442e-bb17-0d379dbf01fb
-  resource: ca5234a0_paperless-ngx/api/documents/
+  resource: http://ca5234a0-paperless-ngx/api/documents/?tags__name__iexact=inbox
   headers:
     Authorization: !secret paperless_auth_header
-  params:
-    query: "tag:inbox"
-  value_template: "{{'{{ value_json.count | int }}'}}"
+  value_template: "{{ value_json.count | int }}"
   name: "Paperless Inbox"
   icon: mdi:inbox
 ```
+{% endif %}
+{% if channel == "edge" %}
+``` yaml
+- platform: rest
+  unique_id: 5dade7bc-ddb7-442e-bb17-0d379dbf01fb
+  resource: http://44849f5f-paperless-ngx/api/documents/?tags__name__iexact=inbox
+  headers:
+    Authorization: !secret paperless_auth_header
+  value_template: "{{ value_json.count | int }}"
+  name: "Paperless Inbox"
+  icon: mdi:inbox
+``` 
+{% endif %}
 
 In your secrets file you'll have to specify:
 

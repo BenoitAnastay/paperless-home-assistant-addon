@@ -226,6 +226,7 @@ RUN set -eux \
 ENV PAPERLESS_REDIS="redis://localhost:6379"
 ENV PAPERLESS_DATA_DIR="/config/data"
 ENV PAPERLESS_MEDIA_ROOT="/share/paperless/media"
+ENV PAPERLESS_CONFIGURATION_PATH="/config/paperless.conf"
 RUN sed -i "s/bind .*/bind 127.0.0.1/g" /etc/redis/redis.conf
 
 VOLUME ["/usr/src/paperless/data", \

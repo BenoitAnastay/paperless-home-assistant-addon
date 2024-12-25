@@ -29,6 +29,7 @@ comparison to installing any other Home Assistant add-on.
    [![Open this add-on in your Home Assistant instance.][addon-badge]][addon]
 
 1. Click the "Install" button to install the add-on.
+1. Modify the configuration to your needs and change the admin credentials.
 1. Start the "Paperless-ngx" add-on.
 1. Check the logs of the "Paperless-ngx" add-on to see it in action.
 

@@ -172,9 +172,9 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   && uv pip install --system --requirement requirements.txt \
   && echo "Installing ZXing" \
   && apt-get -y --no-install-recommends install software-properties-common \
-  && add-apt-repository "deb http://httpredir.debian.org/debian trixie main" \
+  && echo 'deb http://ftp.debian.org/debian testing main' >> /etc/apt/sources.list \
   && apt-get update \
-  && apt-get install --yes --quiet --no-install-recommends -t trixie python3-zxing-cpp=2.3.0-2 \
+  && apt-get install --yes --quiet --no-install-recommends -t testing python3-zxing-cpp=2.3.0-2 \
   && echo "Installing NLTK data" \
   && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" snowball_data \
   && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" stopwords \

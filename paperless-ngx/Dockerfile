@@ -171,7 +171,7 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   && echo "Installing Python requirements" \
   && uv pip install --system --requirement requirements.txt \
   && echo "Installing ZXing" \
-  && install --yes --quiet --no-install-recommends -t testing python3-zxing-cpp \
+  && apt-get install --yes --quiet --no-install-recommends -t testing python3-zxing-cpp \
   && echo "Installing NLTK data" \
   && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" snowball_data \
   && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" stopwords \

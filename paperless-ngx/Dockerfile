@@ -174,7 +174,7 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   && apt-get -y --no-install-recommends install software-properties-common \
   && echo 'deb http://ftp.debian.org/debian testing main' >> /etc/apt/sources.list \
   && apt-get update \
-  && apt-get install --yes --quiet --no-install-recommends -t testing python3-zxing-cpp=2.3.0-2 \
+  && apt-get install --yes --quiet --no-install-recommends -t testing python3-zxing-cpp \
   && echo "Installing NLTK data" \
   && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" snowball_data \
   && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" stopwords \

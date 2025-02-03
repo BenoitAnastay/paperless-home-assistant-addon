@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/debian-base:7.6.3
+ARG BUILD_FROM=ghcr.io/hassio-addons/debian-base:7.7.0
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -23,7 +23,7 @@ ENV POSTGRESQL_VERSION="15.10-0+deb12u1"
 ENV ZLIB_VERSION="1:1.2.13.dfsg-1"
 
 # renovate: datasource=repology depName=debian_12/redis
-ENV REDIS_VERSION="5:7.0.15-1~deb12u1"
+ENV REDIS_VERSION="5:7.0.15-1~deb12u2"
 
 # renovate: datasource=repology depName=debian_12/zbar
 ENV LIBZBAR0_VERSION="0.23.92-7+deb12u1"

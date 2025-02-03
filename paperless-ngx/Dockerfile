@@ -184,6 +184,7 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   && apt-get -y purge ${BUILD_PACKAGES} \
   && apt-get -y autoremove --purge \
   && apt-get clean --yes \
+  && rm -rf *.whl \
   && rm -rf /var/lib/apt/lists/* \
   && rm -rf /tmp/* \
   && rm -rf /var/tmp/* \

@@ -174,7 +174,7 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
       https://github.com/paperless-ngx/builder/releases/download/psycopg-3.2.4/psycopg_c-3.2.4-cp312-cp312-linux_aarch64.whl \
       https://github.com/paperless-ngx/builder/releases/download/zxing-2.3.0/zxing_cpp-2.3.0-cp312-cp312-linux_aarch64.whl \
       https://github.com/paperless-ngx/builder/releases/download/zxing-2.3.0/zxing_cpp-2.3.0-cp312-cp312-linux_x86_64.whl \
-  && python3 -m pip install --default-timeout=1000 --find-links . zxing-cpp \
+  && uv pip install --system --find-links . zxing_cpp-2.3.0-cp312-cp312-linux_${TARGETARCH}.whl \
   && echo "Installing Python requirements" \
   && uv pip install --system --find-links . --requirement requirements.txt \
   && echo "Installing NLTK data" \

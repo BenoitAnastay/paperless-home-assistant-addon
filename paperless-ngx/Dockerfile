@@ -158,7 +158,7 @@ ARG BUILD_PACKAGES="\
   # https://github.com/PyMySQL/mysqlclient#linux
   default-libmysqlclient-dev \
   pkg-config"
-
+  
 # Install requirements
 # hadolint ignore=DL3042,DL3008,DL3013,SC2086
 RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
@@ -174,6 +174,11 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
       https://github.com/paperless-ngx/builder/releases/download/psycopg-3.2.4/psycopg_c-3.2.4-cp312-cp312-linux_aarch64.whl \
       https://github.com/paperless-ngx/builder/releases/download/zxing-2.3.0/zxing_cpp-2.3.0-cp312-cp312-linux_aarch64.whl \
       https://github.com/paperless-ngx/builder/releases/download/zxing-2.3.0/zxing_cpp-2.3.0-cp312-cp312-linux_x86_64.whl \
+  && if [ "${TARGETARCH}" = "amd64" ]; then \
+    uv pip install --system --find-links . zxing-cpp@./zxing_cpp-2.3.0-cp312-cp312-linux_x86_64.whl; \
+  else \
+    uv pip install --system --find-links . zxing-cpp@./zxing_cpp-2.3.0-cp312-cp312-linux_aarch64.whl; \
+  fi \
   && echo "Installing Python requirements" \
   && uv pip install --system --find-links . --requirement requirements.txt \
   && echo "Installing NLTK data" \

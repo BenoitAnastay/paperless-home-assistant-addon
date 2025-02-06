@@ -162,7 +162,7 @@ ARG BUILD_PACKAGES="\
   # Set architecture-specific variables
   RUN if [ "${TARGETARCH}" = "amd64" ]; then \
     export WHLARCH="x86_64"; \
-  else
+  else \
     export WHLARCH="aarch64"; \
       fi
   

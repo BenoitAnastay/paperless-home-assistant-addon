@@ -169,7 +169,7 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   && source $HOME/.local/bin/env \
   && uv pip install --system --no-cache-dir --upgrade wheel \
   && echo "Installing ZXing" \
-  && uv pip install --system zxing-cpp=2.2.0 \
+  && uv pip install --system zxing-cpp==2.2.0 \
   && echo "Installing Python requirements" \
   && uv pip install --system --find-links . --requirement requirements.txt \
   && echo "Installing NLTK data" \

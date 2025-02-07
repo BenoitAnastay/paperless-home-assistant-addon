@@ -169,16 +169,7 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   && source $HOME/.local/bin/env \
   && uv pip install --system --no-cache-dir --upgrade wheel \
   && echo "Installing ZXing" \
-  && curl --fail --silent --no-progress-meter --show-error --location --remote-name-all --parallel --parallel-max 4 \
-      https://github.com/paperless-ngx/builder/releases/download/psycopg-3.2.4/psycopg_c-3.2.4-cp312-cp312-linux_x86_64.whl \
-      https://github.com/paperless-ngx/builder/releases/download/psycopg-3.2.4/psycopg_c-3.2.4-cp312-cp312-linux_aarch64.whl \
-      https://github.com/paperless-ngx/builder/releases/download/zxing-2.3.0/zxing_cpp-2.3.0-cp312-cp312-linux_aarch64.whl \
-      https://github.com/paperless-ngx/builder/releases/download/zxing-2.3.0/zxing_cpp-2.3.0-cp312-cp312-linux_x86_64.whl \
-  && if [ "${TARGETARCH}" = "amd64" ]; then \
-    uv pip install --system --find-links . zxing-cpp@./zxing_cpp-2.3.0-cp312-cp312-linux_x86_64.whl; \
-  else \
-    uv pip install --system --find-links . zxing-cpp@./zxing_cpp-2.3.0-cp312-cp312-linux_aarch64.whl; \
-  fi \
+  && uv pip install --system zxing-cpp=2.2.0 \
   && echo "Installing Python requirements" \
   && uv pip install --system --find-links . --requirement requirements.txt \
   && echo "Installing NLTK data" \

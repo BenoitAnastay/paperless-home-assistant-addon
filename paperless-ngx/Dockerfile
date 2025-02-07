@@ -89,6 +89,7 @@ ARG TARGETARCH
 ARG JBIG2ENC_VERSION=0.29
 ARG QPDF_VERSION=11.9.0
 ARG GS_VERSION=10.03.1
+ARG ZXING_VERSION=2.3.0
 
 # Set Python environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -170,10 +171,9 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   && uv pip install --system --no-cache-dir --upgrade wheel \
   && echo "Installing ZXing" \
   && curl --fail --silent --no-progress-meter --show-error --location --remote-name-all --parallel --parallel-max 4 \
-      https://github.com/paperless-ngx/builder/releases/download/psycopg-3.2.4/psycopg_c-3.2.4-cp312-cp312-linux_x86_64.whl \
-      https://github.com/paperless-ngx/builder/releases/download/psycopg-3.2.4/psycopg_c-3.2.4-cp312-cp312-linux_aarch64.whl \
-      https://github.com/paperless-ngx/builder/releases/download/zxing-2.3.0/zxing_cpp-2.3.0-cp312-cp312-linux_aarch64.whl \
-      https://github.com/paperless-ngx/builder/releases/download/zxing-2.3.0/zxing_cpp-2.3.0-cp312-cp312-linux_x86_64.whl \
+      https://github.com/BenoitAnastay/paperless-builder/releases/download/v2.3.0/zxing_cpp-2.3.0-cp311-cp311-linux_aarch64.whl \
+      https://github.com/BenoitAnastay/paperless-builder/releases/download/v2.3.0/zxing_cpp-2.3.0-cp311-cp311-linux_x86_64.whl \
+  && uv pip install --system --find-links . zxing-cpp==${ZXING_VERSION} \
   && echo "Installing Python requirements" \
   && uv pip install --system --find-links . --requirement requirements.txt \
   && echo "Installing NLTK data" \

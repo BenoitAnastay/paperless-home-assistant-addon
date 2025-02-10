@@ -45,7 +45,7 @@ comparison to installing any other Home Assistant add-on.
 [github-actions]: https://github.com/BenoitAnastay/paperless-home-assistant-addon/actions
 [issue]: https://github.com/BenoitAnastay/paperless-home-assistant-addon/issues
 [license-shield]: https://img.shields.io/github/license/BenoitAnastay/paperless-home-assistant-addon.svg
-[maintenance-shield]: https://img.shields.io/maintenance/yes/2024.svg
+[maintenance-shield]: https://img.shields.io/maintenance/yes/2025.svg
 [project-stage-shield]: https://img.shields.io/badge/project%20stage-stable-green.svg
 [releases-shield]: https://img.shields.io/github/release/BenoitAnastay/paperless-home-assistant-addon.svg
 [releases]: https://github.com/BenoitAnastay/paperless-home-assistant-addon/releases

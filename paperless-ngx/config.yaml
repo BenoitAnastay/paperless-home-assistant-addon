@@ -28,7 +28,7 @@ map:
   - share:rw
   - ssl
 options:
-  filename: "{created_year}/{correspondent}/{title}"
+  filename: "{{ created_year }}/{{ correspondent }}/{{ title }}"
   language: eng
   language_packages: eng deu fra ita spa
   default_superuser:

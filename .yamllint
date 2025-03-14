@@ -1,6 +1,6 @@
 ---
 ignore:
- - .github/FUNDING.yml
+  - .github/FUNDING.yml
 rules:
   braces:
     level: error

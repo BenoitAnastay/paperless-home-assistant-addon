@@ -80,7 +80,7 @@ ARG RUNTIME_PACKAGES="\
   xz-utils=5.4.1-0.2 \
   redis-server=${REDIS_VERSION} \
   redis-tools=${REDIS_VERSION} \
-  nginx=1.22.1-9"
+  nginx=1.22.1-9+deb12u1"
 
 # Buildx provided, must be defined to use though
 ARG TARGETARCH

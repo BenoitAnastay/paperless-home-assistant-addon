@@ -23,7 +23,7 @@ ENV POSTGRESQL_VERSION="15.10-0+deb12u1"
 ENV ZLIB_VERSION="1:1.2.13.dfsg-1"
 
 # renovate: datasource=repology depName=debian_12/redis
-ENV REDIS_VERSION="5:7.0.15-1~deb12u2"
+ENV REDIS_VERSION="5:7.0.15-1~deb12u3"
 
 # renovate: datasource=repology depName=debian_12/zbar
 ENV LIBZBAR0_VERSION="0.23.92-7+deb12u1"
@@ -80,7 +80,7 @@ ARG RUNTIME_PACKAGES="\
   xz-utils=5.4.1-0.2 \
   redis-server=${REDIS_VERSION} \
   redis-tools=${REDIS_VERSION} \
-  nginx=1.22.1-9"
+  nginx=1.22.1-9+deb12u1"
 
 # Buildx provided, must be defined to use though
 ARG TARGETARCH

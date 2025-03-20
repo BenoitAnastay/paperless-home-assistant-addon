@@ -27,6 +27,9 @@ PAPERLESS_USE_X_FORWARD_PORT=true
 PAPERLESS_CONSUMER_BARCODE_SCANNER=ZXING
 PAPERLESS_CONFIGURATION_PATH="/config/paperless.conf"
 PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME="HTTP_X_REMOTE_USER_NAME"
+PAPERLESS_TIKA_ENDPOINT=http://ca5234a0-tika-gotenberg:9998
+PAPERLESS_TIKA_GOTENBERG_ENDPOINT=http://ca5234a0-tika-gotenberg:3000
+PAPERLESS_TIKA_ENABLED=$(bashio::config 'tika_gotenberg')
 
 if bashio::config.has_value 'usermap_uid'; then
   USERMAP_UID=$(bashio::config 'usermap_uid')
@@ -76,6 +79,9 @@ export PAPERLESS_USE_X_FORWARD_PORT
 export PAPERLESS_CONSUMER_BARCODE_SCANNER
 export PAPERLESS_CONFIGURATION_PATH
 export PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME
+export PAPERLESS_TIKA_ENDPOINT
+export PAPERLESS_TIKA_GOTENBERG_ENDPOINT
+export PAPERLESS_TIKA_ENABLED
 
 if bashio::fs.file_exists '/config/paperless.conf'; then
     dotenv -f /config/paperless.conf -e true run /sbin/docker-entrypoint.sh "/usr/local/bin/paperless_cmd.sh"

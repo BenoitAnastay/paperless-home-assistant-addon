@@ -40,6 +40,7 @@ options:
   certfile: fullchain.pem
   keyfile: privkey.pem
   ingress_auth: false
+  tika_gotenberg: false
 schema:
   url: str?
   csrf_allowed:
@@ -64,3 +65,4 @@ schema:
   usermap_uid: int?
   usermap_gid: int?
   ingress_auth: bool
+  tika_gotenberg: bool

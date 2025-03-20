@@ -58,5 +58,8 @@ configuration:
   ingress_auth:
     name: Enable Ingress authentication
     description: This allow a SSO, when logged in to home assistant, login and password will not be asked
+  tika_gotenberg:
+    name: Enable Tika Gotenberg
+    description: You need to install the Tika Gotenberg addon
 network:
   80/tcp: Web interface (Not required for Ingress)

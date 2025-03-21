@@ -66,3 +66,4 @@ schema:
   usermap_gid: int?
   ingress_auth: bool
   tika_gotenberg: bool
+  locales: str?

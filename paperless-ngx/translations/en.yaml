@@ -61,5 +61,8 @@ configuration:
   tika_gotenberg:
     name: Enable Tika Gotenberg
     description: You need to install the Tika Gotenberg addon
+  locales:
+    name: Locales
+    description: Your language (fr_FR, en_US, de_DE, etc)
 network:
   80/tcp: Web interface (Not required for Ingress)

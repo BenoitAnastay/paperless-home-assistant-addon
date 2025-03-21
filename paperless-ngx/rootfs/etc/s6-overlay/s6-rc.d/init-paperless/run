@@ -96,3 +96,21 @@ bashio::var.json \
         | tempio \
             -template /etc/s6-overlay/s6-rc.d/init-paperless/supervisord.gtpl \
             -out  /etc/supervisord.conf
+
+# Update locales
+if bashio::config.has_value 'locales'; then
+    bashio::log.info "Setting up locales"
+    apt-get update -y
+    apt-get install -y locales patch
+    locales=$(bashio::config 'locales')
+    echo -n "${locales}.UTF-8 UTF-8" > /etc/locale.gen
+    locale-gen ${locales}.UTF-8
+    update-locale ${locales}.UTF-8
+    dpkg-reconfigure --frontend=noninteractive locales
+    bashio::log.info "Patching file_handler.py to use ${locales} as default"
+    cd /usr/src/paperless/
+    patch -p1 < /patches/file_handling.patch
+    echo -n "${locales}".UTF-8 > /var/run/s6/container_environment/LC_ALL
+    echo -n "${locales}".UTF-8 > /var/run/s6/container_environment/LANG
+    echo -n "${locales}".UTF-8 > /var/run/s6/container_environment/LANGUAGE
+fi

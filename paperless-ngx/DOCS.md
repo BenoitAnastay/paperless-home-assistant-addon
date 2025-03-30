@@ -13,6 +13,7 @@ comparison to installing any other Home Assistant add-on.
    [![Open this add-on in your Home Assistant instance.][addon-badge]][addon]
 
 1. Click the "Install" button to install the add-on.
+1. Modify the configuration to your needs and change the admin credentials.
 1. Start the "Paperless-ngx" add-on.
 1. Check the logs of the "Paperless-ngx" add-on to see it in action.
 
@@ -99,6 +100,8 @@ This is the list of language packages to install, separated by space
 ### Option: `default_superuser`
 
 When the addon starts up, if this user is not created, it will create it.
+
+Important: You have to modify the superuser before first starting the addon. Otherwise the installation-script will end with an error that has to be resolved by a reinstall.
 
 ### Option: `timezone`
 

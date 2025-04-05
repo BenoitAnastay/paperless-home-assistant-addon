@@ -77,7 +77,7 @@ ARG RUNTIME_PACKAGES="\
   python3-full=3.11.2-1+b1 \
   python3-magic=2:0.4.26-3 \
   wget \
-  xz-utils=5.4.1-0.2 \
+  xz-utils=5.4.1-1 \
   redis-server=${REDIS_VERSION} \
   redis-tools=${REDIS_VERSION} \
   nginx=1.22.1-9+deb12u1"

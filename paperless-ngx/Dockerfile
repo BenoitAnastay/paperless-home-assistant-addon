@@ -193,8 +193,9 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
 WORKDIR /usr/src/paperless/docker/
 
 RUN set -eux \
+  && cp rootfs / \
   && echo "Configuring ImageMagick" \
-  && mv imagemagick-policy.xml /etc/ImageMagick-6/policy.xml \
+  && cp /etc/ImageMagick-6/paperless-policy.xml /etc/ImageMagick-6/policy.xml \
   && echo "Configuring supervisord" \
   && mkdir /var/log/supervisord /var/run/supervisord \
   && mv supervisord.conf /etc/supervisord.conf \

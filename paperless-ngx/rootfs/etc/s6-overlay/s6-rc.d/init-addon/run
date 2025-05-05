@@ -11,9 +11,6 @@ cd /usr/src/paperless/src/ || exit
 PAPERLESS_FILENAME_FORMAT=$(bashio::config 'filename')
 PAPERLESS_OCR_LANGUAGE=$(bashio::config 'language')
 PAPERLESS_OCR_LANGUAGES=$(bashio::config 'language_packages')
-PAPERLESS_ADMIN_USER=$(bashio::config 'default_superuser.username')
-PAPERLESS_ADMIN_MAIL=$(bashio::config 'default_superuser.email')
-PAPERLESS_ADMIN_PASSWORD=$(bashio::config 'default_superuser.password')
 PAPERLESS_TIME_ZONE=$(bashio::info.timezone)
 PAPERLESS_CONSUMER_ENABLE_BARCODES=$(bashio::config 'barcodes_enabled')
 PAPERLESS_CONSUMER_ENABLE_ASN_BARCODE=$(bashio::config 'barcodes_asn')
@@ -62,9 +59,6 @@ export PAPERLESS_URL
 export PAPERLESS_FILENAME_FORMAT
 export PAPERLESS_OCR_LANGUAGE
 export PAPERLESS_OCR_LANGUAGES
-export PAPERLESS_ADMIN_USER
-export PAPERLESS_ADMIN_MAIL
-export PAPERLESS_ADMIN_PASSWORD
 export PAPERLESS_TIME_ZONE
 export PAPERLESS_CONSUMER_POLLING
 export PAPERLESS_CONSUMPTION_DIR
@@ -83,8 +77,24 @@ export PAPERLESS_TIKA_ENDPOINT
 export PAPERLESS_TIKA_GOTENBERG_ENDPOINT
 export PAPERLESS_TIKA_ENABLED
 
-if bashio::fs.file_exists '/config/paperless.conf'; then
-    dotenv -f /config/paperless.conf -e true run /sbin/docker-entrypoint.sh "/usr/local/bin/paperless_cmd.sh"
-else
-    /sbin/docker-entrypoint.sh "/usr/local/bin/paperless_cmd.sh"
-fi
+echo -n "${PAPERLESS_URL}" > /var/run/s6/container_environment/PAPERLESS_URL
+echo -n "${PAPERLESS_FILENAME_FORMAT}" > /var/run/s6/container_environment/PAPERLESS_FILENAME_FORMAT
+echo -n "${PAPERLESS_OCR_LANGUAGE}" > /var/run/s6/container_environment/PAPERLESS_OCR_LANGUAGE
+echo -n "${PAPERLESS_OCR_LANGUAGES}" > /var/run/s6/container_environment/PAPERLESS_OCR_LANGUAGES
+echo -n "${PAPERLESS_TIME_ZONE}" > /var/run/s6/container_environment/PAPERLESS_TIME_ZONE
+echo -n "${PAPERLESS_CONSUMER_POLLING}" > /var/run/s6/container_environment/PAPERLESS_CONSUMER_POLLING
+echo -n "${PAPERLESS_CONSUMPTION_DIR}" > /var/run/s6/container_environment/PAPERLESS_CONSUMPTION_DIR
+echo -n "${PAPERLESS_DATA_DIR}" > /var/run/s6/container_environment/PAPERLESS_DATA_DIR
+echo -n "${PAPERLESS_MEDIA_ROOT}" > /var/run/s6/container_environment/PAPERLESS_MEDIA_ROOT
+echo -n "${PAPERLESS_CONSUMER_ENABLE_BARCODES}" > /var/run/s6/container_environment/PAPERLESS_CONSUMER_ENABLE_BARCODES
+echo -n "${PAPERLESS_CONSUMER_ENABLE_ASN_BARCODE}" > /var/run/s6/container_environment/PAPERLESS_CONSUMER_ENABLE_ASN_BARCODE
+echo -n "${PAPERLESS_CONSUMER_RECURSIVE}" > /var/run/s6/container_environment/PAPERLESS_CONSUMER_RECURSIVE
+echo -n "${PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS}" > /var/run/s6/container_environment/PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS
+echo -n "${PAPERLESS_USE_X_FORWARD_HOST}" > /var/run/s6/container_environment/PAPERLESS_USE_X_FORWARD_HOST
+echo -n "${PAPERLESS_USE_X_FORWARD_PORT}" > /var/run/s6/container_environment/PAPERLESS_USE_X_FORWARD_PORT
+echo -n "${PAPERLESS_CONSUMER_BARCODE_SCANNER}" > /var/run/s6/container_environment/PAPERLESS_CONSUMER_BARCODE_SCANNER
+echo -n "${PAPERLESS_CONFIGURATION_PATH}" > /var/run/s6/container_environment/PAPERLESS_CONFIGURATION_PATH
+echo -n "${PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME}" > /var/run/s6/container_environment/PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME
+echo -n "${PAPERLESS_TIKA_ENDPOINT}" > /var/run/s6/container_environment/PAPERLESS_TIKA_ENDPOINT
+echo -n "${PAPERLESS_TIKA_GOTENBERG_ENDPOINT}" > /var/run/s6/container_environment/PAPERLESS_TIKA_GOTENBERG_ENDPOINT
+echo -n "${PAPERLESS_TIKA_ENABLED}" > /var/run/s6/container_environment/PAPERLESS_TIKA_ENABLED

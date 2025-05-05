@@ -9,7 +9,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV TERM="xterm-256color"
 
 # Paperless version
-ARG PAPERLESS_VERSION="v2.14.7"
+ARG PAPERLESS_VERSION="v2.15.3"
 
 # Renovate packages
 
@@ -193,27 +193,9 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
 WORKDIR /usr/src/paperless/docker/
 
 RUN set -eux \
+  && cp -r /usr/src/paperless/docker/rootfs/* / \
   && echo "Configuring ImageMagick" \
-  && mv imagemagick-policy.xml /etc/ImageMagick-6/policy.xml \
-  && echo "Configuring supervisord" \
-  && mkdir /var/log/supervisord /var/run/supervisord \
-  && mv supervisord.conf /etc/supervisord.conf \
-  && echo "Setting up Docker scripts" \
-  && mv docker-entrypoint.sh /sbin/docker-entrypoint.sh \
-  && chmod 755 /sbin/docker-entrypoint.sh \
-  && mv docker-prepare.sh /sbin/docker-prepare.sh \
-  && chmod 755 /sbin/docker-prepare.sh \
-  && mv wait-for-redis.py /sbin/wait-for-redis.py \
-  && chmod 755 /sbin/wait-for-redis.py \
-  && mv env-from-file.sh /sbin/env-from-file.sh \
-  && chmod 755 /sbin/env-from-file.sh \
-  && mv paperless_cmd.sh /usr/local/bin/paperless_cmd.sh \
-  && chmod 755 /usr/local/bin/paperless_cmd.sh \
-  && mv flower-conditional.sh /usr/local/bin/flower-conditional.sh \
-  && chmod 755 /usr/local/bin/flower-conditional.sh \
-  && echo "Installing managment commands" \
-  && chmod +x install_management_commands.sh \
-  && ./install_management_commands.sh
+  && cp /etc/ImageMagick-6/paperless-policy.xml /etc/ImageMagick-6/policy.xml
 
 WORKDIR /usr/src/paperless/src/
 

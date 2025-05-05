@@ -1,0 +1,26 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+# Benoit Anastay Add-on: Paperless-ngx
+# Start ingress webserver
+# ==============================================================================
+
+# Set up the environment for the webserver
+export PAPERLESS_FORCE_SCRIPT_NAME=$(bashio::addon.ingress_entry)
+export PAPERLESS_ENABLE_HTTP_REMOTE_USER_API=$(bashio::config 'ingress_auth')
+export PAPERLESS_ENABLE_HTTP_REMOTE_USER=$(bashio::config 'ingress_auth')
+
+cd ${PAPERLESS_SRC_DIR}
+
+# Translate between things, preferring GRANIAN_
+export GRANIAN_HOST=${GRANIAN_HOST:-${PAPERLESS_BIND_ADDR:-"::"}}
+export GRANIAN_PORT=${GRANIAN_PORT:-${PAPERLESS_PORT:-8001}}
+export GRANIAN_WORKERS=${GRANIAN_WORKERS:-${PAPERLESS_WEBSERVER_WORKERS:-1}}
+
+# Only set GRANIAN_URL_PATH_PREFIX if PAPERLESS_FORCE_SCRIPT_NAME is set
+if [[ -n "${PAPERLESS_FORCE_SCRIPT_NAME}" ]]; then
+  export GRANIAN_URL_PATH_PREFIX=${PAPERLESS_FORCE_SCRIPT_NAME}
+fi
+
+exec s6-setuidgid paperless granian --interface asginl --ws --loop uvloop "paperless.asgi:application"
+

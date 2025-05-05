@@ -76,3 +76,25 @@ export PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME
 export PAPERLESS_TIKA_ENDPOINT
 export PAPERLESS_TIKA_GOTENBERG_ENDPOINT
 export PAPERLESS_TIKA_ENABLED
+
+echo -n "${PAPERLESS_URL}" > /var/run/s6/container_environment/PAPERLESS_URL
+echo -n "${PAPERLESS_FILENAME_FORMAT}" > /var/run/s6/container_environment/PAPERLESS_FILENAME_FORMAT
+echo -n "${PAPERLESS_OCR_LANGUAGE}" > /var/run/s6/container_environment/PAPERLESS_OCR_LANGUAGE
+echo -n "${PAPERLESS_OCR_LANGUAGES}" > /var/run/s6/container_environment/PAPERLESS_OCR_LANGUAGES
+echo -n "${PAPERLESS_TIME_ZONE}" > /var/run/s6/container_environment/PAPERLESS_TIME_ZONE
+echo -n "${PAPERLESS_CONSUMER_POLLING}" > /var/run/s6/container_environment/PAPERLESS_CONSUMER_POLLING
+echo -n "${PAPERLESS_CONSUMPTION_DIR}" > /var/run/s6/container_environment/PAPERLESS_CONSUMPTION_DIR
+echo -n "${PAPERLESS_DATA_DIR}" > /var/run/s6/container_environment/PAPERLESS_DATA_DIR
+echo -n "${PAPERLESS_MEDIA_ROOT}" > /var/run/s6/container_environment/PAPERLESS_MEDIA_ROOT
+echo -n "${PAPERLESS_CONSUMER_ENABLE_BARCODES}" > /var/run/s6/container_environment/PAPERLESS_CONSUMER_ENABLE_BARCODES
+echo -n "${PAPERLESS_CONSUMER_ENABLE_ASN_BARCODE}" > /var/run/s6/container_environment/PAPERLESS_CONSUMER_ENABLE_ASN_BARCODE
+echo -n "${PAPERLESS_CONSUMER_RECURSIVE}" > /var/run/s6/container_environment/PAPERLESS_CONSUMER_RECURSIVE
+echo -n "${PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS}" > /var/run/s6/container_environment/PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS
+echo -n "${PAPERLESS_USE_X_FORWARD_HOST}" > /var/run/s6/container_environment/PAPERLESS_USE_X_FORWARD_HOST
+echo -n "${PAPERLESS_USE_X_FORWARD_PORT}" > /var/run/s6/container_environment/PAPERLESS_USE_X_FORWARD_PORT
+echo -n "${PAPERLESS_CONSUMER_BARCODE_SCANNER}" > /var/run/s6/container_environment/PAPERLESS_CONSUMER_BARCODE_SCANNER
+echo -n "${PAPERLESS_CONFIGURATION_PATH}" > /var/run/s6/container_environment/PAPERLESS_CONFIGURATION_PATH
+echo -n "${PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME}" > /var/run/s6/container_environment/PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME
+echo -n "${PAPERLESS_TIKA_ENDPOINT}" > /var/run/s6/container_environment/PAPERLESS_TIKA_ENDPOINT
+echo -n "${PAPERLESS_TIKA_GOTENBERG_ENDPOINT}" > /var/run/s6/container_environment/PAPERLESS_TIKA_GOTENBERG_ENDPOINT
+echo -n "${PAPERLESS_TIKA_ENABLED}" > /var/run/s6/container_environment/PAPERLESS_TIKA_ENABLED

@@ -83,7 +83,7 @@ ARG RUNTIME_PACKAGES="\
   nginx=1.22.1-9+deb12u1"
 
 # Buildx provided, must be defined to use though
-ARG TARGETARCH=amd64
+ARG TARGETARCH
 
 # Can be workflow provided, defaults set for manual building
 ARG JBIG2ENC_VERSION=0.29
@@ -101,8 +101,8 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 # Install basic runtime packages.
 # These change very infrequently
 # hadolint ignore=DL3003,DL3042,DL3008,SC2086
-#RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
-RUN  set -eux \
+RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
+  set -eux \
   echo "Installing system packages" \
   && apt-get update \
   && apt-get install --yes --quiet --no-install-recommends ${RUNTIME_PACKAGES} \
@@ -162,8 +162,8 @@ ARG BUILD_PACKAGES="\
 
 # Install requirements
 # hadolint ignore=DL3042,DL3008,DL3013,SC2086
-#RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
-RUN  set -eux \
+RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
+  set -eux \
   && echo "Installing build system packages" \
   && apt-get update \
   && apt-get install --yes --quiet --no-install-recommends ${BUILD_PACKAGES} \

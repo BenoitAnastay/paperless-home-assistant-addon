@@ -83,7 +83,7 @@ ARG RUNTIME_PACKAGES="\
   nginx=1.22.1-9+deb12u1"
 
 # Buildx provided, must be defined to use though
-ARG TARGETARCH
+ARG TARGETARCH=amd64
 
 # Can be workflow provided, defaults set for manual building
 ARG JBIG2ENC_VERSION=0.29
@@ -101,8 +101,8 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 # Install basic runtime packages.
 # These change very infrequently
 # hadolint ignore=DL3003,DL3042,DL3008,SC2086
-RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
-  set -eux \
+#RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
+RUN  set -eux \
   echo "Installing system packages" \
   && apt-get update \
   && apt-get install --yes --quiet --no-install-recommends ${RUNTIME_PACKAGES} \
@@ -162,8 +162,8 @@ ARG BUILD_PACKAGES="\
 
 # Install requirements
 # hadolint ignore=DL3042,DL3008,DL3013,SC2086
-RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
-  set -eux \
+#RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
+RUN  set -eux \
   && echo "Installing build system packages" \
   && apt-get update \
   && apt-get install --yes --quiet --no-install-recommends ${BUILD_PACKAGES} \
@@ -193,28 +193,9 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
 WORKDIR /usr/src/paperless/docker/
 
 RUN set -eux \
-  && cp rootfs / \
+  && cp -r /usr/src/paperless/docker/rootfs/* / \
   && echo "Configuring ImageMagick" \
-  && cp /etc/ImageMagick-6/paperless-policy.xml /etc/ImageMagick-6/policy.xml \
-  && echo "Configuring supervisord" \
-  && mkdir /var/log/supervisord /var/run/supervisord \
-  && mv supervisord.conf /etc/supervisord.conf \
-  && echo "Setting up Docker scripts" \
-  && mv docker-entrypoint.sh /sbin/docker-entrypoint.sh \
-  && chmod 755 /sbin/docker-entrypoint.sh \
-  && mv docker-prepare.sh /sbin/docker-prepare.sh \
-  && chmod 755 /sbin/docker-prepare.sh \
-  && mv wait-for-redis.py /sbin/wait-for-redis.py \
-  && chmod 755 /sbin/wait-for-redis.py \
-  && mv env-from-file.sh /sbin/env-from-file.sh \
-  && chmod 755 /sbin/env-from-file.sh \
-  && mv paperless_cmd.sh /usr/local/bin/paperless_cmd.sh \
-  && chmod 755 /usr/local/bin/paperless_cmd.sh \
-  && mv flower-conditional.sh /usr/local/bin/flower-conditional.sh \
-  && chmod 755 /usr/local/bin/flower-conditional.sh \
-  && echo "Installing managment commands" \
-  && chmod +x install_management_commands.sh \
-  && ./install_management_commands.sh
+  && cp /etc/ImageMagick-6/paperless-policy.xml /etc/ImageMagick-6/policy.xml
 
 WORKDIR /usr/src/paperless/src/
 

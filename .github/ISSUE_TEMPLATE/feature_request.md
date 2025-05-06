@@ -3,8 +3,7 @@ name: Feature request
 about: Suggest an idea for this addon
 title: "[FEATURE]"
 labels: enhancement
-assignees: ''
-
+assignees: ""
 ---
 
 Only enhancements of the addon should be asked her, if your issue is with Paperless-NGX itself please report it to the upstream project.

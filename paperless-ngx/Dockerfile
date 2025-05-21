@@ -42,7 +42,7 @@ ARG RUNTIME_PACKAGES="\
   ghostscript=10.0.0~dfsg-11+deb12u7 \
   gnupg=${GNUPG_VERSION} \
   icc-profiles-free=2.0.1+dfsg-1.1 \
-  imagemagick=8:6.9.11.60+dfsg-1.6+deb12u2 \
+  imagemagick=8:6.9.11.60+dfsg-1.6+deb12u3 \
   # PostgreSQL
   libpq5=${POSTGRESQL_VERSION} \
   postgresql-client-15=${POSTGRESQL_VERSION} \

@@ -60,7 +60,7 @@ ARG RUNTIME_PACKAGES="\
   jbig2dec=0.19-3 \
   # lxml
   libxml2=2.9.14+dfsg-1.3~deb12u1 \
-  libxslt=1.1.35-1.2 \
+  libxslt=1.1.35-1+deb12u1 \
   # itself
   qpdf=11.3.0-1+deb12u1 \
   # Mime type detection

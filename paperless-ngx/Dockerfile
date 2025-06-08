@@ -60,7 +60,7 @@ ARG RUNTIME_PACKAGES="\
   jbig2dec=0.19-3 \
   # lxml
   libxml2=2.9.14+dfsg-1.3~deb12u1 \
-  libxslt1.1=1.1.35-1 \
+  libxslt1.1=1.1.35-1+deb12u1 \
   # itself
   qpdf=11.3.0-1+deb12u1 \
   # Mime type detection
@@ -80,7 +80,7 @@ ARG RUNTIME_PACKAGES="\
   xz-utils=5.4.1-1 \
   redis-server=${REDIS_VERSION} \
   redis-tools=${REDIS_VERSION} \
-  nginx=1.22.1-9+deb12u1"
+  nginx=1.22.1-9+deb12u2"
 
 # Buildx provided, must be defined to use though
 ARG TARGETARCH

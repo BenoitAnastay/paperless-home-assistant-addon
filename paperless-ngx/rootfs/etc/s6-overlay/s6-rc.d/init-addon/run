@@ -98,3 +98,15 @@ echo -n "${PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME}" > /var/run/s6/container_envi
 echo -n "${PAPERLESS_TIKA_ENDPOINT}" > /var/run/s6/container_environment/PAPERLESS_TIKA_ENDPOINT
 echo -n "${PAPERLESS_TIKA_GOTENBERG_ENDPOINT}" > /var/run/s6/container_environment/PAPERLESS_TIKA_GOTENBERG_ENDPOINT
 echo -n "${PAPERLESS_TIKA_ENABLED}" > /var/run/s6/container_environment/PAPERLESS_TIKA_ENABLED
+
+# Load user-provided Paperless configuration if it exists
+CONF_FILE="/config/paperless.conf"
+if [ -f "$CONF_FILE" ]; then
+    bashio::log.info "Loading environment overrides from $CONF_FILE"
+    while IFS='=' read -r key value; do
+        # skip comments and empty lines
+        [ -z "$key" ] && continue
+        case "$key" in \#*) continue ;; esac
+        echo -n "$value" > "/var/run/s6/container_environment/$key"
+    done < "$CONF_FILE"
+fi

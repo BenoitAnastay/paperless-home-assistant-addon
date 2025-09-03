@@ -59,7 +59,7 @@ ARG RUNTIME_PACKAGES="\
   pngquant=2.17.0-1 \
   jbig2dec=0.19-3 \
   # lxml
-  libxml2=2.9.14+dfsg-1.3~deb12u2 \
+  libxml2=2.9.14+dfsg-1.3~deb12u4 \
   libxslt1.1=1.1.35-1+deb12u1 \
   # itself
   qpdf=11.3.0-1+deb12u1 \

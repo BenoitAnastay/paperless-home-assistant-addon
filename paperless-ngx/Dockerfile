@@ -47,7 +47,7 @@ ARG RUNTIME_PACKAGES="\
   libpq5=${POSTGRESQL_VERSION} \
   postgresql-client-15=${POSTGRESQL_VERSION} \
   # MySQL / MariaDB
-  mariadb-client=1:10.11.11-0+deb12u1 \
+  mariadb-client=1:10.11.14-0+deb12u2 \
   # OCRmyPDF dependencies
   tesseract-ocr=5.3.0-2 \
   tesseract-ocr-eng=1:4.1.0-2 \

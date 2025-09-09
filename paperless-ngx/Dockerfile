@@ -44,7 +44,7 @@ ARG RUNTIME_PACKAGES="\
   icc-profiles-free=2.0.1+dfsg-1.1 \
   imagemagick=8:7.1.1.43+dfsg1-1+deb13u1 \
   # PostgreSQL
-  libpq5=${POSTGRESQL_VERSION} \
+  libpq5=17.6-0+deb13u1 \
   postgresql-client=${POSTGRESQL_VERSION} \
   # MySQL / MariaDB
   mariadb-client=1:11.8.3-0+deb13u1 \

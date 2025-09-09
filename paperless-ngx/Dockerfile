@@ -17,7 +17,7 @@ ARG PAPERLESS_VERSION="v2.18.4"
 ENV GNUPG_VERSION="2.4.7-21"
 
 # renovate: datasource=repology depName=debian_13/postgresql
-ENV POSTGRESQL_VERSION="15.10-0+deb12u1"
+ENV POSTGRESQL_VERSION="17+278"
 
 # renovate: datasource=repology depName=debian_13/zlib
 ENV ZLIB_VERSION="1:1.3.dfsg+really1.3.1-1+b1"
@@ -41,11 +41,11 @@ ARG RUNTIME_PACKAGES="\
   gettext=0.23.1-2 \
   ghostscript=10.05.1~dfsg-1 \
   gnupg=${GNUPG_VERSION} \
-  icc-profiles-free=2.0.1+dfsg-1. 1 \
+  icc-profiles-free=2.0.1+dfsg-1.1 \
   imagemagick=8:7.1.1.43+dfsg1-1+deb13u1 \
   # PostgreSQL
   libpq5=${POSTGRESQL_VERSION} \
-  postgresql-client-15=${POSTGRESQL_VERSION} \
+  postgresql-client=${POSTGRESQL_VERSION} \
   # MySQL / MariaDB
   mariadb-client=1:11.8.3-0+deb13u1 \
   # OCRmyPDF dependencies
@@ -72,7 +72,7 @@ ARG RUNTIME_PACKAGES="\
   libzbar0t64=${LIBZBAR0_VERSION} \
   poppler-utils=25.03.0-5 \
   python3=3.13.5-1 \
-  python3-pip=23.0.1+dfsg-1 \
+  python3-pip=25.1.1+dfsg-1 \
   python3-dev=3.13.5-1 \
   python3-full=3.13.5-1 \
   python3-magic=2:0.4.27-3 \

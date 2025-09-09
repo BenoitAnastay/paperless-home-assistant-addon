@@ -23,7 +23,7 @@ ENV POSTGRESQL_VERSION="15.10-0+deb12u1"
 ENV ZLIB_VERSION="1:1.2.13.dfsg-1"
 
 # renovate: datasource=repology depName=debian_12/redis
-ENV REDIS_VERSION="5:7.0.15-1~deb12u5"
+ENV REDIS_VERSION="5:8.0.2-3"
 
 # renovate: datasource=repology depName=debian_12/zbar
 ENV LIBZBAR0_VERSION="0.23.92-7+deb12u1"
@@ -70,17 +70,17 @@ ARG RUNTIME_PACKAGES="\
   zlib1g=${ZLIB_VERSION} \
   # Barcode splitter
   libzbar0=${LIBZBAR0_VERSION} \
-  poppler-utils=22.12.0-2+deb12u1 \
-  python3=3.11.2-1+b1 \
+  poppler-utils=25.03.0-5 \
+  python3=3.13.5-1 \
   python3-pip=23.0.1+dfsg-1 \
-  python3-dev=3.11.2-1+b1 \
-  python3-full=3.11.2-1+b1 \
+  python3-dev=3.13.5-1 \
+  python3-full=3.13.5-1 \
   python3-magic=2:0.4.26-3 \
   wget \
-  xz-utils=5.4.1-1 \
+  xz-utils=5.8.1-1 \
   redis-server=${REDIS_VERSION} \
   redis-tools=${REDIS_VERSION} \
-  nginx=1.22.1-9+deb12u2"
+  nginx=1.26.3-3+deb13u1"
 
 # Buildx provided, must be defined to use though
 ARG TARGETARCH

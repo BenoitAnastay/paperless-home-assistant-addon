@@ -31,33 +31,33 @@ ENV LIBZBAR0_VERSION="0.23.93-8"
 # Packages need for running
 ARG RUNTIME_PACKAGES="\
   # General utils
-  curl=7.88.1-10+deb12u14 \
+  curl=8.14.1-2 \
   # Docker specific
-  gosu=1.14-1+b10 \
+  gosu=1.17-3+b4 \
   # Timezones support
-  tzdata=2025b-0+deb12u2 \
+  tzdata=2025b-4+deb13u1 \
   # fonts for text file thumbnail generation
-  fonts-liberation=1:1.07.4-11 \
-  gettext=0.21-12 \
-  ghostscript=10.0.0~dfsg-11+deb12u7 \
+  fonts-liberation=1:2.1.5-3 \
+  gettext=0.23.1-2 \
+  ghostscript=10.05.1~dfsg-1 \
   gnupg=${GNUPG_VERSION} \
-  icc-profiles-free=2.0.1+dfsg-1.1 \
-  imagemagick=8:6.9.11.60+dfsg-1.6+deb12u3 \
+  icc-profiles-free=2.0.1+dfsg-1. 1 \
+  imagemagick=8:7.1.1.43+dfsg1-1+deb13u1 \
   # PostgreSQL
   libpq5=${POSTGRESQL_VERSION} \
   postgresql-client-15=${POSTGRESQL_VERSION} \
   # MySQL / MariaDB
-  mariadb-client=1:10.11.14-0+deb12u2 \
+  mariadb-client=1:11.8.3-0+deb13u1 \
   # OCRmyPDF dependencies
-  tesseract-ocr=5.3.0-2 \
+  tesseract-ocr=5.5.0-1+b1 \
   tesseract-ocr-eng=1:4.1.0-2 \
   tesseract-ocr-deu=1:4.1.0-2 \
   tesseract-ocr-fra=1:4.1.0-2 \
   tesseract-ocr-ita=1:4.1.0-2 \
   tesseract-ocr-spa=1:4.1.0-2 \
-  unpaper=7.0.0-0.1 \
-  pngquant=2.17.0-1 \
-  jbig2dec=0.19-3 \
+  unpaper=7.0.0-3+b2 \
+  pngquant=2.18.0-1+b1 \
+  jbig2dec=0.20-1+b3 \
   # lxml
   libxml2=2.12.7+dfsg+really2.9.14-2.1+deb13u1 \
   libxslt1.1=1.1.35-1.2+deb13u1 \
@@ -65,8 +65,8 @@ ARG RUNTIME_PACKAGES="\
   qpdf=12.2.0-1 \
   # Mime type detection
   file=1:5.46-5 \
-  libmagic1=1:5.44-3 \
-  media-types=10.0.0 \
+  libmagic1t64=1:5.46-5 \
+  media-types=13.0.0 \
   zlib1g=${ZLIB_VERSION} \
   # Barcode splitter
   libzbar0t64=${LIBZBAR0_VERSION} \
@@ -76,7 +76,7 @@ ARG RUNTIME_PACKAGES="\
   python3-dev=3.13.5-1 \
   python3-full=3.13.5-1 \
   python3-magic=2:0.4.27-3 \
-  wget \
+  wget=1.25.0-2 \
   xz-utils=5.8.1-1 \
   redis-server=${REDIS_VERSION} \
   redis-tools=${REDIS_VERSION} \

@@ -1,6 +1,7 @@
 ---
 name: Update Dockerfiles
 
+# yamllint disable-line rule:truthy
 on:
   schedule:
     - cron: '40 16 * * *'

@@ -13,20 +13,20 @@ ARG PAPERLESS_VERSION="v2.18.4"
 
 # Renovate packages
 
-# renovate: datasource=repology depName=debian_12/gnupg2
+# renovate: datasource=repology depName=debian_13/gnupg2
 ENV GNUPG_VERSION="2.2.40-1.1"
 
-# renovate: datasource=repology depName=debian_12/postgresql
+# renovate: datasource=repology depName=debian_13/postgresql
 ENV POSTGRESQL_VERSION="15.10-0+deb12u1"
 
-# renovate: datasource=repology depName=debian_12/zlib
-ENV ZLIB_VERSION="1:1.2.13.dfsg-1"
+# renovate: datasource=repology depName=debian_13/zlib
+ENV ZLIB_VERSION="1:1.3.dfsg+really1.3.1-1+b1"
 
-# renovate: datasource=repology depName=debian_12/redis
+# renovate: datasource=repology depName=debian_13/redis
 ENV REDIS_VERSION="5:8.0.2-3"
 
-# renovate: datasource=repology depName=debian_12/zbar
-ENV LIBZBAR0_VERSION="0.23.92-7+deb12u1"
+# renovate: datasource=repology depName=debian_13/zbar
+ENV LIBZBAR0_VERSION="0.23.93-8"
 
 # Packages need for running
 ARG RUNTIME_PACKAGES="\
@@ -59,23 +59,23 @@ ARG RUNTIME_PACKAGES="\
   pngquant=2.17.0-1 \
   jbig2dec=0.19-3 \
   # lxml
-  libxml2=2.9.14+dfsg-1.3~deb12u4 \
-  libxslt1.1=1.1.35-1+deb12u1 \
+  libxml2=2.12.7+dfsg+really2.9.14-2.1+deb13u1 \
+  libxslt1.1=1.1.35-1.2+deb13u1 \
   # itself
-  qpdf=11.3.0-1+deb12u1 \
+  qpdf=12.2.0-1 \
   # Mime type detection
-  file=1:5.44-3 \
+  file=1:5.46-5 \
   libmagic1=1:5.44-3 \
   media-types=10.0.0 \
   zlib1g=${ZLIB_VERSION} \
   # Barcode splitter
-  libzbar0=${LIBZBAR0_VERSION} \
+  libzbar0t64=${LIBZBAR0_VERSION} \
   poppler-utils=25.03.0-5 \
   python3=3.13.5-1 \
   python3-pip=23.0.1+dfsg-1 \
   python3-dev=3.13.5-1 \
   python3-full=3.13.5-1 \
-  python3-magic=2:0.4.26-3 \
+  python3-magic=2:0.4.27-3 \
   wget \
   xz-utils=5.8.1-1 \
   redis-server=${REDIS_VERSION} \
@@ -87,7 +87,7 @@ ARG TARGETARCH
 
 # Can be workflow provided, defaults set for manual building
 ARG JBIG2ENC_VERSION=0.29
-ARG QPDF_VERSION=11.9.0
+ARG QPDF_VERSION=12.2.0
 ARG GS_VERSION=10.03.1
 ARG ZXING_VERSION=2.3.0
 

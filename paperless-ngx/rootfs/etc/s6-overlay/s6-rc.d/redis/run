@@ -5,4 +5,5 @@
 # Run redis
 # ==============================================================================
 
-redis-server --daemonize yes
+exec 2>&1
+redis-server

@@ -13,83 +13,91 @@ ARG PAPERLESS_VERSION="v2.18.4"
 
 # Renovate packages
 
-# renovate: datasource=repology depName=debian_12/gnupg2
-ENV GNUPG_VERSION="2.2.40-1.1"
+# renovate: datasource=repology depName=debian_13/gnupg2
+ENV GNUPG_VERSION="2.4.7-21"
 
-# renovate: datasource=repology depName=debian_12/postgresql
-ENV POSTGRESQL_VERSION="15.10-0+deb12u1"
+# renovate: datasource=repology depName=debian_13/postgresql
+ENV POSTGRESQL_VERSION="17+278"
 
-# renovate: datasource=repology depName=debian_12/zlib
-ENV ZLIB_VERSION="1:1.2.13.dfsg-1"
+# renovate: datasource=repology depName=debian_13/zlib
+ENV ZLIB_VERSION="1:1.3.dfsg+really1.3.1-1+b1"
 
-# renovate: datasource=repology depName=debian_12/redis
-ENV REDIS_VERSION="5:7.0.15-1~deb12u5"
+# renovate: datasource=repology depName=debian_13/redis
+ENV REDIS_VERSION="5:8.0.2-3"
 
-# renovate: datasource=repology depName=debian_12/zbar
-ENV LIBZBAR0_VERSION="0.23.92-7+deb12u1"
+# renovate: datasource=repology depName=debian_13/zbar
+ENV LIBZBAR0_VERSION="0.23.93-8"
+
+# renovate: datasource=repology depName=debian_13/ghostscript
+ENV GHOSTSCRIPT_VERSION="10.05.1~dfsg-1"
+
+ENV UNPAPER_X64_VERSION="7.0.0-3+b2"
+ENV UNPAPER_ARM_VERSION="7.0.0-3+b3"
+
+ENV PNGQUANT_X64_VERSION="2.18.0-1+b1"
+ENV PNGQUANT_ARM_VERSION="2.18.0-1+b2"
 
 # Packages need for running
 ARG RUNTIME_PACKAGES="\
   # General utils
-  curl=7.88.1-10+deb12u14 \
+  curl=8.14.1-2 \
   # Docker specific
-  gosu=1.14-1+b10 \
+  gosu=1.17-3+b4 \
   # Timezones support
-  tzdata=2025b-0+deb12u2 \
+  tzdata=2025b-4+deb13u1 \
   # fonts for text file thumbnail generation
-  fonts-liberation=1:1.07.4-11 \
-  gettext=0.21-12 \
-  ghostscript=10.0.0~dfsg-11+deb12u7 \
+  fonts-liberation=1:2.1.5-3 \
+  gettext=0.23.1-2 \
+  ghostscript=10.05.1~dfsg-1 \
   gnupg=${GNUPG_VERSION} \
   icc-profiles-free=2.0.1+dfsg-1.1 \
-  imagemagick=8:6.9.11.60+dfsg-1.6+deb12u3 \
+  imagemagick=8:7.1.1.43+dfsg1-1+deb13u1 \
   # PostgreSQL
-  libpq5=${POSTGRESQL_VERSION} \
-  postgresql-client-15=${POSTGRESQL_VERSION} \
+  libpq5=17.6-0+deb13u1 \
+  postgresql-client=${POSTGRESQL_VERSION} \
   # MySQL / MariaDB
-  mariadb-client=1:10.11.14-0+deb12u2 \
+  mariadb-client=1:11.8.3-0+deb13u1 \
   # OCRmyPDF dependencies
-  tesseract-ocr=5.3.0-2 \
+  tesseract-ocr=5.5.0-1+b1 \
   tesseract-ocr-eng=1:4.1.0-2 \
   tesseract-ocr-deu=1:4.1.0-2 \
   tesseract-ocr-fra=1:4.1.0-2 \
   tesseract-ocr-ita=1:4.1.0-2 \
   tesseract-ocr-spa=1:4.1.0-2 \
-  unpaper=7.0.0-0.1 \
-  pngquant=2.17.0-1 \
-  jbig2dec=0.19-3 \
+  jbig2dec=0.20-1+b3 \
   # lxml
-  libxml2=2.9.14+dfsg-1.3~deb12u4 \
-  libxslt1.1=1.1.35-1+deb12u1 \
+  libxml2=2.12.7+dfsg+really2.9.14-2.1+deb13u1 \
+  libxslt1.1=1.1.35-1.2+deb13u1 \
   # itself
-  qpdf=11.3.0-1+deb12u1 \
+  qpdf=12.2.0-1 \
   # Mime type detection
-  file=1:5.44-3 \
-  libmagic1=1:5.44-3 \
-  media-types=10.0.0 \
+  file=1:5.46-5 \
+  libmagic1t64=1:5.46-5 \
+  media-types=13.0.0 \
   zlib1g=${ZLIB_VERSION} \
   # Barcode splitter
-  libzbar0=${LIBZBAR0_VERSION} \
-  poppler-utils=22.12.0-2+deb12u1 \
-  python3=3.11.2-1+b1 \
-  python3-pip=23.0.1+dfsg-1 \
-  python3-dev=3.11.2-1+b1 \
-  python3-full=3.11.2-1+b1 \
-  python3-magic=2:0.4.26-3 \
-  wget \
-  xz-utils=5.4.1-1 \
+  libzbar0t64=${LIBZBAR0_VERSION} \
+  poppler-utils=25.03.0-5 \
+  python3=3.13.5-1 \
+  python3-pip=25.1.1+dfsg-1 \
+  python3-dev=3.13.5-1 \
+  python3-full=3.13.5-1 \
+  python3-magic=2:0.4.27-3 \
+  python3-zxing-cpp=2.3.0-4 \
+  wget=1.25.0-2 \
+  xz-utils=5.8.1-1 \
   redis-server=${REDIS_VERSION} \
   redis-tools=${REDIS_VERSION} \
-  nginx=1.22.1-9+deb12u2"
+  nginx=1.26.3-3+deb13u1 \
+  # ghostscript
+  libgs10=${GHOSTSCRIPT_VERSION} \
+  libgs10-common=${GHOSTSCRIPT_VERSION} \
+  ghostscript=${GHOSTSCRIPT_VERSION} \
+  libjbig2enc-dev=0.30-1 \
+  qpdf=12.2.0-1"
 
 # Buildx provided, must be defined to use though
 ARG TARGETARCH
-
-# Can be workflow provided, defaults set for manual building
-ARG JBIG2ENC_VERSION=0.29
-ARG QPDF_VERSION=11.9.0
-ARG GS_VERSION=10.03.1
-ARG ZXING_VERSION=2.3.0
 
 # Set Python environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -105,40 +113,15 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   set -eux \
   echo "Installing system packages" \
   && apt-get update \
+  && echo "Installing unpaper for ${TARGETARCH}" \
+  && case "${TARGETARCH}" in \
+         "amd64")  apt-get install --yes --quiet --no-install-recommends unpaper=${UNPAPER_X64_VERSION} pngquant=${PNGQUANT_X64_VERSION} ;; \
+         "arm64")  apt-get install --yes --quiet --no-install-recommends unpaper=${UNPAPER_ARM_VERSION} pngquant=${PNGQUANT_ARM_VERSION} ;; \
+         *) exit 1 ;; \
+    esac \
   && apt-get install --yes --quiet --no-install-recommends ${RUNTIME_PACKAGES} \
-  && echo "Installing pre-built updates" \
-    && echo "Installing qpdf ${QPDF_VERSION}" \
-      && curl --fail --silent --show-error --location \
-        --output libqpdf29_${QPDF_VERSION}-1_${TARGETARCH}.deb \
-        https://github.com/paperless-ngx/builder/releases/download/qpdf-${QPDF_VERSION}/libqpdf29_${QPDF_VERSION}-1_${TARGETARCH}.deb \
-      && curl --fail --silent --show-error --location \
-        --output qpdf_${QPDF_VERSION}-1_${TARGETARCH}.deb \
-        https://github.com/paperless-ngx/builder/releases/download/qpdf-${QPDF_VERSION}/qpdf_${QPDF_VERSION}-1_${TARGETARCH}.deb \
-      && dpkg --install ./libqpdf29_${QPDF_VERSION}-1_${TARGETARCH}.deb \
-      && dpkg --install ./qpdf_${QPDF_VERSION}-1_${TARGETARCH}.deb \
-    && echo "Installing Ghostscript ${GS_VERSION}" \
-      && curl --fail --silent --show-error --location \
-        --output libgs10_${GS_VERSION}.dfsg-1_${TARGETARCH}.deb \
-        https://github.com/paperless-ngx/builder/releases/download/ghostscript-${GS_VERSION}/libgs10_${GS_VERSION}.dfsg-1_${TARGETARCH}.deb \
-      && curl --fail --silent --show-error --location \
-        --output ghostscript_${GS_VERSION}.dfsg-1_${TARGETARCH}.deb \
-        https://github.com/paperless-ngx/builder/releases/download/ghostscript-${GS_VERSION}/ghostscript_${GS_VERSION}.dfsg-1_${TARGETARCH}.deb \
-      && curl --fail --silent --show-error --location \
-        --output libgs10-common_${GS_VERSION}.dfsg-1_all.deb \
-        https://github.com/paperless-ngx/builder/releases/download/ghostscript-${GS_VERSION}/libgs10-common_${GS_VERSION}.dfsg-1_all.deb \
-      && dpkg --install ./libgs10-common_${GS_VERSION}.dfsg-1_all.deb \
-      && dpkg --install ./libgs10_${GS_VERSION}.dfsg-1_${TARGETARCH}.deb \
-      && dpkg --install ./ghostscript_${GS_VERSION}.dfsg-1_${TARGETARCH}.deb \
-      && echo "Installing jbig2enc" \
-        && curl --fail --silent --show-error --location \
-          --output jbig2enc_${JBIG2ENC_VERSION}-1_${TARGETARCH}.deb \
-          https://github.com/paperless-ngx/builder/releases/download/jbig2enc-${JBIG2ENC_VERSION}/jbig2enc_${JBIG2ENC_VERSION}-1_${TARGETARCH}.deb \
-        && dpkg --install ./jbig2enc_${JBIG2ENC_VERSION}-1_${TARGETARCH}.deb \
-      && echo "Cleaning up image layer" \
-        && rm --force --verbose *.deb \
-    && rm --recursive --force --verbose /var/lib/apt/lists/* \
   && echo "Installing supervisor" \
-  && rm /usr/lib/python3.11/EXTERNALLY-MANAGED \
+  && rm /usr/lib/python3.13/EXTERNALLY-MANAGED \
   && curl -LsSf https://astral.sh/uv/install.sh | sh \
   && source $HOME/.local/bin/env \
   && uv pip install --system --upgrade --no-cache-dir supervisor==4.2.5 \
@@ -155,7 +138,7 @@ ARG BUILD_PACKAGES="\
   build-essential \
   git \
   # https://www.psycopg.org/docs/install.html#prerequisites
-  libpq-dev=${POSTGRESQL_VERSION} \
+  libpq-dev=17.6-0+deb13u1 \
   # https://github.com/PyMySQL/mysqlclient#linux
   default-libmysqlclient-dev \
   pkg-config"
@@ -169,11 +152,6 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   && apt-get install --yes --quiet --no-install-recommends ${BUILD_PACKAGES} \
   && source $HOME/.local/bin/env \
   && uv pip install --system --no-cache-dir --upgrade wheel \
-  && echo "Installing ZXing" \
-  && curl --fail --silent --no-progress-meter --show-error --location --remote-name-all --parallel --parallel-max 4 \
-      https://github.com/BenoitAnastay/paperless-builder/releases/download/v2.3.0/zxing_cpp-2.3.0-cp311-cp311-linux_aarch64.whl \
-      https://github.com/BenoitAnastay/paperless-builder/releases/download/v2.3.0/zxing_cpp-2.3.0-cp311-cp311-linux_x86_64.whl \
-  && uv pip install --system --find-links . zxing-cpp==${ZXING_VERSION} \
   && echo "Installing Python requirements" \
   && uv pip install --system --find-links . --requirement requirements.txt \
   && echo "Installing NLTK data" \

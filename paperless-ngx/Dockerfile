@@ -31,6 +31,12 @@ ENV LIBZBAR0_VERSION="0.23.93-8"
 # renovate: datasource=repology depName=debian_13/ghostscript
 ENV GHOSTSCRIPT_VERSION="10.05.1~dfsg-1"
 
+ENV UNPAPER_X64_VERSION="7.0.0-3+b2"
+ENV UNPAPER_ARM_VERSION="7.0.0-3+b3"
+
+ENV PNGQUANT_X64_VERSION="2.18.0-1+b1"
+ENV PNGQUANT_ARM_VERSION="2.18.0-1+b2"
+
 # Packages need for running
 ARG RUNTIME_PACKAGES="\
   # General utils
@@ -58,8 +64,6 @@ ARG RUNTIME_PACKAGES="\
   tesseract-ocr-fra=1:4.1.0-2 \
   tesseract-ocr-ita=1:4.1.0-2 \
   tesseract-ocr-spa=1:4.1.0-2 \
-  unpaper=7.0.0-3+b2 \
-  pngquant=2.18.0-1+b1 \
   jbig2dec=0.20-1+b3 \
   # lxml
   libxml2=2.12.7+dfsg+really2.9.14-2.1+deb13u1 \
@@ -109,6 +113,12 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   set -eux \
   echo "Installing system packages" \
   && apt-get update \
+  && echo "Installing unpaper for ${TARGETARCH}" \
+  && case "${TARGETARCH}" in \
+         "amd64")  apt-get install --yes --quiet --no-install-recommends unpaper=${UNPAPER_X64_VERSION} pngquant=${PNGQUANT_X64_VERSION} ;; \
+         "arm64")  apt-get install --yes --quiet --no-install-recommends unpaper=${UNPAPER_ARM_VERSION} pngquant=${PNGQUANT_ARM_VERSION} ;; \
+         *) exit 1 ;; \
+    esac \
   && apt-get install --yes --quiet --no-install-recommends ${RUNTIME_PACKAGES} \
   && echo "Installing supervisor" \
   && rm /usr/lib/python3.13/EXTERNALLY-MANAGED \

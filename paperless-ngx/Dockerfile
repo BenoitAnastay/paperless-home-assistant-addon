@@ -28,6 +28,9 @@ ENV REDIS_VERSION="5:8.0.2-3"
 # renovate: datasource=repology depName=debian_13/zbar
 ENV LIBZBAR0_VERSION="0.23.93-8"
 
+# renovate: datasource=repology depName=debian_13/ghostscript
+ENV GHOSTSCRIPT_VERSION="10.05.1~dfsg-1"
+
 # Packages need for running
 ARG RUNTIME_PACKAGES="\
   # General utils
@@ -76,20 +79,21 @@ ARG RUNTIME_PACKAGES="\
   python3-dev=3.13.5-1 \
   python3-full=3.13.5-1 \
   python3-magic=2:0.4.27-3 \
+  python3-zxing-cpp=2.3.0-4 \
   wget=1.25.0-2 \
   xz-utils=5.8.1-1 \
   redis-server=${REDIS_VERSION} \
   redis-tools=${REDIS_VERSION} \
-  nginx=1.26.3-3+deb13u1"
+  nginx=1.26.3-3+deb13u1 \
+  # ghostscript
+  libgs10=${GHOSTSCRIPT_VERSION} \
+  libgs10-common=${GHOSTSCRIPT_VERSION} \
+  ghostscript=${GHOSTSCRIPT_VERSION} \
+  libjbig2enc-dev=0.30-1 \
+  qpdf=12.2.0-1"
 
 # Buildx provided, must be defined to use though
 ARG TARGETARCH
-
-# Can be workflow provided, defaults set for manual building
-ARG JBIG2ENC_VERSION=0.29
-ARG QPDF_VERSION=11.9.0
-ARG GS_VERSION=10.03.1
-ARG ZXING_VERSION=2.3.0
 
 # Set Python environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -106,39 +110,8 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   echo "Installing system packages" \
   && apt-get update \
   && apt-get install --yes --quiet --no-install-recommends ${RUNTIME_PACKAGES} \
-  && echo "Installing pre-built updates" \
-    && echo "Installing qpdf ${QPDF_VERSION}" \
-      && curl --fail --silent --show-error --location \
-        --output libqpdf29_${QPDF_VERSION}-1_${TARGETARCH}.deb \
-        https://github.com/paperless-ngx/builder/releases/download/qpdf-${QPDF_VERSION}/libqpdf29_${QPDF_VERSION}-1_${TARGETARCH}.deb \
-      && curl --fail --silent --show-error --location \
-        --output qpdf_${QPDF_VERSION}-1_${TARGETARCH}.deb \
-        https://github.com/paperless-ngx/builder/releases/download/qpdf-${QPDF_VERSION}/qpdf_${QPDF_VERSION}-1_${TARGETARCH}.deb \
-      && dpkg --install ./libqpdf29_${QPDF_VERSION}-1_${TARGETARCH}.deb \
-      && dpkg --install ./qpdf_${QPDF_VERSION}-1_${TARGETARCH}.deb \
-    && echo "Installing Ghostscript ${GS_VERSION}" \
-      && curl --fail --silent --show-error --location \
-        --output libgs10_${GS_VERSION}.dfsg-1_${TARGETARCH}.deb \
-        https://github.com/paperless-ngx/builder/releases/download/ghostscript-${GS_VERSION}/libgs10_${GS_VERSION}.dfsg-1_${TARGETARCH}.deb \
-      && curl --fail --silent --show-error --location \
-        --output ghostscript_${GS_VERSION}.dfsg-1_${TARGETARCH}.deb \
-        https://github.com/paperless-ngx/builder/releases/download/ghostscript-${GS_VERSION}/ghostscript_${GS_VERSION}.dfsg-1_${TARGETARCH}.deb \
-      && curl --fail --silent --show-error --location \
-        --output libgs10-common_${GS_VERSION}.dfsg-1_all.deb \
-        https://github.com/paperless-ngx/builder/releases/download/ghostscript-${GS_VERSION}/libgs10-common_${GS_VERSION}.dfsg-1_all.deb \
-      && dpkg --install ./libgs10-common_${GS_VERSION}.dfsg-1_all.deb \
-      && dpkg --install ./libgs10_${GS_VERSION}.dfsg-1_${TARGETARCH}.deb \
-      && dpkg --install ./ghostscript_${GS_VERSION}.dfsg-1_${TARGETARCH}.deb \
-      && echo "Installing jbig2enc" \
-        && curl --fail --silent --show-error --location \
-          --output jbig2enc_${JBIG2ENC_VERSION}-1_${TARGETARCH}.deb \
-          https://github.com/paperless-ngx/builder/releases/download/jbig2enc-${JBIG2ENC_VERSION}/jbig2enc_${JBIG2ENC_VERSION}-1_${TARGETARCH}.deb \
-        && dpkg --install ./jbig2enc_${JBIG2ENC_VERSION}-1_${TARGETARCH}.deb \
-      && echo "Cleaning up image layer" \
-        && rm --force --verbose *.deb \
-    && rm --recursive --force --verbose /var/lib/apt/lists/* \
   && echo "Installing supervisor" \
-  && rm /usr/lib/python3.11/EXTERNALLY-MANAGED \
+  && rm /usr/lib/python3.13/EXTERNALLY-MANAGED \
   && curl -LsSf https://astral.sh/uv/install.sh | sh \
   && source $HOME/.local/bin/env \
   && uv pip install --system --upgrade --no-cache-dir supervisor==4.2.5 \
@@ -155,7 +128,7 @@ ARG BUILD_PACKAGES="\
   build-essential \
   git \
   # https://www.psycopg.org/docs/install.html#prerequisites
-  libpq-dev=${POSTGRESQL_VERSION} \
+  libpq-dev=17.6-0+deb13u1 \
   # https://github.com/PyMySQL/mysqlclient#linux
   default-libmysqlclient-dev \
   pkg-config"
@@ -169,11 +142,6 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   && apt-get install --yes --quiet --no-install-recommends ${BUILD_PACKAGES} \
   && source $HOME/.local/bin/env \
   && uv pip install --system --no-cache-dir --upgrade wheel \
-  && echo "Installing ZXing" \
-  && curl --fail --silent --no-progress-meter --show-error --location --remote-name-all --parallel --parallel-max 4 \
-      https://github.com/BenoitAnastay/paperless-builder/releases/download/v2.3.0/zxing_cpp-2.3.0-cp311-cp311-linux_aarch64.whl \
-      https://github.com/BenoitAnastay/paperless-builder/releases/download/v2.3.0/zxing_cpp-2.3.0-cp311-cp311-linux_x86_64.whl \
-  && uv pip install --system --find-links . zxing-cpp==${ZXING_VERSION} \
   && echo "Installing Python requirements" \
   && uv pip install --system --find-links . --requirement requirements.txt \
   && echo "Installing NLTK data" \

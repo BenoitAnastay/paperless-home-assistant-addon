@@ -4,5 +4,6 @@
 # Benoit Anastay Add-on: Paperless-ngx
 # Run redis
 # ==============================================================================
+sysctl vm.overcommit_memory=1
 
 redis-server --daemonize yes

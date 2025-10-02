@@ -5,7 +5,7 @@ configuration:
     description: You can set the value of PAPERLESS_URL manually
   csrf_allowed:
     name: CSRF Allowed domains
-    description: List of domains you want to manually add to CSRD_ALLOWED
+    description: List of domains you want to manually add to PAPERLESS_CSRF_TRUSTED_ORIGINS
   filename:
     name: Filename
     description: Default file format
@@ -16,9 +16,6 @@ configuration:
     name: Languages packs
     description: >-
       List of langages to install for OCR
-  default_superuser:
-    name: Default superuser
-    description: Superuser credentials
   timezone:
     name: Timezone
     description: Timezone

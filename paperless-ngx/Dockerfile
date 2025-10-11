@@ -48,7 +48,7 @@ ARG RUNTIME_PACKAGES="\
   # fonts for text file thumbnail generation
   fonts-liberation=1:2.1.5-3 \
   gettext=0.23.1-2 \
-  ghostscript=10.05.1~dfsg-1 \
+  ghostscript=10.05.1~dfsg-1+deb13u1 \
   gnupg=${GNUPG_VERSION} \
   icc-profiles-free=2.0.1+dfsg-1.1 \
   imagemagick=8:7.1.1.43+dfsg1-1+deb13u2 \

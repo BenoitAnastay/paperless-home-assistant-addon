@@ -10,6 +10,7 @@ ENV TERM="xterm-256color"
 
 # Paperless version
 ARG PAPERLESS_VERSION="v2.19.4"
+ARG JBIG2ENC_VERSION=0.30
 
 # Renovate packages
 
@@ -93,8 +94,6 @@ ARG RUNTIME_PACKAGES="\
   libgs10=${GHOSTSCRIPT_VERSION} \
   libgs10-common=${GHOSTSCRIPT_VERSION} \
   ghostscript=${GHOSTSCRIPT_VERSION} \
-  libjbig2enc-dev=0.30-1 \
-  jbig2enc=0.30-1 \
   qpdf=12.2.0-1"
 
 # Buildx provided, must be defined to use though
@@ -114,6 +113,11 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   set -eux \
   echo "Installing system packages" \
   && apt-get update \
+  && echo "Installing pre-built updates" \
+      && curl --fail --silent --no-progress-meter --show-error --location --remote-name-all --parallel --parallel-max 4 \
+        https://github.com/paperless-ngx/builder/releases/download/jbig2enc-${JBIG2ENC_VERSION}/jbig2enc_${JBIG2ENC_VERSION}-1_${TARGETARCH}.deb \
+    && echo "Installing jbig2enc" \
+        && dpkg --install ./jbig2enc_${JBIG2ENC_VERSION}-1_${TARGETARCH}.deb \
   && echo "Installing unpaper for ${TARGETARCH}" \
   && case "${TARGETARCH}" in \
          "amd64")  apt-get install --yes --quiet --no-install-recommends unpaper=${UNPAPER_X64_VERSION} pngquant=${PNGQUANT_X64_VERSION} ;; \

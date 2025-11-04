@@ -94,6 +94,7 @@ ARG RUNTIME_PACKAGES="\
   libgs10-common=${GHOSTSCRIPT_VERSION} \
   ghostscript=${GHOSTSCRIPT_VERSION} \
   libjbig2enc-dev=0.30-1 \
+  jbig2enc=0.30-1 \
   qpdf=12.2.0-1"
 
 # Buildx provided, must be defined to use though

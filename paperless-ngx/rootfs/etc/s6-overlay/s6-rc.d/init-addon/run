@@ -11,7 +11,7 @@ cd /usr/src/paperless/src/ || exit
 PAPERLESS_FILENAME_FORMAT=$(bashio::config 'filename')
 PAPERLESS_OCR_LANGUAGE=$(bashio::config 'language')
 PAPERLESS_OCR_LANGUAGES=$(bashio::config 'language_packages')
-PAPERLESS_TIME_ZONE=$(bashio::info.timezone)
+PAPERLESS_TIME_ZONE=$(bashio::config 'timezone')
 PAPERLESS_CONSUMER_ENABLE_BARCODES=$(bashio::config 'barcodes_enabled')
 PAPERLESS_CONSUMER_ENABLE_ASN_BARCODE=$(bashio::config 'barcodes_asn')
 PAPERLESS_CONSUMER_RECURSIVE=$(bashio::config 'consumer_recursive')

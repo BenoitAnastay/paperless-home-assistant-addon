@@ -113,6 +113,7 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   set -eux \
   echo "Installing system packages" \
   && apt-get update \
+  && apt-get install --yes --quiet --no-install-recommends ${RUNTIME_PACKAGES} \
   && echo "Installing pre-built updates" \
       && curl --fail --silent --no-progress-meter --show-error --location --remote-name-all --parallel --parallel-max 4 \
         https://github.com/paperless-ngx/builder/releases/download/jbig2enc-${JBIG2ENC_VERSION}/jbig2enc_${JBIG2ENC_VERSION}-1_${TARGETARCH}.deb \
@@ -124,7 +125,6 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
          "arm64")  apt-get install --yes --quiet --no-install-recommends unpaper=${UNPAPER_ARM_VERSION} pngquant=${PNGQUANT_ARM_VERSION} ;; \
          *) exit 1 ;; \
     esac \
-  && apt-get install --yes --quiet --no-install-recommends ${RUNTIME_PACKAGES} \
   && echo "Installing supervisor" \
   && rm /usr/lib/python3.13/EXTERNALLY-MANAGED \
   && curl -LsSf https://astral.sh/uv/install.sh | sh \

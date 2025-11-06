@@ -66,6 +66,10 @@ ARG RUNTIME_PACKAGES="\
   tesseract-ocr-ita=1:4.1.0-2 \
   tesseract-ocr-spa=1:4.1.0-2 \
   jbig2dec=0.20-1+b3 \
+  jbig2enc=0.30-1 \
+  jbig2=0.30-1 \
+  libjbig2enc-dev=0.30-1 \
+  libjbig2enc0t64=0.30-1 \
   # lxml
   libxml2=2.12.7+dfsg+really2.9.14-2.1+deb13u1 \
   libxslt1.1=1.1.35-1.2+deb13u1 \
@@ -114,11 +118,6 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   echo "Installing system packages" \
   && apt-get update \
   && apt-get install --yes --quiet --no-install-recommends ${RUNTIME_PACKAGES} \
-  && echo "Installing pre-built updates" \
-      && curl --fail --silent --no-progress-meter --show-error --location --remote-name-all --parallel --parallel-max 4 \
-        https://github.com/paperless-ngx/builder/releases/download/jbig2enc-${JBIG2ENC_VERSION}/jbig2enc_${JBIG2ENC_VERSION}-1_${TARGETARCH}.deb \
-    && echo "Installing jbig2enc" \
-        && dpkg --install ./jbig2enc_${JBIG2ENC_VERSION}-1_${TARGETARCH}.deb \
   && echo "Installing unpaper for ${TARGETARCH}" \
   && case "${TARGETARCH}" in \
          "amd64")  apt-get install --yes --quiet --no-install-recommends unpaper=${UNPAPER_X64_VERSION} pngquant=${PNGQUANT_X64_VERSION} ;; \

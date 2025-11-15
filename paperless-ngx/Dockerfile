@@ -77,7 +77,7 @@ ARG RUNTIME_PACKAGES="\
   zlib1g=${ZLIB_VERSION} \
   # Barcode splitter
   libzbar0t64=${LIBZBAR0_VERSION} \
-  poppler-utils=25.03.0-5 \
+  poppler-utils=25.03.0-5+deb13u2 \
   python3=3.13.5-1 \
   python3-pip=25.1.1+dfsg-1 \
   python3-dev=3.13.5-1 \

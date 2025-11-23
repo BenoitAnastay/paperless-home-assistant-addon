@@ -40,7 +40,7 @@ ENV PNGQUANT_ARM_VERSION="2.18.0-1+b2"
 # Packages need for running
 ARG RUNTIME_PACKAGES="\
   # General utils
-  curl=8.14.1-2 \
+  curl=8.14.1-2+deb13u2 \
   # Docker specific
   gosu=1.17-3+b4 \
   # Timezones support

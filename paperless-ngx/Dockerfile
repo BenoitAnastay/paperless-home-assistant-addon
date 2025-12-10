@@ -23,13 +23,13 @@ ENV POSTGRESQL_VERSION="17+278"
 ENV ZLIB_VERSION="1:1.3.dfsg+really1.3.1-1+b1"
 
 # renovate: datasource=repology depName=debian_13/redis
-ENV REDIS_VERSION="5:8.0.2-3"
+ENV REDIS_VERSION="5:8.0.2-3+deb13u1"
 
 # renovate: datasource=repology depName=debian_13/zbar
 ENV LIBZBAR0_VERSION="0.23.93-8"
 
 # renovate: datasource=repology depName=debian_13/ghostscript
-ENV GHOSTSCRIPT_VERSION="10.05.1~dfsg-1"
+ENV GHOSTSCRIPT_VERSION="10.05.1~dfsg-1+deb13u1"
 
 ENV UNPAPER_X64_VERSION="7.0.0-3+b2"
 ENV UNPAPER_ARM_VERSION="7.0.0-3+b3"
@@ -67,7 +67,7 @@ ARG RUNTIME_PACKAGES="\
   jbig2dec=0.20-1+b3 \
   # lxml
   libxml2=2.12.7+dfsg+really2.9.14-2.1+deb13u2 \
-  libxslt1.1=1.1.35-1.2+deb13u1 \
+  libxslt1.1=1.1.35-1.2+deb13u2 \
   # itself
   qpdf=12.2.0-1 \
   # Mime type detection

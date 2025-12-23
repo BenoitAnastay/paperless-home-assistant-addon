@@ -37,6 +37,7 @@ options:
   keyfile: privkey.pem
   ingress_auth: false
   tika_gotenberg: false
+  backup_cron: "0 3 * * *"
 schema:
   url: str?
   csrf_allowed:
@@ -59,3 +60,4 @@ schema:
   ingress_auth: bool
   tika_gotenberg: bool
   locales: str?
+  backup_cron: str

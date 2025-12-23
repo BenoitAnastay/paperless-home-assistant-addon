@@ -94,7 +94,9 @@ ARG RUNTIME_PACKAGES="\
   libgs10-common=${GHOSTSCRIPT_VERSION} \
   ghostscript=${GHOSTSCRIPT_VERSION} \
   libjbig2enc-dev=0.30-1 \
-  qpdf=12.2.0-1"
+  qpdf=12.2.0-1 \
+  zip \
+  unzip"
 
 # Buildx provided, must be defined to use though
 ARG TARGETARCH
@@ -105,6 +107,9 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     # Ignore warning from Whitenoise
     PYTHONWARNINGS="ignore:::django.http.response:517" \
     PNGX_CONTAINERIZED=1
+
+# Copy backup script
+COPY scripts/paperless_backup.sh /usr/local/bin/paperless_backup.sh
 
 # Install basic runtime packages.
 # These change very infrequently
@@ -128,12 +133,13 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   && echo "Download Paperless-ngx" \
   && curl -J -L -s -o paperless.tar.xz https://github.com/paperless-ngx/paperless-ngx/releases/download/${PAPERLESS_VERSION}/paperless-ngx-${PAPERLESS_VERSION}.tar.xz \
   && tar -xf paperless.tar.xz \
-  && mv paperless-ngx /usr/src/paperless
+  && mv paperless-ngx /usr/src/paperless \
+  && apt-get update && apt-get install -y
 
 WORKDIR /usr/src/paperless
 
 # Packages needed only for building a few quick Python
-# dependencies
+# dependencies & running a backup script
 ARG BUILD_PACKAGES="\
   build-essential \
   git \
@@ -168,6 +174,19 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   && rm -rf /var/tmp/* \
   && rm -rf /var/cache/apt/archives/
 
+
+# Install supercronic
+# Latest releases available at https://github.com/aptible/supercronic/releases
+ENV SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v0.2.41/supercronic-linux-amd64 \
+    SUPERCRONIC_SHA1SUM=f70ad28d0d739a96dc9e2087ae370c257e79b8d7 \
+    SUPERCRONIC=supercronic-linux-amd64
+
+RUN curl -fsSLO "$SUPERCRONIC_URL" \
+ && echo "${SUPERCRONIC_SHA1SUM}  ${SUPERCRONIC}" | sha1sum -c - \
+ && chmod +x "$SUPERCRONIC" \
+ && mv "$SUPERCRONIC" "/usr/local/bin/${SUPERCRONIC}" \
+ && ln -s "/usr/local/bin/${SUPERCRONIC}" /usr/local/bin/supercronic
+
 WORKDIR /usr/src/paperless/docker/
 
 RUN set -eux \
@@ -186,7 +205,8 @@ RUN set -eux \
   && useradd --uid 1000 --gid paperless --home-dir /usr/src/paperless paperless \
   && chown -R paperless:paperless /usr/src/paperless \
   && gosu paperless python3 manage.py collectstatic --clear --no-input --link \
-  && gosu paperless python3 manage.py compilemessages
+  && gosu paperless python3 manage.py compilemessages \
+  && chmod +x /usr/local/bin/paperless_backup.sh
 
 ENV PAPERLESS_REDIS="redis://localhost:6379"
 ENV PAPERLESS_DATA_DIR="/config/data"
@@ -201,6 +221,8 @@ VOLUME ["/usr/src/paperless/data", \
 
 # Copy root filesystem
 COPY rootfs/ /
+
+RUN chmod +x /usr/local/bin/paperless_backup.sh
 
 # Build arguments
 ARG BUILD_ARCH

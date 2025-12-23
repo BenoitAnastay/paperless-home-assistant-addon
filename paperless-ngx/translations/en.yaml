@@ -64,5 +64,8 @@ configuration:
   locales:
     name: Locales
     description: Your language (fr_FR, en_US, de_DE, etc)
+  backup_cron:
+    name: Backup Cron Schedule
+    description: Cron schedule for automatic backups
 network:
   80/tcp: Web interface (Not required for Ingress)

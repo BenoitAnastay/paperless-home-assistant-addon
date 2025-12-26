@@ -9,7 +9,7 @@ if type bashio >/dev/null 2>&1; then
     BACKUP_ENABLED="$(bashio::config 'backup_enabled')"
     BACKUP_KEEP_COUNT="$(bashio::config 'backup_keep_count')"
 else
-    CRON_SCHEDULE="${BACKUP_CRON:-0 2 * * *}"
+    CRON_SCHEDULE="0 2 * * *"
     BACKUP_ENABLED="false"
     BACKUP_KEEP_COUNT=-1
 fi
@@ -21,7 +21,7 @@ fi
 
 mkdir -p /etc/cron.d
 
-echo "${CRON_SCHEDULE:-0 3 * * *} /usr/local/bin/paperless_backup.sh" > /etc/cron.d/paperless-backup
+echo "${CRON_SCHEDULE} /usr/local/bin/paperless_backup.sh" > /etc/cron.d/paperless-backup
 
 chmod 0644 /etc/cron.d/paperless-backup
 

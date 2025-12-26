@@ -10,20 +10,14 @@ else
     BACKUP_PATH="/share/paperless/exports"
 fi
 
-NOW=$(date '+%Y-%m-%d %H:%M:%S')
+NOW=$(date '+%Y-%m-%d-%H:%M:%S')
 echo "[INFO] Backup started: $NOW"
 
-mkdir -p $BACKUP_PATH/temp
-
-python3 manage.py document_exporter $BACKUP_PATH/temp \
+python3 manage.py document_exporter \
+  "$BACKUP_PATH" \
+  -z \
+  -zn "paperless-export-$NOW" \
   || { echo "[ERROR] Creating export failed"; exit 1; }
-
-cd $BACKUP_PATH \
-  && zip -j "paperless-export-$NOW.zip" $BACKUP_PATH/temp/* \
-  || { echo "[ERROR] Creating ZIP failed"; exit 1; }
-
-rm -r $BACKUP_PATH/temp \
-  || { echo "[ERROR] Deleting temp directory failed"; exit 1; }
 
 echo "[INFO] Backup completed: paperless-export-$NOW.zip"
 

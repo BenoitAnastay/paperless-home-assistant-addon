@@ -133,13 +133,12 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   && echo "Download Paperless-ngx" \
   && curl -J -L -s -o paperless.tar.xz https://github.com/paperless-ngx/paperless-ngx/releases/download/${PAPERLESS_VERSION}/paperless-ngx-${PAPERLESS_VERSION}.tar.xz \
   && tar -xf paperless.tar.xz \
-  && mv paperless-ngx /usr/src/paperless \
-  && apt-get update && apt-get install -y
+  && mv paperless-ngx /usr/src/paperless
 
 WORKDIR /usr/src/paperless
 
 # Packages needed only for building a few quick Python
-# dependencies & running a backup script
+# dependencies
 ARG BUILD_PACKAGES="\
   build-essential \
   git \
@@ -205,8 +204,7 @@ RUN set -eux \
   && useradd --uid 1000 --gid paperless --home-dir /usr/src/paperless paperless \
   && chown -R paperless:paperless /usr/src/paperless \
   && gosu paperless python3 manage.py collectstatic --clear --no-input --link \
-  && gosu paperless python3 manage.py compilemessages \
-  && chmod +x /usr/local/bin/paperless_backup.sh
+  && gosu paperless python3 manage.py compilemessages
 
 ENV PAPERLESS_REDIS="redis://localhost:6379"
 ENV PAPERLESS_DATA_DIR="/config/data"
@@ -222,7 +220,8 @@ VOLUME ["/usr/src/paperless/data", \
 # Copy root filesystem
 COPY rootfs/ /
 
-RUN chmod +x /usr/local/bin/paperless_backup.sh
+RUN chmod +x /usr/local/bin/paperless_backup.sh \
+  && chmod +x /etc/cont-init.d/90-cron-backup.sh
 
 # Build arguments
 ARG BUILD_ARCH

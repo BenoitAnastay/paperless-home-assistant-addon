@@ -37,7 +37,10 @@ options:
   keyfile: privkey.pem
   ingress_auth: false
   tika_gotenberg: false
+  backup_enabled: false
+  backup_path: /share/paperless/exports
   backup_cron: "0 3 * * *"
+  backup_keep_count: 3
 schema:
   url: str?
   csrf_allowed:
@@ -60,4 +63,7 @@ schema:
   ingress_auth: bool
   tika_gotenberg: bool
   locales: str?
-  backup_cron: str
+  backup_enabled: bool 
+  backup_path: str 
+  backup_cron: str 
+  backup_keep_count: int

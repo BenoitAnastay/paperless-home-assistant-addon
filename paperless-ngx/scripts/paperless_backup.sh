@@ -1,15 +1,42 @@
-#!/bin/bash
+#!/command/with-contenv bashio
+# shellcheck shell=bash
 set -e
-set -o pipefail
 
-mkdir -p /share/paperless/exports/temp
+if type bashio >/dev/null 2>&1; then
+    BACKUP_KEEP_COUNT="$(bashio::config 'backup_keep_count')"
+    BACKUP_PATH="$(bashio::config 'backup_path')"
+else
+    BACKUP_KEEP_COUNT=3
+    BACKUP_PATH="/share/paperless/exports"
+fi
 
-python3 manage.py document_exporter /share/paperless/exports/temp \
-    || { echo "[ERROR] Creating export failed"; exit 1; }
+NOW=$(date '+%Y-%m-%d %H:%M:%S')
+echo "[INFO] Backup started: $NOW"
 
-cd /share/paperless/exports
-zip -j "paperless-export-$(date +%F).zip" /share/paperless/exports/temp/* || { echo "[ERROR] Creating ZIP failed"; exit 1; }
+mkdir -p $BACKUP_PATH/temp
 
-rm -r /share/paperless/exports/temp || { echo "[ERROR] Deleting temp directory failed"; exit 1; }
+python3 manage.py document_exporter $BACKUP_PATH/temp \
+  || { echo "[ERROR] Creating export failed"; exit 1; }
 
-echo "[INFO] Backup completed: paperless-export-$(date +%F).zip"
+cd $BACKUP_PATH \
+  && zip -j "paperless-export-$NOW.zip" $BACKUP_PATH/temp/* \
+  || { echo "[ERROR] Creating ZIP failed"; exit 1; }
+
+rm -r $BACKUP_PATH/temp \
+  || { echo "[ERROR] Deleting temp directory failed"; exit 1; }
+
+echo "[INFO] Backup completed: paperless-export-$NOW.zip"
+
+# -----------------------------
+# Delete old backups
+# -----------------------------
+BACKUP_DIR="$BACKUP_PATH"
+
+mapfile -t BACKUPS < <(ls -1t "$BACKUP_DIR"/paperless-export-*.zip 2>/dev/null)
+
+if [ "${#BACKUPS[@]}" -gt "$BACKUP_KEEP_COUNT" ]; then
+    for ((i=BACKUP_KEEP_COUNT; i<${#BACKUPS[@]}; i++)); do
+        echo "[INFO] Deleting old backup: ${BACKUPS[i]}"
+        rm -f "${BACKUPS[i]}"
+    done
+fi

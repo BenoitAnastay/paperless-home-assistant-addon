@@ -23,7 +23,7 @@ fi
 
 mkdir -p /etc/cron.d
 
-echo "${CRON_SCHEDULE} /usr/local/bin/paperless_backup.sh" > /etc/cron.d/paperless-backup
+echo "${CRON_SCHEDULE} /usr/local/bin/paperless_backup.sh >> /proc/1/fd/1 2>&1" > /etc/cron.d/paperless-backup
 
 chmod 0644 /etc/cron.d/paperless-backup
 

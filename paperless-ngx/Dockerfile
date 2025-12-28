@@ -218,7 +218,8 @@ VOLUME ["/usr/src/paperless/data", \
 COPY rootfs/ /
 
 RUN chmod +x /usr/local/bin/paperless_backup.sh \
-  && chmod +x /etc/cont-init.d/90-cron-backup.sh
+  && chmod +x /etc/cont-init.d/90-cron-backup.sh \
+  && chmod +x /etc/services.d/supercronic/run
 
 # Build arguments
 ARG BUILD_ARCH

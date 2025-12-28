@@ -108,9 +108,6 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONWARNINGS="ignore:::django.http.response:517" \
     PNGX_CONTAINERIZED=1
 
-# Copy backup script
-COPY scripts/paperless_backup.sh /usr/local/bin/paperless_backup.sh
-
 # Install basic runtime packages.
 # These change very infrequently
 # hadolint ignore=DL3003,DL3042,DL3008,SC2086

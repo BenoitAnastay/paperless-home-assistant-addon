@@ -71,7 +71,7 @@ ssl: false
 certfile: fullchain.pem
 keyfile: privkey.pem
 backup_enabled: false
-backup_path: /share/paperless/exports
+backup_path: /data/exports
 backup_cron: "0 3 * * *"
 backup_keep_count: 3
 ```
@@ -162,11 +162,11 @@ Enables or disables automatic backups of your Paperless data. Set to `true` to e
 
 ### Option: `backup_path`
 
-Specifies the directory where backup files will be stored. The default path is `/share/paperless/exports`.
+Specifies the directory where backup files will be stored. The default path is `/data/exports`.
 
 ### Option: `backup_cron`
 
-Defines the cron schedule for automatic backups. The default value `"0 3 * * *"` runs backups daily at 3:00 AM. Use standard cron syntax to customize the backup schedule.
+Defines the cron schedule for automatic backups. The default value `"0 2 * * *"` runs backups daily at 3:00 AM. Use standard cron syntax to customize the backup schedule.
 
 ### Option: `backup_keep_count`
 

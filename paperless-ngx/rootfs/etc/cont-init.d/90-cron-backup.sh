@@ -4,14 +4,16 @@ set -e
 
 echo "[INFO] Configuring backup cron job..."
 
-if type bashio >/dev/null 2>&1; then
-    CRON_SCHEDULE="$(bashio::config 'backup_cron')"
+if bashio::config.has_value 'backup_enabled'; then
     BACKUP_ENABLED="$(bashio::config 'backup_enabled')"
-    BACKUP_KEEP_COUNT="$(bashio::config 'backup_keep_count')"
+else
+    BACKUP_ENABLED="false"
+fi
+
+if bashio::config.has_value 'backup_cron'; then
+    CRON_SCHEDULE="$(bashio::config 'backup_cron')"
 else
     CRON_SCHEDULE="0 2 * * *"
-    BACKUP_ENABLED="false"
-    BACKUP_KEEP_COUNT=-1
 fi
 
 if [ "$BACKUP_ENABLED" == "false" ]; then
@@ -25,4 +27,4 @@ echo "${CRON_SCHEDULE} /usr/local/bin/paperless_backup.sh" > /etc/cron.d/paperle
 
 chmod 0644 /etc/cron.d/paperless-backup
 
-echo "[INFO] Backup cron job configured with schedule: $CRON_SCHEDULE & keep_count: $BACKUP_KEEP_COUNT"
+echo "[INFO] Backup cron job configured with schedule: $CRON_SCHEDULE"

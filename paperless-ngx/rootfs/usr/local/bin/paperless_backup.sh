@@ -2,16 +2,24 @@
 # shellcheck shell=bash
 set -e
 
-if type bashio >/dev/null 2>&1; then
-    BACKUP_KEEP_COUNT="$(bashio::config 'backup_keep_count')"
+if bashio::config.has_value 'backup_path'; then
     BACKUP_PATH="$(bashio::config 'backup_path')"
 else
+    echo "[ERROR] No backup path configured. Please set 'backup_path' in the add-on configuration."
+    exit 1
+fi
+
+if bashio::config.has_value 'backup_keep_count'; then
+    BACKUP_KEEP_COUNT="$(bashio::config 'backup_keep_count')"
+else
+    echo "[WARN] 'backup_keep_count' not set, defaulting to 3"
     BACKUP_KEEP_COUNT=3
-    BACKUP_PATH="/share/paperless/exports"
 fi
 
 NOW=$(date '+%Y-%m-%d-%H:%M:%S')
 echo "[INFO] Backup started: $NOW"
+
+mkdir -p "$BACKUP_PATH"
 
 python3 manage.py document_exporter \
   "$BACKUP_PATH" \

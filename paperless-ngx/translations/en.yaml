@@ -64,5 +64,17 @@ configuration:
   locales:
     name: Locales
     description: Your language (fr_FR, en_US, de_DE, etc)
+  backup_enabled:
+    name: Enable Backup
+    description: Enable or disable automatic backups
+  backup_path:
+    name: Backup Path
+    description: Path to store backups
+  backup_cron:
+    name: Backup Cron Schedule
+    description: Cron schedule for automatic backups
+  backup_keep_count:
+    name: Backup Keep Count
+    description: Number of backups to keep
 network:
   80/tcp: Web interface (Not required for Ingress)

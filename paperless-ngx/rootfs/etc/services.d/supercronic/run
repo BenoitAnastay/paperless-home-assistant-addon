@@ -1,0 +1,3 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+exec /usr/local/bin/supercronic /etc/cron.d/paperless-backup

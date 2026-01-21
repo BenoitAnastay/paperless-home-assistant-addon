@@ -11,7 +11,7 @@ cd /usr/src/paperless/src/ || exit
 PAPERLESS_FILENAME_FORMAT=$(bashio::config 'filename')
 PAPERLESS_OCR_LANGUAGE=$(bashio::config 'language')
 PAPERLESS_OCR_LANGUAGES=$(bashio::config 'language_packages')
-PAPERLESS_TIME_ZONE=$(bashio::config 'timezone')
+PAPERLESS_TIME_ZONE=$(bashio::info.timezone)
 PAPERLESS_CONSUMER_ENABLE_BARCODES=$(bashio::config 'barcodes_enabled')
 PAPERLESS_CONSUMER_ENABLE_ASN_BARCODE=$(bashio::config 'barcodes_asn')
 PAPERLESS_CONSUMER_RECURSIVE=$(bashio::config 'consumer_recursive')
@@ -27,6 +27,11 @@ PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME="HTTP_X_REMOTE_USER_NAME"
 PAPERLESS_TIKA_ENDPOINT=http://ca5234a0-tika-gotenberg:9998
 PAPERLESS_TIKA_GOTENBERG_ENDPOINT=http://ca5234a0-tika-gotenberg:3000
 PAPERLESS_TIKA_ENABLED=$(bashio::config 'tika_gotenberg')
+
+if bashio::config.has_value 'timezone'; then
+  PAPERLESS_TIME_ZONE=$(bashio::config 'timezone')
+  bashio::log.info "Timezone set to $PAPERLESS_TIME_ZONE"
+fi
 
 if bashio::config.has_value 'usermap_uid'; then
   USERMAP_UID=$(bashio::config 'usermap_uid')

@@ -31,7 +31,6 @@ options:
   filename: "{{ created_year }}/{{ correspondent }}/{{ title }}"
   language: eng
   language_packages: eng deu fra ita spa
-  timezone: UTC
   ssl: false
   certfile: fullchain.pem
   keyfile: privkey.pem
@@ -44,7 +43,7 @@ schema:
   filename: str
   language: str
   language_packages: str
-  timezone: str
+  timezone: str?
   polling_interval: int?
   barcodes_enabled: bool?
   barcodes_asn: bool?

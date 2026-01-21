@@ -94,7 +94,9 @@ ARG RUNTIME_PACKAGES="\
   libgs10-common=${GHOSTSCRIPT_VERSION} \
   ghostscript=${GHOSTSCRIPT_VERSION} \
   libjbig2enc-dev=0.30-1 \
-  qpdf=12.2.0-1"
+  qpdf=12.2.0-1 \
+  zip \
+  unzip"
 
 # Buildx provided, must be defined to use though
 ARG TARGETARCH
@@ -168,6 +170,19 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   && rm -rf /var/tmp/* \
   && rm -rf /var/cache/apt/archives/
 
+
+# Install supercronic
+# Latest releases available at https://github.com/aptible/supercronic/releases
+ENV SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v0.2.41/supercronic-linux-amd64 \
+    SUPERCRONIC_SHA1SUM=f70ad28d0d739a96dc9e2087ae370c257e79b8d7 \
+    SUPERCRONIC=supercronic-linux-amd64
+
+RUN curl -fsSLO "$SUPERCRONIC_URL" \
+ && echo "${SUPERCRONIC_SHA1SUM}  ${SUPERCRONIC}" | sha1sum -c - \
+ && chmod +x "$SUPERCRONIC" \
+ && mv "$SUPERCRONIC" "/usr/local/bin/${SUPERCRONIC}" \
+ && ln -s "/usr/local/bin/${SUPERCRONIC}" /usr/local/bin/supercronic
+
 WORKDIR /usr/src/paperless/docker/
 
 RUN set -eux \
@@ -201,6 +216,10 @@ VOLUME ["/usr/src/paperless/data", \
 
 # Copy root filesystem
 COPY rootfs/ /
+
+RUN chmod +x /usr/local/bin/paperless_backup.sh \
+  && chmod +x /etc/cont-init.d/90-cron-backup.sh \
+  && chmod +x /etc/services.d/supercronic/run
 
 # Build arguments
 ARG BUILD_ARCH

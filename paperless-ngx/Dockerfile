@@ -98,6 +98,8 @@ ARG RUNTIME_PACKAGES="\
 # Buildx provided, must be defined to use though
 ARG TARGETARCH
 
+ARG JBIG2ENC_VERSION=0.30
+
 # Set Python environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
@@ -119,6 +121,11 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
          *) exit 1 ;; \
     esac \
   && apt-get install --yes --quiet --no-install-recommends ${RUNTIME_PACKAGES} \
+  && echo "Installing pre-built updates" \
+      && curl --fail --silent --no-progress-meter --show-error --location --remote-name-all \
+        https://github.com/paperless-ngx/builder/releases/download/jbig2enc-trixie-v${JBIG2ENC_VERSION}/jbig2enc_${JBIG2ENC_VERSION}-1_${TARGETARCH}.deb \
+      && echo "Installing jbig2enc" \
+        && dpkg --install ./jbig2enc_${JBIG2ENC_VERSION}-1_${TARGETARCH}.deb \
   && echo "Installing supervisor" \
   && rm /usr/lib/python3.13/EXTERNALLY-MANAGED \
   && curl -LsSf https://astral.sh/uv/install.sh | sh \

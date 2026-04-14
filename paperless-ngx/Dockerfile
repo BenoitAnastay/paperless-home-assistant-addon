@@ -53,7 +53,7 @@ ARG RUNTIME_PACKAGES="\
   icc-profiles-free=2.0.1+dfsg-1.1 \
   imagemagick=8:7.1.1.43+dfsg1-1+deb13u7 \
   # PostgreSQL
-  libpq5=17.7-0+deb13u1 \
+  libpq5=17.9-0+deb13u1 \
   postgresql-client=${POSTGRESQL_VERSION} \
   # MySQL / MariaDB
   mariadb-client=1:11.8.6-0+deb13u1 \
@@ -93,7 +93,6 @@ ARG RUNTIME_PACKAGES="\
   libgs10=${GHOSTSCRIPT_VERSION} \
   libgs10-common=${GHOSTSCRIPT_VERSION} \
   ghostscript=${GHOSTSCRIPT_VERSION} \
-  libjbig2enc-dev=0.30-1 \
   qpdf=12.2.0-1"
 
 # Buildx provided, must be defined to use though
@@ -138,7 +137,7 @@ ARG BUILD_PACKAGES="\
   build-essential \
   git \
   # https://www.psycopg.org/docs/install.html#prerequisites
-  libpq-dev=17.7-0+deb13u1 \
+  libpq-dev=17.9-0+deb13u1 \
   # https://github.com/PyMySQL/mysqlclient#linux
   default-libmysqlclient-dev \
   pkg-config"

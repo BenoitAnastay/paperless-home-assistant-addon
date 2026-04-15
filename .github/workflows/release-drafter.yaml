@@ -8,5 +8,13 @@ on:
       - main
 
 jobs:
-  workflows:
-    uses: release-drafter/release-drafter@5de93583980a40bd78603b6dfdcda5b4df377b32
+  update_release_draft:
+    name: Draft release
+    if: github.event_name == 'push' && github.ref_name == github.event.repository.default_branch
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: read
+    steps:
+      - name: 🚀 Run Release Drafter
+        uses: release-drafter/release-drafter@5de93583980a40bd78603b6dfdcda5b4df377b32

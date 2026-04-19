@@ -57,4 +57,5 @@ schema:
   usermap_gid: int?
   ingress_auth: bool
   tika_gotenberg: bool
+  x_forwarded_host_no_port: bool?
   locales: str?

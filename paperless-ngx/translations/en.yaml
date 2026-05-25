@@ -74,5 +74,17 @@ configuration:
   locales:
     name: Locales
     description: Your language (fr_FR, en_US, de_DE, etc)
+  backup_enabled:
+    name: Enable Scheduled Backup
+    description: Run automatic document exports on a cron schedule
+  backup_path:
+    name: Backup Path
+    description: Directory to store backup zip files (must be under /share/)
+  backup_cron:
+    name: Backup Schedule
+    description: Cron expression for when to run the backup (e.g. "0 3 * * *" = daily at 3 AM)
+  backup_keep_count:
+    name: Backups to Keep
+    description: Number of most-recent backup zip files to retain; older ones are deleted automatically
 network:
   80/tcp: Web interface (Not required for Ingress)

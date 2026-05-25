@@ -28,6 +28,10 @@ ENV REDIS_VERSION="5:8.0.2-3+deb13u1"
 # renovate: datasource=repology depName=debian_13/zbar
 ENV LIBZBAR0_VERSION="0.23.93-8"
 
+# libpq5/libpq-dev are binary packages from postgresql-17 source; not tracked
+# separately in repology — update this value alongside POSTGRESQL_VERSION
+ENV LIBPQ_VERSION="17.10-0+deb13u1"
+
 # renovate: datasource=repology depName=debian_13/ghostscript
 ENV GHOSTSCRIPT_VERSION="10.05.1~dfsg-1+deb13u1"
 
@@ -50,7 +54,7 @@ ARG RUNTIME_PACKAGES="\
   icc-profiles-free=2.0.1+dfsg-1.1 \
   imagemagick=8:7.1.1.43+dfsg1-1+deb13u8 \
   # PostgreSQL
-  libpq5=17.10-0+deb13u1 \
+  libpq5=${LIBPQ_VERSION} \
   postgresql-client=${POSTGRESQL_VERSION} \
   # MySQL / MariaDB
   mariadb-client=1:11.8.6-0+deb13u1 \
@@ -140,7 +144,7 @@ ARG BUILD_PACKAGES="\
   build-essential \
   git \
   # https://www.psycopg.org/docs/install.html#prerequisites
-  libpq-dev=17.10-0+deb13u1 \
+  libpq-dev=${LIBPQ_VERSION} \
   # https://github.com/PyMySQL/mysqlclient#linux
   default-libmysqlclient-dev \
   pkg-config"

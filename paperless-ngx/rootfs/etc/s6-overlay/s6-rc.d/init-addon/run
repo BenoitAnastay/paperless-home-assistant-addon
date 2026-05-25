@@ -24,8 +24,15 @@ PAPERLESS_USE_X_FORWARD_PORT=true
 PAPERLESS_CONSUMER_BARCODE_SCANNER=ZXING
 PAPERLESS_CONFIGURATION_PATH="/config/paperless.conf"
 PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME="HTTP_X_REMOTE_USER_NAME"
-PAPERLESS_TIKA_ENDPOINT=http://ca5234a0-tika-gotenberg:9998
-PAPERLESS_TIKA_GOTENBERG_ENDPOINT=http://ca5234a0-tika-gotenberg:3000
+# Derive the repo slug from this container's hostname (format: {repo_slug}-paperless-ngx)
+# so the Tika-Gotenberg sibling addon hostname is always resolved correctly regardless
+# of which slug the HA Supervisor assigned to this repository.
+ADDON_SLUG="paperless-ngx"
+CONTAINER_HOSTNAME=$(hostname)
+REPO_SLUG="${CONTAINER_HOSTNAME%-${ADDON_SLUG}}"
+PAPERLESS_TIKA_ENDPOINT="http://${REPO_SLUG}-tika-gotenberg:9998"
+PAPERLESS_TIKA_GOTENBERG_ENDPOINT="http://${REPO_SLUG}-tika-gotenberg:3000"
+bashio::log.info "Tika endpoint resolved to ${PAPERLESS_TIKA_ENDPOINT}"
 PAPERLESS_TIKA_ENABLED=$(bashio::config 'tika_gotenberg')
 
 if bashio::config.has_value 'timezone'; then

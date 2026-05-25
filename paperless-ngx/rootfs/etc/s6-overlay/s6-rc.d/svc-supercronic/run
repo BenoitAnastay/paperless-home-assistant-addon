@@ -1,0 +1,24 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+# Benoit Anastay Add-on: Paperless-ngx
+# Run supercronic for scheduled document exports
+# ==============================================================================
+
+exec 2>&1
+
+if ! bashio::config.true 'backup_enabled'; then
+  bashio::log.info "Scheduled backup is disabled"
+  exec sleep infinity
+fi
+
+BACKUP_CRON=$(bashio::config 'backup_cron')
+BACKUP_PATH=$(bashio::config 'backup_path')
+
+mkdir -p /etc/cron.d
+echo "${BACKUP_CRON} /usr/local/bin/paperless_backup.sh" > /etc/cron.d/paperless-backup
+
+bashio::log.info "Backup schedule: ${BACKUP_CRON}"
+bashio::log.info "Backup destination: ${BACKUP_PATH}"
+
+exec /usr/local/bin/supercronic /etc/cron.d/paperless-backup

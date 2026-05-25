@@ -96,6 +96,7 @@ ARG RUNTIME_PACKAGES="\
 ARG TARGETARCH
 
 ARG JBIG2ENC_VERSION=0.30
+ARG SUPERCRONIC_VERSION=0.2.41
 
 # Set Python environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -169,6 +170,18 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   && rm -rf /tmp/* \
   && rm -rf /var/tmp/* \
   && rm -rf /var/cache/apt/archives/
+
+# Install supercronic for scheduled backups
+# hadolint ignore=DL4006
+RUN case "${TARGETARCH}" in \
+        "amd64") SUPERCRONIC_SHA1SUM="f70ad28d0d739a96dc9e2087ae370c257e79b8d7" ;; \
+        "arm64") SUPERCRONIC_SHA1SUM="44e10e33e8d98b1d1522f6719f15fb9469786ff0" ;; \
+        *) exit 1 ;; \
+    esac \
+  && curl -fsSLo supercronic "https://github.com/aptible/supercronic/releases/download/v${SUPERCRONIC_VERSION}/supercronic-linux-${TARGETARCH}" \
+  && echo "${SUPERCRONIC_SHA1SUM}  supercronic" | sha1sum -c - \
+  && chmod +x supercronic \
+  && mv supercronic /usr/local/bin/supercronic
 
 WORKDIR /usr/src/paperless/docker/
 

@@ -47,6 +47,11 @@
       "automerge": true
     },
     {
+      "description": "libpq5 and libpq-dev are not tracked separately in repology (they are binary packages from the postgresql-17 source). Version is managed via LIBPQ_VERSION in the Dockerfile.",
+      "matchDepNames": ["debian_13/libpq5", "debian_13/libpq-dev"],
+      "enabled": false
+    },
+    {
       "groupName": "Add-on base image",
       "matchDatasources": ["docker"]
     },

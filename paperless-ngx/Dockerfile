@@ -31,11 +31,8 @@ ENV LIBZBAR0_VERSION="0.23.93-8"
 # renovate: datasource=repology depName=debian_13/ghostscript
 ENV GHOSTSCRIPT_VERSION="10.05.1~dfsg-1+deb13u1"
 
-ENV UNPAPER_X64_VERSION="7.0.0-3+b2"
-ENV UNPAPER_ARM_VERSION="7.0.0-3+b3"
-
-ENV PNGQUANT_X64_VERSION="2.18.0-1+b1"
-ENV PNGQUANT_ARM_VERSION="2.18.0-1+b2"
+# renovate: datasource=repology depName=debian_13/libxslt1 versioning=deb
+ENV LIBXSLT_VERSION="1.1.35-1.2+deb13u2"
 
 # Packages need for running
 ARG RUNTIME_PACKAGES="\
@@ -53,7 +50,7 @@ ARG RUNTIME_PACKAGES="\
   icc-profiles-free=2.0.1+dfsg-1.1 \
   imagemagick=8:7.1.1.43+dfsg1-1+deb13u8 \
   # PostgreSQL
-  libpq5=17.9-0+deb13u1 \
+  libpq5=17.10-0+deb13u1 \
   postgresql-client=${POSTGRESQL_VERSION} \
   # MySQL / MariaDB
   mariadb-client=1:11.8.6-0+deb13u1 \
@@ -67,7 +64,7 @@ ARG RUNTIME_PACKAGES="\
   jbig2dec=0.20-1+b3 \
   # lxml
   libxml2=2.12.7+dfsg+really2.9.14-2.1+deb13u2 \
-  libxslt1.1=1.1.35-1.2+deb13u2 \
+  libxslt1.1 \
   # itself
   qpdf=12.2.0-1 \
   # Mime type detection
@@ -116,8 +113,7 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   && apt-get update \
   && echo "Installing unpaper for ${TARGETARCH}" \
   && case "${TARGETARCH}" in \
-         "amd64")  apt-get install --yes --quiet --no-install-recommends unpaper=${UNPAPER_X64_VERSION} pngquant=${PNGQUANT_X64_VERSION} ;; \
-         "arm64")  apt-get install --yes --quiet --no-install-recommends unpaper=${UNPAPER_ARM_VERSION} pngquant=${PNGQUANT_ARM_VERSION} ;; \
+         "amd64"|"arm64")  apt-get install --yes --quiet --no-install-recommends unpaper pngquant ;; \
          *) exit 1 ;; \
     esac \
   && apt-get install --yes --quiet --no-install-recommends ${RUNTIME_PACKAGES} \
@@ -144,7 +140,7 @@ ARG BUILD_PACKAGES="\
   build-essential \
   git \
   # https://www.psycopg.org/docs/install.html#prerequisites
-  libpq-dev=17.9-0+deb13u1 \
+  libpq-dev=17.10-0+deb13u1 \
   # https://github.com/PyMySQL/mysqlclient#linux
   default-libmysqlclient-dev \
   pkg-config"

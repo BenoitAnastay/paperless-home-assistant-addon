@@ -34,12 +34,12 @@ Another way is to make a copy of the `data` and `media` directories.
 
 The add-on can automatically export all documents as a zip archive on a cron schedule.
 
-| Option | Default | Description |
-|---|---|---|
-| `backup_enabled` | `false` | Enable the scheduled export |
-| `backup_path` | `/share/paperless/export` | Where to store the zip files (must be under `/share/`) |
-| `backup_cron` | `0 3 * * *` | Cron schedule (default: daily at 03:00) |
-| `backup_keep_count` | `3` | Number of archives to keep; older ones are deleted |
+| Option              | Default                   | Description                                            |
+| ------------------- | ------------------------- | ------------------------------------------------------ |
+| `backup_enabled`    | `false`                   | Enable the scheduled export                            |
+| `backup_path`       | `/share/paperless/export` | Where to store the zip files (must be under `/share/`) |
+| `backup_cron`       | `0 3 * * *`               | Cron schedule (default: daily at 03:00)                |
+| `backup_keep_count` | `3`                       | Number of archives to keep; older ones are deleted     |
 
 Each run produces a file named `paperless-export-YYYY-MM-DD_HH-MM-SS.zip` in `backup_path`.
 

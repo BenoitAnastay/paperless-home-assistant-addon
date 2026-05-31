@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/debian-base:9.1.0
+ARG BUILD_FROM=ghcr.io/hassio-addons/debian-base:9.3.0
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -9,12 +9,12 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV TERM="xterm-256color"
 
 # Paperless version
-ARG PAPERLESS_VERSION="v2.20.1"
+ARG PAPERLESS_VERSION="v2.20.15"
 
 # Renovate packages
 
 # renovate: datasource=repology depName=debian_13/gnupg2
-ENV GNUPG_VERSION="2.4.7-21"
+ENV GNUPG_VERSION="2.4.7-21+deb13u1"
 
 # renovate: datasource=repology depName=debian_13/postgresql
 ENV POSTGRESQL_VERSION="17+278"
@@ -28,35 +28,36 @@ ENV REDIS_VERSION="5:8.0.2-3+deb13u1"
 # renovate: datasource=repology depName=debian_13/zbar
 ENV LIBZBAR0_VERSION="0.23.93-8"
 
+# libpq5/libpq-dev are binary packages from postgresql-17 source; not tracked
+# separately in repology — update this value alongside POSTGRESQL_VERSION
+ENV LIBPQ_VERSION="17.10-0+deb13u1"
+
 # renovate: datasource=repology depName=debian_13/ghostscript
 ENV GHOSTSCRIPT_VERSION="10.05.1~dfsg-1+deb13u1"
 
-ENV UNPAPER_X64_VERSION="7.0.0-3+b2"
-ENV UNPAPER_ARM_VERSION="7.0.0-3+b3"
-
-ENV PNGQUANT_X64_VERSION="2.18.0-1+b1"
-ENV PNGQUANT_ARM_VERSION="2.18.0-1+b2"
+# renovate: datasource=repology depName=debian_13/libxslt1 versioning=deb
+ENV LIBXSLT_VERSION="1.1.35-1.2+deb13u2"
 
 # Packages need for running
 ARG RUNTIME_PACKAGES="\
   # General utils
-  curl=8.14.1-2+deb13u2 \
+  curl=8.14.1-2+deb13u3 \
   # Docker specific
   gosu=1.17-3+b4 \
   # Timezones support
-  tzdata=2025b-4+deb13u1 \
+  tzdata=2026b-0+deb13u1 \
   # fonts for text file thumbnail generation
   fonts-liberation=1:2.1.5-3 \
   gettext=0.23.1-2 \
   ghostscript=10.05.1~dfsg-1+deb13u1 \
   gnupg=${GNUPG_VERSION} \
   icc-profiles-free=2.0.1+dfsg-1.1 \
-  imagemagick=8:7.1.1.43+dfsg1-1+deb13u3 \
+  imagemagick=8:7.1.1.43+dfsg1-1+deb13u9 \
   # PostgreSQL
-  libpq5=17.6-0+deb13u1 \
+  libpq5=${LIBPQ_VERSION} \
   postgresql-client=${POSTGRESQL_VERSION} \
   # MySQL / MariaDB
-  mariadb-client=1:11.8.3-0+deb13u1 \
+  mariadb-client=1:11.8.6-0+deb13u1 \
   # OCRmyPDF dependencies
   tesseract-ocr=5.5.0-1+b1 \
   tesseract-ocr-eng=1:4.1.0-2 \
@@ -67,7 +68,7 @@ ARG RUNTIME_PACKAGES="\
   jbig2dec=0.20-1+b3 \
   # lxml
   libxml2=2.12.7+dfsg+really2.9.14-2.1+deb13u2 \
-  libxslt1.1=1.1.35-1.2+deb13u2 \
+  libxslt1.1 \
   # itself
   qpdf=12.2.0-1 \
   # Mime type detection
@@ -88,18 +89,18 @@ ARG RUNTIME_PACKAGES="\
   xz-utils=5.8.1-1 \
   redis-server=${REDIS_VERSION} \
   redis-tools=${REDIS_VERSION} \
-  nginx=1.26.3-3+deb13u1 \
+  nginx=1.26.3-3+deb13u5 \
   # ghostscript
   libgs10=${GHOSTSCRIPT_VERSION} \
   libgs10-common=${GHOSTSCRIPT_VERSION} \
   ghostscript=${GHOSTSCRIPT_VERSION} \
   libjbig2enc-dev=0.30-1 \
-  qpdf=12.2.0-1 \
-  zip \
-  unzip"
+  qpdf=12.2.0-1"
 
 # Buildx provided, must be defined to use though
 ARG TARGETARCH
+
+ARG JBIG2ENC_VERSION=0.30
 
 # Set Python environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -117,11 +118,15 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   && apt-get update \
   && echo "Installing unpaper for ${TARGETARCH}" \
   && case "${TARGETARCH}" in \
-         "amd64")  apt-get install --yes --quiet --no-install-recommends unpaper=${UNPAPER_X64_VERSION} pngquant=${PNGQUANT_X64_VERSION} ;; \
-         "arm64")  apt-get install --yes --quiet --no-install-recommends unpaper=${UNPAPER_ARM_VERSION} pngquant=${PNGQUANT_ARM_VERSION} ;; \
+         "amd64"|"arm64")  apt-get install --yes --quiet --no-install-recommends unpaper pngquant ;; \
          *) exit 1 ;; \
     esac \
   && apt-get install --yes --quiet --no-install-recommends ${RUNTIME_PACKAGES} \
+  && echo "Installing pre-built updates" \
+      && curl --fail --silent --no-progress-meter --show-error --location --remote-name-all \
+        https://github.com/paperless-ngx/builder/releases/download/jbig2enc-trixie-v${JBIG2ENC_VERSION}/jbig2enc_${JBIG2ENC_VERSION}-1_${TARGETARCH}.deb \
+      && echo "Installing jbig2enc" \
+        && dpkg --install ./jbig2enc_${JBIG2ENC_VERSION}-1_${TARGETARCH}.deb \
   && echo "Installing supervisor" \
   && rm /usr/lib/python3.13/EXTERNALLY-MANAGED \
   && curl -LsSf https://astral.sh/uv/install.sh | sh \
@@ -140,7 +145,7 @@ ARG BUILD_PACKAGES="\
   build-essential \
   git \
   # https://www.psycopg.org/docs/install.html#prerequisites
-  libpq-dev=17.6-0+deb13u1 \
+  libpq-dev=${LIBPQ_VERSION} \
   # https://github.com/PyMySQL/mysqlclient#linux
   default-libmysqlclient-dev \
   pkg-config"

@@ -14,6 +14,7 @@ if bashio::var.has_value "$(bashio::addon.port 80)"; then
         keyfile "$(bashio::config 'keyfile')" \
         ssl "^$(bashio::config 'ssl')" \
         port "$(bashio::addon.port 80)" \
+        x_forwarded_host_no_port "^$(bashio::config 'x_forwarded_host_no_port')" \
         | tempio \
             -template /etc/nginx/templates/direct.gtpl \
             -out /etc/nginx/servers/direct.conf

@@ -20,7 +20,11 @@ server {
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        {{ if .x_forwarded_host_no_port }}
+        proxy_set_header X-Forwarded-Host $host;
+        {{ else }}
         proxy_set_header X-Forwarded-Host $host:{{ .port }};
+        {{ end }}
         proxy_set_header X-Remote-User-Display-Name "";
         proxy_set_header X-Remote-User-Name "";
         proxy_set_header X-Remote-User-Id "";

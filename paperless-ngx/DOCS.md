@@ -171,6 +171,34 @@ Defines the cron schedule for automatic backups. The default value `"0 2 * * *"`
 ### Option: `backup_keep_count`
 
 Sets the number of most recent backups to retain. Older backups beyond this count will be automatically deleted. The default is `3` backups.
+### Option: `x_forwarded_host_no_port`
+
+> **Advanced — only needed for external reverse proxies on a different host.**
+
+By default the add-on's NGINX sets `X-Forwarded-Host: <host>:<port>` (e.g.
+`papers.domain.ltd:7852`). This is correct when Paperless is accessed directly
+via `IP:port`.
+
+Set this to `true` when you have a **reverse proxy on a separate host** (e.g.
+a Traefik instance outside Home Assistant) that terminates HTTPS on port 443.
+In that case the internal add-on port leaks into Django's absolute URL
+generation (including OIDC `redirect_uri`) unless this option is enabled.
+With it enabled, `X-Forwarded-Host` is forwarded as `<host>` only (no port).
+
+When enabled, also configure Paperless with:
+
+```
+PAPERLESS_URL=https://papers.domain.ltd
+PAPERLESS_USE_X_FORWARD_HOST=true
+PAPERLESS_PROXY_SSL_HEADER=["HTTP_X_FORWARDED_PROTO","https"]
+```
+
+> **If your reverse proxy runs on the same host as Home Assistant**, do **not**
+> enable this option. Instead, point your reverse proxy directly at the
+> add-on's internal network URI, which completely bypasses the add-on's NGINX:
+>
+> - Edge repository: `http://44849f5f-paperless-ngx:8000`
+> - Stable repository: `http://ca5234a0-paperless-ngx:8000`
 
 ### More personalisation
 

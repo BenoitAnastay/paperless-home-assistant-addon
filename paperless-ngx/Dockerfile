@@ -38,6 +38,9 @@ ENV GHOSTSCRIPT_VERSION="10.05.1~dfsg-1+deb13u1"
 # renovate: datasource=repology depName=debian_13/libxslt1 versioning=deb
 ENV LIBXSLT_VERSION="1.1.35-1.2+deb13u2"
 
+# renovate: datasource=repology depName=debian_13/poppler
+ENV POPPLER_VERSION="25.03.0-5+deb13u3"
+
 # Packages need for running
 ARG RUNTIME_PACKAGES="\
   # General utils
@@ -78,7 +81,7 @@ ARG RUNTIME_PACKAGES="\
   zlib1g=${ZLIB_VERSION} \
   # Barcode splitter
   libzbar0t64=${LIBZBAR0_VERSION} \
-  poppler-utils=25.03.0-5+deb13u2 \
+  poppler-utils=${POPPLER_VERSION} \
   python3=3.13.5-1 \
   python3-pip=25.1.1+dfsg-1 \
   python3-dev=3.13.5-1 \

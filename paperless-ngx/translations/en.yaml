@@ -16,9 +16,6 @@ configuration:
     name: Languages packs
     description: >-
       List of langages to install for OCR
-  default_superuser:
-    name: Default superuser
-    description: Superuser credentials
   timezone:
     name: Timezone
     description: Timezone
@@ -57,7 +54,11 @@ configuration:
     description: must match host GID of file owner
   ingress_auth:
     name: Enable Ingress authentication
-    description: This allow a SSO, when logged in to home assistant, login and password will not be asked
+    description: >-
+      This allow a SSO, when logged in to home assistant, login and password
+      will not be asked. Create the first account from the Paperless-ngx
+      login screen using your Home Assistant username, then restart the
+      add-on (see documentation)
   tika_gotenberg:
     name: Enable Tika Gotenberg
     description: You need to install the Tika Gotenberg addon

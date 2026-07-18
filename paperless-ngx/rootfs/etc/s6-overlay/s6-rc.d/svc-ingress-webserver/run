@@ -6,11 +6,64 @@
 # ==============================================================================
 
 # Set up the environment for the webserver
-export PAPERLESS_FORCE_SCRIPT_NAME=$(bashio::addon.ingress_entry)
-export PAPERLESS_ENABLE_HTTP_REMOTE_USER_API=$(bashio::config 'ingress_auth')
-export PAPERLESS_ENABLE_HTTP_REMOTE_USER=$(bashio::config 'ingress_auth')
+PAPERLESS_FORCE_SCRIPT_NAME=$(bashio::addon.ingress_entry)
+export PAPERLESS_FORCE_SCRIPT_NAME
 
-cd ${PAPERLESS_SRC_DIR}
+cd "${PAPERLESS_SRC_DIR}" || exit
+
+if bashio::config.true 'ingress_auth'; then
+    # Paperless only offers its first-account creation screen while no user
+    # exists. With SSO enabled, the remote-user middleware creates a
+    # permissionless user on the very first ingress request, which hides that
+    # screen forever and locks the user out with 403 errors (#306).
+    # Defer SSO until an account exists, and promote the single SSO-created
+    # user when it was left without permissions.
+    SSO_STATE=$(s6-setuidgid paperless python3 manage.py shell -c "
+from django.contrib.auth import get_user_model
+users = get_user_model().objects.exclude(username='AnonymousUser')
+if users.filter(is_superuser=True).exists():
+    print('ready')
+elif users.count() == 1:
+    user = users.first()
+    user.is_staff = True
+    user.is_superuser = True
+    user.save()
+    print('promoted:' + user.get_username())
+elif users.exists():
+    print('ambiguous')
+else:
+    print('no-user')
+" | tail -n1)
+
+    case "${SSO_STATE}" in
+        ready)
+            export PAPERLESS_ENABLE_HTTP_REMOTE_USER=true
+            export PAPERLESS_ENABLE_HTTP_REMOTE_USER_API=true
+            ;;
+        promoted:*)
+            bashio::log.warning "Ingress SSO: promoted '${SSO_STATE#promoted:}' to superuser," \
+                "this account was created by the ingress authentication while no superuser existed (#306)"
+            export PAPERLESS_ENABLE_HTTP_REMOTE_USER=true
+            export PAPERLESS_ENABLE_HTTP_REMOTE_USER_API=true
+            ;;
+        no-user)
+            bashio::log.notice "Ingress SSO is deferred until the first account exists:" \
+                "open Paperless-ngx, create the first account using your Home Assistant username," \
+                "then restart the add-on to enable SSO"
+            ;;
+        ambiguous)
+            bashio::log.warning "Ingress SSO: several accounts exist but none is a superuser," \
+                "grant superuser to one of them manually (see the add-on documentation)"
+            export PAPERLESS_ENABLE_HTTP_REMOTE_USER=true
+            export PAPERLESS_ENABLE_HTTP_REMOTE_USER_API=true
+            ;;
+        *)
+            bashio::log.warning "Ingress SSO: could not check the accounts state, enabling SSO anyway"
+            export PAPERLESS_ENABLE_HTTP_REMOTE_USER=true
+            export PAPERLESS_ENABLE_HTTP_REMOTE_USER_API=true
+            ;;
+    esac
+fi
 
 # Translate between things, preferring GRANIAN_
 export GRANIAN_HOST=${GRANIAN_HOST:-${PAPERLESS_BIND_ADDR:-"::"}}
@@ -23,4 +76,3 @@ if [[ -n "${PAPERLESS_FORCE_SCRIPT_NAME}" ]]; then
 fi
 
 exec s6-setuidgid paperless granian --interface asginl --ws --loop uvloop "paperless.asgi:application"
-

@@ -57,10 +57,7 @@ url: http://example.com
 filename: "{created_year}/{correspondent}/{title}"
 language: eng
 language_packages: eng deu fra ita spa
-default_superuser:
-  username: admin
-  email: admin@example.com
-  password: changeme
+ingress_auth: false
 timezone: Europe/Paris
 polling_interval: 0
 barcodes_enabled: false
@@ -96,9 +93,25 @@ This can be a combination of multiple languages such as deu+eng, in which case t
 
 This is the list of language packages to install, separated by space
 
-### Option: `default_superuser`
+### Option: `ingress_auth`
 
-When the addon starts up, if this user is not created, it will create it.
+Enables SSO through Home Assistant Ingress: when opening Paperless-ngx from
+the sidebar, you are logged in automatically with your Home Assistant
+username and no password is asked.
+
+**First account**: Paperless-ngx offers to create the first account from its
+login screen as long as no account exists. Create it **using your Home
+Assistant username** so SSO matches your account, then restart the add-on.
+While no account exists, SSO stays deferred so this screen remains reachable.
+
+If the add-on ever created a permissionless SSO account before a superuser
+existed (the `403 Forbidden` symptom of older versions), that account is
+promoted to superuser automatically on the next add-on restart.
+
+**Note**: _An account created with a different username than your Home
+Assistant one will not be matched by SSO; Paperless-ngx would then create a
+separate account without permissions. A superuser can grant permissions to
+such accounts in `Settings > Users & Groups`._
 
 ### Option: `timezone`
 

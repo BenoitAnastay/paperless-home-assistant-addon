@@ -44,7 +44,7 @@ ENV POPPLER_VERSION="25.03.0-5+deb13u3"
 # Packages need for running
 ARG RUNTIME_PACKAGES="\
   # General utils
-  curl=8.14.1-2+deb13u3 \
+  curl=8.14.1-2+deb13u4 \
   # Docker specific
   gosu=1.17-3+b4 \
   # Timezones support

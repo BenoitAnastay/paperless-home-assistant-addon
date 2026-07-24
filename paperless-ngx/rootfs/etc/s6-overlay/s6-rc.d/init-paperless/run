@@ -21,6 +21,15 @@ if bashio::fs.directory_exists '/share/paperless'; then
     chown -R paperless:paperless /share/paperless
 fi
 
+if bashio::fs.file_exists '/share/paperless/PAPERLESS_SECRET_KEY'; then
+    bashio::log.info "Using existing PAPERLESS_SECRET_KEY"
+else
+    bashio::log.info "Generating new PAPERLESS_SECRET_KEY"
+    python3 -c "import secrets; print(secrets.token_urlsafe(64))" > /share/paperless/PAPERLESS_SECRET_KEY
+fi
+
+echo -n "$(cat /share/paperless/PAPERLESS_SECRET_KEY)" > /var/run/s6/container_environment/PAPERLESS_SECRET_KEY
+
 mkdir -p $PAPERLESS_CONSUMPTION_DIR
 mkdir -p $PAPERLESS_DATA_DIR
 mkdir -p $PAPERLESS_MEDIA_ROOT

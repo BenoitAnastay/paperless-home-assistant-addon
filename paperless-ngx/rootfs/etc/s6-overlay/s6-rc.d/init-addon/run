@@ -35,6 +35,12 @@ PAPERLESS_TIKA_GOTENBERG_ENDPOINT="http://${REPO_SLUG}-tika-gotenberg:3000"
 bashio::log.info "Tika endpoint resolved to ${PAPERLESS_TIKA_ENDPOINT}"
 PAPERLESS_TIKA_ENABLED=$(bashio::config 'tika_gotenberg')
 
+#FIX Bolean values
+[[ "$PAPERLESS_CONSUMER_ENABLE_BARCODES" == "null" || -z "$PAPERLESS_CONSUMER_ENABLE_BARCODES" ]] && PAPERLESS_CONSUMER_ENABLE_BARCODES=false
+[[ "$PAPERLESS_CONSUMER_ENABLE_ASN_BARCODE" == "null" || -z "$PAPERLESS_CONSUMER_ENABLE_ASN_BARCODE" ]] && PAPERLESS_CONSUMER_ENABLE_ASN_BARCODE=false
+[[ "$PAPERLESS_CONSUMER_RECURSIVE" == "null" || -z "$PAPERLESS_CONSUMER_RECURSIVE" ]] && PAPERLESS_CONSUMER_RECURSIVE=false
+[[ "$PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS" == "null" || -z "$PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS" ]] && PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS=false
+
 if bashio::config.has_value 'timezone'; then
   PAPERLESS_TIME_ZONE=$(bashio::config 'timezone')
   bashio::log.info "Timezone set to $PAPERLESS_TIME_ZONE"
@@ -61,10 +67,10 @@ else
 fi
 
 if bashio::config.has_value 'polling_interval'; then
-  PAPERLESS_CONSUMER_POLLING=$(bashio::config 'polling_interval')
-  bashio::log.info "Pooling interval set to $PAPERLESS_CONSUMER_POLLING"
+  PAPERLESS_CONSUMER_POLLING_INTERVAL=$(bashio::config 'polling_interval')
+  bashio::log.info "Pooling interval set to $PAPERLESS_CONSUMER_POLLING_INTERVAL"
 else
-  PAPERLESS_CONSUMER_POLLING=0
+  PAPERLESS_CONSUMER_POLLING_INTERVAL=0
 fi
 
 export PAPERLESS_URL
@@ -72,7 +78,7 @@ export PAPERLESS_FILENAME_FORMAT
 export PAPERLESS_OCR_LANGUAGE
 export PAPERLESS_OCR_LANGUAGES
 export PAPERLESS_TIME_ZONE
-export PAPERLESS_CONSUMER_POLLING
+export PAPERLESS_CONSUMER_POLLING_INTERVAL
 export PAPERLESS_CONSUMPTION_DIR
 export PAPERLESS_DATA_DIR
 export PAPERLESS_MEDIA_ROOT
@@ -94,7 +100,7 @@ echo -n "${PAPERLESS_FILENAME_FORMAT}" > /var/run/s6/container_environment/PAPER
 echo -n "${PAPERLESS_OCR_LANGUAGE}" > /var/run/s6/container_environment/PAPERLESS_OCR_LANGUAGE
 echo -n "${PAPERLESS_OCR_LANGUAGES}" > /var/run/s6/container_environment/PAPERLESS_OCR_LANGUAGES
 echo -n "${PAPERLESS_TIME_ZONE}" > /var/run/s6/container_environment/PAPERLESS_TIME_ZONE
-echo -n "${PAPERLESS_CONSUMER_POLLING}" > /var/run/s6/container_environment/PAPERLESS_CONSUMER_POLLING
+echo -n "${PAPERLESS_CONSUMER_POLLING_INTERVAL}" > /var/run/s6/container_environment/PAPERLESS_CONSUMER_POLLING_INTERVAL
 echo -n "${PAPERLESS_CONSUMPTION_DIR}" > /var/run/s6/container_environment/PAPERLESS_CONSUMPTION_DIR
 echo -n "${PAPERLESS_DATA_DIR}" > /var/run/s6/container_environment/PAPERLESS_DATA_DIR
 echo -n "${PAPERLESS_MEDIA_ROOT}" > /var/run/s6/container_environment/PAPERLESS_MEDIA_ROOT

@@ -39,7 +39,7 @@ ENV GHOSTSCRIPT_VERSION="10.05.1~dfsg-1+deb13u1"
 ENV LIBXSLT_VERSION="1.1.35-1.2+deb13u2"
 
 # renovate: datasource=repology depName=debian_13/poppler
-ENV POPPLER_VERSION="25.03.0-5+deb13u3"
+ENV POPPLER_VERSION="25.03.0-5+deb13u4"
 
 # Packages need for running
 ARG RUNTIME_PACKAGES="\

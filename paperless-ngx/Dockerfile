@@ -23,7 +23,7 @@ ENV POSTGRESQL_VERSION="17+278"
 ENV ZLIB_VERSION="1:1.3.dfsg+really1.3.1-1+b1"
 
 # renovate: datasource=repology depName=debian_13/redis
-ENV REDIS_VERSION="5:8.0.2-3+deb13u1"
+ENV REDIS_VERSION="5:8.0.2-3+deb13u2"
 
 # renovate: datasource=repology depName=debian_13/zbar
 ENV LIBZBAR0_VERSION="0.23.93-8"

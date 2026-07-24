@@ -162,7 +162,12 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   && source $HOME/.local/bin/env \
   && uv pip install --system --no-cache-dir --upgrade wheel \
   && echo "Installing Python requirements" \
-  && uv pip install --system --find-links . --requirement requirements.txt \
+  && uv export --quiet --no-dev --all-extras --format requirements-txt --output-file requirements.txt \
+    && uv pip install --no-cache --system --no-python-downloads --python-preference system \
+      --index https://pypi.org/simple \
+      --index https://download.pytorch.org/whl/cpu \
+      --index-strategy unsafe-best-match \
+      --requirements requirements.txt \
   && echo "Installing NLTK data" \
   && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" snowball_data \
   && python3 -W ignore::RuntimeWarning -m nltk.downloader -d "/usr/share/nltk_data" stopwords \
@@ -189,13 +194,29 @@ WORKDIR /usr/src/paperless/src/
 # add users, setup scripts
 # Mount the compiled frontend to expected location
 RUN set -eux \
- && echo "Creating gnupg directory" \
+  && sed -i '1s|^#!/usr/bin/env python3|#!/command/with-contenv python3|' manage.py \
+  && echo "Setting up user/group" \
+    && addgroup --gid 1000 paperless \
+    && useradd --uid 1000 --gid paperless --home-dir /usr/src/paperless paperless \
+  && echo "Creating volume directories" \
+    && mkdir --parents --verbose /usr/src/paperless/data \
+    && mkdir --parents --verbose /usr/src/paperless/media \
+    && mkdir --parents --verbose /usr/src/paperless/consume \
+    && mkdir --parents --verbose /usr/src/paperless/export \
+  && echo "Creating gnupg directory" \
     && mkdir -m700 --verbose /usr/src/paperless/.gnupg \
-  && addgroup --gid 1000 paperless \
-  && useradd --uid 1000 --gid paperless --home-dir /usr/src/paperless paperless \
-  && chown -R paperless:paperless /usr/src/paperless \
-  && gosu paperless python3 manage.py collectstatic --clear --no-input --link \
-  && gosu paperless python3 manage.py compilemessages
+  && echo "Adjusting all permissions" \
+    && chown --from root:root --changes --recursive paperless:paperless /usr/src/paperless \
+  && echo "Making fontconfig cache writable for arbitrary container UIDs" \
+    && chmod 1777 /var/cache/fontconfig \
+  && echo "Making /run world-writable for rootless operation" \
+    && chmod 1777 /run \
+  && echo "Removing setuid from s6-overlay-suexec for rootless compat" \
+    && chmod u-s /command/s6-overlay-suexec \
+  && echo "Collecting static files" \
+    && PAPERLESS_SECRET_KEY=build-time-dummy s6-setuidgid paperless python3 manage.py collectstatic --clear --no-input --link \
+    && PAPERLESS_SECRET_KEY=build-time-dummy s6-setuidgid paperless python3 manage.py compilemessages \
+    && /usr/local/bin/deduplicate.py --verbose /usr/src/paperless/static/
 
 ENV PAPERLESS_REDIS="redis://localhost:6379"
 ENV PAPERLESS_DATA_DIR="/config/data"

@@ -18,7 +18,10 @@ if bashio::var.has_value "$(bashio::addon.port 80)"; then
         | tempio \
             -template /etc/nginx/templates/direct.gtpl \
             -out /etc/nginx/servers/direct.conf
-
+else
+    tempio \
+        -template /etc/nginx/templates/api.gtpl \
+        -out /etc/nginx/servers/direct.conf
 fi
 
 bashio::log.blue "Ingress is enabled"

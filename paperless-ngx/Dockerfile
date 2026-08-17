@@ -30,7 +30,7 @@ ENV LIBZBAR0_VERSION="0.23.93-8"
 
 # libpq5/libpq-dev are binary packages from postgresql-17 source; not tracked
 # separately in repology — update this value alongside POSTGRESQL_VERSION
-ENV LIBPQ_VERSION="17.10-0+deb13u1"
+ENV LIBPQ_VERSION="17.11-0+deb13u1"
 
 # renovate: datasource=repology depName=debian_13/ghostscript
 ENV GHOSTSCRIPT_VERSION="10.05.1~dfsg-1+deb13u1"
@@ -58,7 +58,7 @@ ARG RUNTIME_PACKAGES="\
   imagemagick=8:7.1.1.43+dfsg1-1+deb13u11 \
   # PostgreSQL
   libpq5=${LIBPQ_VERSION} \
-  postgresql-client=${POSTGRESQL_VERSION} \
+  postgresql-client-17=${POSTGRESQL_VERSION} \
   # MySQL / MariaDB
   mariadb-client=1:11.8.6-0+deb13u1 \
   # OCRmyPDF dependencies

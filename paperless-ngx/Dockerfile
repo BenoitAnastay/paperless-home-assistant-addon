@@ -17,7 +17,7 @@ ARG PAPERLESS_VERSION="v3.0.5"
 ENV GNUPG_VERSION="2.4.7-21+deb13u1"
 
 # renovate: datasource=repology depName=debian_13/postgresql
-ENV POSTGRESQL_VERSION="17+278"
+ENV POSTGRESQL_VERSION="17.11-0+deb13u1"
 
 # renovate: datasource=repology depName=debian_13/zlib
 ENV ZLIB_VERSION="1:1.3.dfsg+really1.3.1-1+b1"

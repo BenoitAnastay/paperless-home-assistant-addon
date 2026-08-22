@@ -11,6 +11,12 @@ server {
         # Adjust host and port as required.
         proxy_pass http://localhost:8000/;
 
+        # Increase proxy timeouts to match LLM request timeout and avoid 504s
+        # (aligned with upstream LLM Request Timeout; 300s chosen to cover long inferences)
+        proxy_read_timeout 300s;
+        proxy_send_timeout 300s;
+        proxy_connect_timeout 300s;
+
         # These configuration options are required for WebSockets to work.
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;

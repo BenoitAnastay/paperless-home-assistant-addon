@@ -11,6 +11,11 @@ server {
         # Adjust host and port as required.
         proxy_pass http://localhost:8000/;
 
+        # Allow long-running requests such as local AI inference to complete.
+        # Keep the proxy timeout slightly above Paperless' default LLM request timeout.
+        proxy_read_timeout 330s;
+        proxy_send_timeout 330s;
+
         # These configuration options are required for WebSockets to work.
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;

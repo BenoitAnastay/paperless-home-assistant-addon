@@ -6,7 +6,7 @@
 # ==============================================================================
 
 # Set up the environment for the webserver
-PAPERLESS_FORCE_SCRIPT_NAME=$(bashio::addon.ingress_entry)
+PAPERLESS_FORCE_SCRIPT_NAME=$(bashio::app.ingress_entry)
 export PAPERLESS_FORCE_SCRIPT_NAME
 
 cd "${PAPERLESS_SRC_DIR}" || exit

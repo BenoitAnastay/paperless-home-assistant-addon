@@ -68,7 +68,7 @@ ARG RUNTIME_PACKAGES="\
   tesseract-ocr-fra=1:4.1.0-2 \
   tesseract-ocr-ita=1:4.1.0-2 \
   tesseract-ocr-spa=1:4.1.0-2 \
-  jbig2dec=0.20-1+b3 \
+  jbig2dec=0.20-1+deb13u1 \
   # lxml
   libxml2=2.12.7+dfsg+really2.9.14-2.1+deb13u3 \
   libxslt1.1 \

@@ -100,9 +100,6 @@ if bashio::config.has_value 'locales'; then
     locale-gen ${locales}.UTF-8
     update-locale ${locales}.UTF-8
     dpkg-reconfigure --frontend=noninteractive locales
-    bashio::log.info "Patching file_handler.py to use ${locales} as default"
-    cd /usr/src/paperless/
-    patch -p1 < /patches/file_handling.patch
     echo -n "${locales}".UTF-8 > /var/run/s6/container_environment/LC_ALL
     echo -n "${locales}".UTF-8 > /var/run/s6/container_environment/LANG
     echo -n "${locales}".UTF-8 > /var/run/s6/container_environment/LANGUAGE

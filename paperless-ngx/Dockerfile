@@ -9,7 +9,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV TERM="xterm-256color"
 
 # Paperless version
-ARG PAPERLESS_VERSION="v3.3.4"
+ARG PAPERLESS_VERSION="v3.4.1"
 
 # Renovate packages
 

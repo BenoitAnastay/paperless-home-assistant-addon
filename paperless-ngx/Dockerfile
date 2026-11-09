@@ -55,7 +55,6 @@ ARG RUNTIME_PACKAGES="\
   ghostscript=10.05.1~dfsg-1+deb13u3 \
   gnupg=${GNUPG_VERSION} \
   icc-profiles-free=2.0.1+dfsg-1.1 \
-  imagemagick=8:7.1.1.43+dfsg1-1+deb13u13 \
   # PostgreSQL
   libpq5=${LIBPQ_VERSION} \
   postgresql-client-17=${POSTGRESQL_VERSION} \
@@ -181,13 +180,6 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   && rm -rf /tmp/* \
   && rm -rf /var/tmp/* \
   && rm -rf /var/cache/apt/archives/
-
-WORKDIR /usr/src/paperless/docker/
-
-RUN set -eux \
-  && cp -r /usr/src/paperless/docker/rootfs/* / \
-  && echo "Configuring ImageMagick" \
-  && cp /etc/ImageMagick-6/paperless-policy.xml /etc/ImageMagick-6/policy.xml
 
 WORKDIR /usr/src/paperless/src/
 

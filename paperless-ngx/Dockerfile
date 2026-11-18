@@ -181,6 +181,12 @@ RUN --mount=type=cache,target=/root/.cache/uv/,id=uv-cache \
   && rm -rf /var/tmp/* \
   && rm -rf /var/cache/apt/archives/
 
+WORKDIR /usr/src/paperless/docker/
+
+# Install upstream helper scripts (deduplicate.py, document_* wrappers, ...)
+RUN set -eux \
+  && cp -r /usr/src/paperless/docker/rootfs/* /
+
 WORKDIR /usr/src/paperless/src/
 
 # add users, setup scripts

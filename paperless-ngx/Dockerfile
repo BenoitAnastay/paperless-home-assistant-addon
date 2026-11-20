@@ -91,7 +91,7 @@ ARG RUNTIME_PACKAGES="\
   xz-utils=5.8.1-1+deb13u2 \
   redis-server=${REDIS_VERSION} \
   redis-tools=${REDIS_VERSION} \
-  nginx=1.26.3-3+deb13u10 \
+  nginx=1.26.3-3+deb13u11 \
   # ghostscript
   libgs10=${GHOSTSCRIPT_VERSION} \
   libgs10-common=${GHOSTSCRIPT_VERSION} \

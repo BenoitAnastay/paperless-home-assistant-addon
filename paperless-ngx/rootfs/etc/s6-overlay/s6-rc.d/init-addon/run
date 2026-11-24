@@ -66,9 +66,6 @@ else
   PAPERLESS_URL="http://$(bashio::info.hostname):8000"
 fi
 
-# Paperless >= 3.5 restricts ALLOWED_HOSTS to the PAPERLESS_URL host when a URL
-# is set. Access goes via ingress and the direct port under several hostnames,
-# so keep the previous default (allow all) unless explicitly configured.
 PAPERLESS_ALLOWED_HOSTS="${PAPERLESS_ALLOWED_HOSTS:-*}"
 export PAPERLESS_ALLOWED_HOSTS
 echo -n "${PAPERLESS_ALLOWED_HOSTS}" > /var/run/s6/container_environment/PAPERLESS_ALLOWED_HOSTS
